@@ -1,4 +1,4 @@
-Drone Automation (Drone Farming)
+# Drone Automation (Drone Farming)
 
 This repository is part of a group project for CS420: Software Engineering course at The University of Alabama at Birmingham. My group consists of Eli Davis, Eric Dollar, Kodie Box, Joe Tiller, Josh Patton, John Thompkins, and Jesus Zubia. 
 
