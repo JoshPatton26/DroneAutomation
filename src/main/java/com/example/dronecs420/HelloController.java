@@ -62,6 +62,7 @@ public class HelloController implements Initializable{
     public void initialize(URL arg0, ResourceBundle arg1) {
 
         TreeItem<String> rootItem = new TreeItem<>("Root");
+        rootItem.setExpanded(true);
 
         //Branch_Items
         TreeItem<String> Command_Center = new TreeItem<>("Command Center");
