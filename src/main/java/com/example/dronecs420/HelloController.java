@@ -50,7 +50,7 @@ public class HelloController implements Initializable{
 
     @FXML
     void itemDeleteClick(ActionEvent event) {
-
+        
     }
 
     @FXML
