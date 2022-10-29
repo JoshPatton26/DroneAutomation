@@ -43,7 +43,7 @@
                   </VBox>
                   <Button layoutX="48.0" layoutY="501.0" mnemonicParsing="false" text="Visit Item/Item Container" />
                   <Button layoutX="48.0" layoutY="533.0" mnemonicParsing="false" text="Scan Farm" />
-                  <Button layoutX="49.0" layoutY="567.0" mnemonicParsing="false" text="Go Home" />
+                  <Button layoutX="49.0" layoutY="567.0" mnemonicParsing="false" text="Go Home" visible="false" />
                </children>
             </AnchorPane>
           <AnchorPane fx:id="myImageView" minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
