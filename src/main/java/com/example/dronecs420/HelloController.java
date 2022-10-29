@@ -26,14 +26,7 @@ public class HelloController implements Initializable{
 
     @FXML
     private ImageView ImageView;
-
-    @FXML
-    private ListView<String> myListView;
-    String[] commands = {"Rename", "Change Location", "Change Price", "Change Dimensions", "Delete"};
-
-    @FXML
-    private ListView<String> myListView2;
-    String[] commandsContains = {"Rename", "Change Location", "Change Price", "Change Dimensions", "Add Item", "Add Item-Container", "Delete"};
+    
     @FXML
     protected void onHelloButtonClick() {
         welcomeText.setText("Welcome to JavaFX Application!");
@@ -41,8 +34,6 @@ public class HelloController implements Initializable{
 
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
-        myListView.getItems().addAll(commands);
-        myListView2.getItems().addAll(commandsContains);
 
         TreeItem<String> rootItem = new TreeItem<>("Root");
 
