@@ -15,7 +15,6 @@ public class ItemContainer extends ItemsClass {
     ArrayList<ItemsClass> containerList = new ArrayList<ItemsClass>();
 
     private String name;
-
     // price field
     private int price;
 
@@ -68,6 +67,12 @@ public class ItemContainer extends ItemsClass {
 
     }
 
+    public void addItemContainer(ItemContainer icontainer){
+        this.containerList.add(icontainer);
+    }
+    public void addItem(ItemsClass item){
+        this.containerList.add(item);
+    }
 
 
 
