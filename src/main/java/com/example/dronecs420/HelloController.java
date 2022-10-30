@@ -5,6 +5,7 @@ import javafx.scene.control.*;
 
 import java.net.URL;
 import java.net.URL;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -13,8 +14,10 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.SpinnerValueFactory.IntegerSpinnerValueFactory;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.GridPane;
 
 import java.util.ResourceBundle;
 
@@ -29,23 +32,91 @@ public class HelloController implements Initializable{
     private ImageView ImageView;
 
     @FXML
+    private Button itemRenameBtn;
+
+    @FXML
     protected void onHelloButtonClick() {
         welcomeText.setText("Welcome to JavaFX Application!");
     }
 
     @FXML
     void itemChangeDClick(ActionEvent event) {
+        // Create dialog box.
+        Dialog<Double> changeLoc = new Dialog<>();
+        changeLoc.setTitle("Dimensions");
+        changeLoc.setHeaderText("Enter the new dimensions: ");
+        changeLoc.setResizable(true);
+        //changeLoc.setWidth(1000.0);
 
+        // Add the attributes of the dialog box.
+        Label label1 = new Label("Width: ");
+        Label label2 = new Label("Height: ");
+        TextField width = new TextField();
+        TextField height = new TextField();
+
+        // Add the layout, and add the attributes to layout.
+        GridPane grid = new GridPane();
+        grid.add(label1, 1, 1);
+        grid.add(width, 2, 1);
+        grid.add(label2, 1, 2);
+        grid.add(height, 2, 2);
+        changeLoc.getDialogPane().setContent(grid);
+
+        // Add button to close dialog box after user enters values.
+        ButtonType okButton = new ButtonType("Okay", ButtonData.OK_DONE);
+        changeLoc.getDialogPane().getButtonTypes().add(okButton);
+
+        Optional<Double> result = changeLoc.showAndWait();
+        if(result.isPresent()){
+            System.out.println(width.getText() + " " + height.getText());
+        }
     }
 
     @FXML
     void itemChangeLClick(ActionEvent event) {
+        // Create dialog box.
+        Dialog<Double> changeDim = new Dialog<>();
+        changeDim.setTitle("Location");
+        changeDim.setHeaderText("Enter the new location: ");
+        changeDim.setResizable(true);
 
+        // Add the attributes of the dialog box.
+        Label label1 = new Label("Change x: ");
+        Label label2 = new Label("Change y: ");
+        TextField xvalue = new TextField();
+        TextField yvalue = new TextField();
+
+        // Add the layout, and add the attributes to layout.
+        GridPane grid = new GridPane();
+        grid.add(label1, 1, 1);
+        grid.add(xvalue, 2, 1);
+        grid.add(label2, 1, 2);
+        grid.add(yvalue, 2, 2);
+        changeDim.getDialogPane().setContent(grid);
+
+        // Add button to close dialog box after user enters values.
+        ButtonType okButton = new ButtonType("Okay", ButtonData.OK_DONE);
+        changeDim.getDialogPane().getButtonTypes().add(okButton);
+
+        Optional<Double> result = changeDim.showAndWait();
+        if(result.isPresent()){
+            System.out.println(xvalue.getText() + " " + yvalue.getText());
+        }
     }
 
     @FXML
     void itemChangePClick(ActionEvent event) {
+        // Create the TextInputDialog box.
+        TextInputDialog priceItem = new TextInputDialog();
+        priceItem.setTitle("New Price");
+        priceItem.setHeaderText("Enter new price: ");
+        priceItem.setContentText("Price: ");
 
+        // Capture the users input
+        Optional<String> result = priceItem.showAndWait();
+        if(result.isPresent()){
+            System.out.println(result.get());
+        }
     }
 
     @FXML
@@ -55,7 +126,17 @@ public class HelloController implements Initializable{
 
     @FXML
     void itemRenameClick(ActionEvent event) {
+        // Create the TextInputDialog box.
+        TextInputDialog renameItem = new TextInputDialog();
+        renameItem.setTitle("Rename");
+        renameItem.setHeaderText("Enter new name: ");
+        renameItem.setContentText("Name: ");
 
+        // Capture the users input.
+        Optional<String> result = renameItem.showAndWait();
+        if(result.isPresent()){
+            System.out.println(result.get());
+        }
     }
 
     @Override
