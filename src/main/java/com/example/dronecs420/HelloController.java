@@ -19,16 +19,23 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.SpinnerValueFactory.IntegerSpinnerValueFactory;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
+import javafx.scene.text.Text;
+
 
 import java.util.ResourceBundle;
 
 public class HelloController implements Initializable{
     @FXML
     private TreeView treeView;
+
+    @FXML
+    public AnchorPane Farm;
 
     @FXML
     private Label welcomeText;
@@ -80,6 +87,25 @@ public class HelloController implements Initializable{
         if(result.isPresent()){
             System.out.println(width.getText() + " " + height.getText());
         }
+        //Drawing the Reactangle
+        Rectangle rectangle = new Rectangle();
+
+
+        //Assigning a new variable to change the txt field to double
+        double user_width = Double.parseDouble(width.getText());
+        double user_height = Double.parseDouble(height.getText());
+
+        //Setting up the new rectangle
+        rectangle.setX(150.0f);
+        rectangle.setY(75.0f);
+        rectangle.setWidth(user_width);
+        rectangle.setHeight(user_height);
+        rectangle.setFill(Color.TRANSPARENT);
+        rectangle.setStroke(Color.BLACK);
+
+        //Adding the rectangle to the Panel
+        Farm.getChildren().add(rectangle);
+
     }
 
     @FXML
@@ -112,6 +138,25 @@ public class HelloController implements Initializable{
         if(result.isPresent()){
             System.out.println(xvalue.getText() + " " + yvalue.getText());
         }
+
+        //Drawing the Rectangle
+        Rectangle rectangle = new Rectangle();
+
+        //Assigning a new variable to change the txt field to double
+        double user_xvalue = Double.parseDouble(xvalue.getText());
+        double user_yvalue = Double.parseDouble(yvalue.getText());
+
+        //Setting up the new rectangle
+        rectangle.setX(user_xvalue);
+        rectangle.setY(user_yvalue);
+        rectangle.setWidth(50.0f);
+        rectangle.setHeight(50.0f);
+        rectangle.setFill(Color.TRANSPARENT);
+        rectangle.setStroke(Color.BLACK);
+
+        //Adding the rectangle to the Panel
+        Farm.getChildren().add(rectangle);
+
     }
 
     @FXML
@@ -180,6 +225,19 @@ public class HelloController implements Initializable{
         // Add default child so commands don't read it as a leaf.
         TreeItem<String> defaultchild = new TreeItem<>("Default");
         treeBranch.getChildren().add(defaultchild);
+
+        //Drawing the Reactangle
+        Rectangle rectangle = new Rectangle();
+
+        rectangle.setX(150.0f);
+        rectangle.setY(75.0f);
+        rectangle.setWidth(90.0f);
+        rectangle.setHeight(90.0f);
+        rectangle.setFill(Color.TRANSPARENT);
+        rectangle.setStroke(Color.BLACK);
+
+        Farm.getChildren().addAll(rectangle);
+
     }
 
     @FXML
@@ -211,46 +269,67 @@ public class HelloController implements Initializable{
 
         rectangle.setX(150.0f);
         rectangle.setY(75.0f);
-        rectangle.setWidth(300.0f);
-        rectangle.setHeight(150.0f);
+        rectangle.setWidth(50.0f);
+        rectangle.setHeight(50.0f);
+        rectangle.setFill(Color.TRANSPARENT);
+        rectangle.setStroke(Color.BLACK);
 
-        Group root = new Group();
-        Scene scene = new Scene(root, 500, 500);
-        root.getChildren().add(rectangle);
-        
+        Farm.getChildren().add(rectangle);
+
     }
 
     @FXML
     void itemContChangeDClick(ActionEvent event) {
         // Create dialog box.
-        Dialog<Double> changeDim = new Dialog<>();
-        changeDim.setTitle("Location");
-        changeDim.setHeaderText("Enter the new location: ");
-        changeDim.setResizable(true);
+        Dialog<Double> changeLoc = new Dialog<>();
+        changeLoc.setTitle("Dimensions");
+        changeLoc.setHeaderText("Enter the new dimensions: ");
+        changeLoc.setResizable(true);
+        //changeLoc.setWidth(1000.0);
 
         // Add the attributes of the dialog box.
-        Label label1 = new Label("Change x: ");
-        Label label2 = new Label("Change y: ");
-        TextField xvalue = new TextField();
-        TextField yvalue = new TextField();
+        Label label1 = new Label("Width: ");
+        Label label2 = new Label("Height: ");
+        TextField width = new TextField();
+        TextField height = new TextField();
 
         // Add the layout, and add the attributes to layout.
         GridPane grid = new GridPane();
         grid.add(label1, 1, 1);
-        grid.add(xvalue, 2, 1);
+        grid.add(width, 2, 1);
         grid.add(label2, 1, 2);
-        grid.add(yvalue, 2, 2);
-        changeDim.getDialogPane().setContent(grid);
+        grid.add(height, 2, 2);
+        changeLoc.getDialogPane().setContent(grid);
 
         // Add button to close dialog box after user enters values.
         ButtonType okButton = new ButtonType("Okay", ButtonData.OK_DONE);
-        changeDim.getDialogPane().getButtonTypes().add(okButton);
+        changeLoc.getDialogPane().getButtonTypes().add(okButton);
 
-        Optional<Double> result = changeDim.showAndWait();
+        Optional<Double> result = changeLoc.showAndWait();
         if(result.isPresent()){
-            System.out.println(xvalue.getText() + " " + yvalue.getText());
+            System.out.println(width.getText() + " " + height.getText());
         }
+        //Drawing the Reactangle
+        Rectangle rectangle = new Rectangle();
 
+        //Assigning a new variable to change the txt field to double
+        double user_width = Double.parseDouble(width.getText());
+        double user_height = Double.parseDouble(height.getText());
+
+        //Setting up the new rectangle
+        rectangle.setX(150.0f);
+        rectangle.setY(75.0f);
+        rectangle.setWidth(user_width);
+        rectangle.setHeight(user_height);
+        rectangle.setFill(Color.TRANSPARENT);
+        rectangle.setStroke(Color.BLACK);
+
+        TreeItem<String> item = (TreeItem<String>) treeView.getSelectionModel().getSelectedItem();
+
+        Farm.getChildren().remove(item);
+
+        //Adding the rectangle to the Panel
+        Farm.getChildren().add(rectangle);
 
     }
 
@@ -284,6 +363,24 @@ public class HelloController implements Initializable{
         if(result.isPresent()){
             System.out.println(xvalue.getText() + " " + yvalue.getText());
         }
+
+        //Drawing the Reactangle
+        Rectangle rectangle = new Rectangle();
+
+        //Assigning a new variable to change the txt field to double
+        double user_xvalue = Double.parseDouble(xvalue.getText());
+        double user_yvalue = Double.parseDouble(yvalue.getText());
+
+        //Setting up the new rectangle
+        rectangle.setX(user_xvalue);
+        rectangle.setY(user_yvalue);
+        rectangle.setWidth(90.0f);
+        rectangle.setHeight(90.0f);
+        rectangle.setFill(Color.TRANSPARENT);
+        rectangle.setStroke(Color.BLACK);
+
+        //Adding the rectangle to the Panel
+        Farm.getChildren().add(rectangle);
 
     }
 
