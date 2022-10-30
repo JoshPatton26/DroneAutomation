@@ -1,6 +1,8 @@
 package com.example.dronecs420;
 
 import javafx.fxml.FXML;
+import javafx.scene.Group;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 
 import java.net.URL;
@@ -19,6 +21,8 @@ import javafx.scene.control.SpinnerValueFactory.IntegerSpinnerValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.shape.Rectangle;
+import javafx.stage.Stage;
 
 import java.util.ResourceBundle;
 
@@ -127,7 +131,10 @@ public class HelloController implements Initializable{
 
     @FXML
     void itemDeleteClick(ActionEvent event) {
-        
+        TreeItem delete = (TreeItem)treeView.getSelectionModel().getSelectedItem();
+        System.out.println(delete);
+        boolean remove = delete.getParent().getChildren().remove(delete);
+
     }
 
     @FXML
@@ -187,7 +194,7 @@ public class HelloController implements Initializable{
         Optional<String> result = renameItem.showAndWait();
         if(result.isPresent()){
             System.out.println(result.get());
-            
+
         }
         // Create a new item.
         String itemName = result.get();
@@ -198,15 +205,85 @@ public class HelloController implements Initializable{
         TreeItem<String> treeItem = new TreeItem<>(result.get());
         TreeItem<String> parent = selectItem();
         parent.getChildren().add(treeItem);
+
+        //Drawing the Reactangle
+        Rectangle rectangle = new Rectangle();
+
+        rectangle.setX(150.0f);
+        rectangle.setY(75.0f);
+        rectangle.setWidth(300.0f);
+        rectangle.setHeight(150.0f);
+
+        Group root = new Group();
+        Scene scene = new Scene(root, 500, 500);
+        root.getChildren().add(rectangle);
+        
     }
 
     @FXML
     void itemContChangeDClick(ActionEvent event) {
+        // Create dialog box.
+        Dialog<Double> changeDim = new Dialog<>();
+        changeDim.setTitle("Location");
+        changeDim.setHeaderText("Enter the new location: ");
+        changeDim.setResizable(true);
+
+        // Add the attributes of the dialog box.
+        Label label1 = new Label("Change x: ");
+        Label label2 = new Label("Change y: ");
+        TextField xvalue = new TextField();
+        TextField yvalue = new TextField();
+
+        // Add the layout, and add the attributes to layout.
+        GridPane grid = new GridPane();
+        grid.add(label1, 1, 1);
+        grid.add(xvalue, 2, 1);
+        grid.add(label2, 1, 2);
+        grid.add(yvalue, 2, 2);
+        changeDim.getDialogPane().setContent(grid);
+
+        // Add button to close dialog box after user enters values.
+        ButtonType okButton = new ButtonType("Okay", ButtonData.OK_DONE);
+        changeDim.getDialogPane().getButtonTypes().add(okButton);
+
+        Optional<Double> result = changeDim.showAndWait();
+        if(result.isPresent()){
+            System.out.println(xvalue.getText() + " " + yvalue.getText());
+        }
+
 
     }
 
     @FXML
     void itemContChangeLClick(ActionEvent event) {
+        // Create dialog box.
+        Dialog<Double> changeDim = new Dialog<>();
+        changeDim.setTitle("Location");
+        changeDim.setHeaderText("Enter the new location: ");
+        changeDim.setResizable(true);
+
+        // Add the attributes of the dialog box.
+        Label label1 = new Label("Change x: ");
+        Label label2 = new Label("Change y: ");
+        TextField xvalue = new TextField();
+        TextField yvalue = new TextField();
+
+        // Add the layout, and add the attributes to layout.
+        GridPane grid = new GridPane();
+        grid.add(label1, 1, 1);
+        grid.add(xvalue, 2, 1);
+        grid.add(label2, 1, 2);
+        grid.add(yvalue, 2, 2);
+        changeDim.getDialogPane().setContent(grid);
+
+        // Add button to close dialog box after user enters values.
+        ButtonType okButton = new ButtonType("Okay", ButtonData.OK_DONE);
+        changeDim.getDialogPane().getButtonTypes().add(okButton);
+
+        Optional<Double> result = changeDim.showAndWait();
+        if(result.isPresent()){
+            System.out.println(xvalue.getText() + " " + yvalue.getText());
+        }
 
     }
 
@@ -227,7 +304,8 @@ public class HelloController implements Initializable{
 
     @FXML
     void itemContDeleteClick(ActionEvent event) {
-
+        TreeItem delete = (TreeItem)treeView.getSelectionModel().getSelectedItem();
+        boolean remove = delete.getParent().getChildren().remove(delete);
     }
 
     @FXML

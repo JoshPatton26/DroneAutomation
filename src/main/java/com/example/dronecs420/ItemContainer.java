@@ -1,6 +1,10 @@
 package com.example.dronecs420;
 
+import java.util.ArrayList;
+
 public abstract class ItemContainer {
+
+    ArrayList ItemContainer = new ArrayList();
 
     /*public void add(ItemContainer, newItemContainer){
         throw new UnsupportedOperationException();
