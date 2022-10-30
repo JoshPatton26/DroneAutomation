@@ -1,7 +1,39 @@
 package com.example.dronecs420;
 
 import java.util.ArrayList;
+
+
+public abstract class ItemContainer {
+
+    ArrayList ItemContainer = new ArrayList();
+
+    /*public void add(ItemContainer, newItemContainer){
+        throw new UnsupportedOperationException();
+    } */
+
+    /*public void remove(ItemContainer, newItemContainer){
+        throw new UnsupportedOperationException();
+    }*/
+
+    public ItemContainer getComponent(int componentIndex){
+        throw new UnsupportedOperationException();
+    }
+
+    public String getNewItem(){
+        throw new UnsupportedOperationException();
+    }
+
+    public String getNewItemContainer(){
+        throw new UnsupportedOperationException();
+    }
+
+    public void diplsayItemContainerInfo(){
+        throw new UnsupportedOperationException();
+    }
+
+
 public class ItemContainer extends ItemsClass {
+
     // name field
 //    ItemContainer(){
 //        name = "test";
@@ -11,7 +43,7 @@ public class ItemContainer extends ItemsClass {
 //        length = 8;
 //        width = 8;
 //        height = 8;
-//    }
+    }
     ArrayList<ItemsClass> containerList = new ArrayList<ItemsClass>();
 
     private String name;
@@ -58,6 +90,10 @@ public class ItemContainer extends ItemsClass {
         // sets height to containerheight
         this.height = containerheight;
     }
+
+
+    class ItemContainer extends ItemsClass {}
+
 
 
 
