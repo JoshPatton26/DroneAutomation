@@ -19,6 +19,9 @@ public class ItemsClass {
         this.height = iheight;
     }
 
+    public ItemsClass() {
+    }
+
 
     public void deleteItem(ItemsClass self){
         self = null;
