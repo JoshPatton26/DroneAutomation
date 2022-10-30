@@ -26,7 +26,6 @@
                         <Font name="System Bold" size="14.0" />
                      </font>
                   </Label>
-                  <Button layoutX="47.0" layoutY="506.0" mnemonicParsing="false" text="Visit Item/Item Container" />
                   <TreeView fx:id="treeView" layoutX="59.0" layoutY="45.0" onContextMenuRequested="#selectItem" onMouseClicked="#selectItem" prefHeight="200.0" prefWidth="200.0" />
                   <VBox fx:id="itemCmds" layoutX="40.0" layoutY="260.0" prefHeight="160.0" prefWidth="256.0" visible="false">
                      <children>
@@ -58,8 +57,17 @@
                         <Button layoutX="10.0" layoutY="169.0" mnemonicParsing="false" onAction="#itemContDeleteClick" prefHeight="26.0" prefWidth="256.0" text="Delete" />
                      </children>
                   </VBox>
-                  <Button layoutX="47.0" layoutY="537.0" mnemonicParsing="false" text="Scan Farm" />
-                  <Button layoutX="48.0" layoutY="567.0" mnemonicParsing="false" text="Go Home" visible="false" />
+                  <VBox fx:id="droneBtns" layoutX="40.0" layoutY="506.0" prefHeight="56.0" prefWidth="150.0" spacing="5.0">
+                     <children>
+                        <Button mnemonicParsing="false" onAction="#visitItemBtn" text="Visit Item/Item Container" />
+                        <Button mnemonicParsing="false" onAction="#scanFarmBtn" text="Scan Farm" />
+                     </children>
+                  </VBox>
+                  <VBox fx:id="droneBtns2" layoutX="40.0" layoutY="567.0" prefHeight="27.0" prefWidth="71.0" spacing="5.0" visible="false">
+                     <children>
+                        <Button fx:id="goHome" mnemonicParsing="false" onAction="#goHomeClick" text="Go Home" />
+                     </children>
+                  </VBox>
                </children>
             </AnchorPane>
           <AnchorPane fx:id="Farm" minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
