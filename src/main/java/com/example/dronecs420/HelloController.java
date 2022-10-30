@@ -144,10 +144,9 @@ public class HelloController implements Initializable{
             System.out.println(result.get());
         }
 
-        // Working on trying to change the items values.
-        // ItemsClass item = new ItemsClass(name, 0, 0, 0, 0, 0, 0);
-        // name = result.get();
-        // item.setName(name);
+        // Rename TreeItem item value.
+        TreeItem<String> item = selectItem();
+        item.setValue(result.get());
     }
 
     @FXML
@@ -163,6 +162,17 @@ public class HelloController implements Initializable{
         if(result.isPresent()){
             System.out.println(result.get());
         }
+
+        // Create new TreeItem branch node.
+        TreeItem<String> treeBranch = new TreeItem<>(result.get());
+
+        // Get parent (root node)
+        TreeItem<String> parent = selectItem();
+        parent.getChildren().add(treeBranch);
+
+        // Add default child so commands don't read it as a leaf.
+        TreeItem<String> defaultchild = new TreeItem<>("Default");
+        treeBranch.getChildren().add(defaultchild);
     }
 
     @FXML
@@ -177,12 +187,22 @@ public class HelloController implements Initializable{
         Optional<String> result = renameItem.showAndWait();
         if(result.isPresent()){
             System.out.println(result.get());
+            
         }
+        // Create a new item.
+        String itemName = result.get();
+        ItemsClass item = new ItemsClass(itemName, 0, 0, 0, 0, 0, 0);
+        System.out.println(item.getName());
+
+        // Create new TreeItem leaf node.
+        TreeItem<String> treeItem = new TreeItem<>(result.get());
+        TreeItem<String> parent = selectItem();
+        parent.getChildren().add(treeItem);
     }
 
     @FXML
     void itemContChangeDClick(ActionEvent event) {
-        
+
     }
 
     @FXML
@@ -223,6 +243,10 @@ public class HelloController implements Initializable{
         if(result.isPresent()){
             System.out.println(result.get());
         }
+
+        // Rename TreeItem item container value.
+        TreeItem<String> item = selectItem();
+        item.setValue(result.get());
     }
 
     @Override
@@ -257,7 +281,7 @@ public class HelloController implements Initializable{
     }
 
     //Printing out the Item Values when selecting each specific Item or Item Container
-    public void selectItem(){
+    public TreeItem<String> selectItem(){
         TreeItem<String> item = (TreeItem<String>) treeView.getSelectionModel().getSelectedItem();
 
         if(item.isLeaf()){
@@ -271,5 +295,7 @@ public class HelloController implements Initializable{
         if(item != null){
             System.out.println(item.getValue());
         }
+
+        return item;
     }
 }
