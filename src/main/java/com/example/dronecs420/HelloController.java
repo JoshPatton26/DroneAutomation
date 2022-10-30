@@ -38,6 +38,8 @@ public class HelloController implements Initializable{
     @FXML
     private VBox itemContCmds;
 
+    private String name;
+
     @FXML
     protected void onHelloButtonClick() {
         welcomeText.setText("Welcome to JavaFX Application!");
@@ -141,22 +143,46 @@ public class HelloController implements Initializable{
         if(result.isPresent()){
             System.out.println(result.get());
         }
-        //ItemsClass.setName(result.get());
+
+        // Working on trying to change the items values.
+        // ItemsClass item = new ItemsClass(name, 0, 0, 0, 0, 0, 0);
+        // name = result.get();
+        // item.setName(name);
     }
 
     @FXML
     void itemContAddItemCClick(ActionEvent event) {
+        // Create the TextInputDialog box.
+        TextInputDialog renameItem = new TextInputDialog();
+        renameItem.setTitle("Add Item Container");
+        renameItem.setHeaderText("Enter new item container name: ");
+        renameItem.setContentText("Name: ");
 
+        // Capture the users input.
+        Optional<String> result = renameItem.showAndWait();
+        if(result.isPresent()){
+            System.out.println(result.get());
+        }
     }
 
     @FXML
     void itemContAddItemClick(ActionEvent event) {
+        // Create the TextInputDialog box.
+        TextInputDialog renameItem = new TextInputDialog();
+        renameItem.setTitle("Add Item");
+        renameItem.setHeaderText("Enter new item name: ");
+        renameItem.setContentText("Name: ");
 
+        // Capture the users input.
+        Optional<String> result = renameItem.showAndWait();
+        if(result.isPresent()){
+            System.out.println(result.get());
+        }
     }
 
     @FXML
     void itemContChangeDClick(ActionEvent event) {
-
+        
     }
 
     @FXML
@@ -166,7 +192,17 @@ public class HelloController implements Initializable{
 
     @FXML
     void itemContChangePClick(ActionEvent event) {
+        // Create the TextInputDialog box.
+        TextInputDialog renameItem = new TextInputDialog();
+        renameItem.setTitle("New Price");
+        renameItem.setHeaderText("Enter new price: ");
+        renameItem.setContentText("Price: ");
 
+        // Capture the users input.
+        Optional<String> result = renameItem.showAndWait();
+        if(result.isPresent()){
+            System.out.println(result.get());
+        }
     }
 
     @FXML
@@ -176,7 +212,17 @@ public class HelloController implements Initializable{
 
     @FXML
     void itemContRenameClick(ActionEvent event) {
+        // Create the TextInputDialog box.
+        TextInputDialog renameItem = new TextInputDialog();
+        renameItem.setTitle("Rename");
+        renameItem.setHeaderText("Enter new name: ");
+        renameItem.setContentText("Name: ");
 
+        // Capture the users input.
+        Optional<String> result = renameItem.showAndWait();
+        if(result.isPresent()){
+            System.out.println(result.get());
+        }
     }
 
     @Override
