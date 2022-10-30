@@ -137,6 +137,42 @@ public class HelloController implements Initializable{
         if(result.isPresent()){
             System.out.println(result.get());
         }
+        //ItemsClass.setName(result.get());
+    }
+
+    @FXML
+    void itemContAddItemCClick(ActionEvent event) {
+
+    }
+
+    @FXML
+    void itemContAddItemClick(ActionEvent event) {
+
+    }
+
+    @FXML
+    void itemContChangeDClick(ActionEvent event) {
+
+    }
+
+    @FXML
+    void itemContChangeLClick(ActionEvent event) {
+
+    }
+
+    @FXML
+    void itemContChangePClick(ActionEvent event) {
+
+    }
+
+    @FXML
+    void itemContDeleteClick(ActionEvent event) {
+
+    }
+
+    @FXML
+    void itemContRenameClick(ActionEvent event) {
+
     }
 
     @Override
