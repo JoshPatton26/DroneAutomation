@@ -18,6 +18,7 @@ import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.SpinnerValueFactory.IntegerSpinnerValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
 
 import java.util.ResourceBundle;
 
@@ -32,7 +33,10 @@ public class HelloController implements Initializable{
     private ImageView ImageView;
 
     @FXML
-    private Button itemRenameBtn;
+    private VBox itemCmds;
+
+    @FXML
+    private VBox itemContCmds;
 
     @FXML
     protected void onHelloButtonClick() {
@@ -209,6 +213,14 @@ public class HelloController implements Initializable{
     //Printing out the Item Values when selecting each specific Item or Item Container
     public void selectItem(){
         TreeItem<String> item = (TreeItem<String>) treeView.getSelectionModel().getSelectedItem();
+
+        if(item.isLeaf()){
+            this.itemCmds.setVisible(true);
+            this.itemContCmds.setVisible(false);
+        }else{
+            this.itemCmds.setVisible(false);
+            this.itemContCmds.setVisible(true);
+        }
 
         if(item != null){
             System.out.println(item.getValue());

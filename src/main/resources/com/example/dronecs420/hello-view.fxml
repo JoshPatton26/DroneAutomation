@@ -30,7 +30,7 @@
                   <RadioButton layoutX="51.0" layoutY="527.0" mnemonicParsing="false" text="Visit Item/Item Container" />
                   <RadioButton layoutX="51.0" layoutY="561.0" mnemonicParsing="false" text="Scan Farm" />
                   <TreeView fx:id="treeView" layoutX="59.0" layoutY="45.0" onContextMenuRequested="#selectItem" onMouseClicked="#selectItem" prefHeight="200.0" prefWidth="200.0" />
-                  <VBox layoutX="40.0" layoutY="260.0" prefHeight="160.0" prefWidth="256.0">
+                  <VBox fx:id="itemCmds" layoutX="40.0" layoutY="260.0" prefHeight="160.0" prefWidth="256.0" visible="false">
                      <children>
                         <Label alignment="CENTER" contentDisplay="RIGHT" prefHeight="27.0" prefWidth="255.0" text="Item Commands" textAlignment="CENTER">
                            <font>
@@ -44,7 +44,7 @@
                         <Button layoutX="10.0" layoutY="116.0" mnemonicParsing="false" onAction="#itemDeleteClick" prefHeight="26.0" prefWidth="266.0" text="Delete" />
                      </children>
                   </VBox>
-                  <VBox layoutX="40.0" layoutY="260.0" prefHeight="211.0" prefWidth="256.0" visible="false">
+                  <VBox fx:id="itemContCmds" layoutX="40.0" layoutY="260.0" prefHeight="211.0" prefWidth="256.0">
                      <children>
                         <Label alignment="CENTER" contentDisplay="RIGHT" prefHeight="27.0" prefWidth="255.0" text="Item Container Commands" textAlignment="CENTER">
                            <font>
