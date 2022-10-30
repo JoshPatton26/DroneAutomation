@@ -2,18 +2,9 @@ package com.example.dronecs420;
 
 import java.util.ArrayList;
 public class ItemContainer extends ItemsClass {
-    // name field
-//    ItemContainer(){
-//        name = "test";
-//        price = 69;
-//        Lx = 420;
-//        Ly = -420;
-//        length = 8;
-//        width = 8;
-//        height = 8;
-//    }
-    ArrayList<ItemsClass> containerList = new ArrayList<ItemsClass>();
 
+    ArrayList<ItemsClass> containerList = new ArrayList<ItemsClass>();
+    // name field
     private String name;
     // price field
     private int price;
@@ -59,8 +50,6 @@ public class ItemContainer extends ItemsClass {
         this.height = containerheight;
     }
 
-
-
     // this function deletes the container
     public void deleteContainer(ItemContainer self) {
         self = null;
@@ -74,9 +63,4 @@ public class ItemContainer extends ItemsClass {
         this.containerList.add(item);
     }
 
-
-
 }
-
-    // test comment
-
