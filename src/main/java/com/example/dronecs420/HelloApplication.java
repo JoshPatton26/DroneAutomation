@@ -50,13 +50,7 @@ public class HelloApplication extends Application {
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("hello-view.fxml"));
         //ImageView drone = new ImageView(new Image("drone.png"));
 
-        //Setting the position of the image
-        //drone.setX(50);
-        //drone.setY(25);
 
-        //Setting the fit height and width of the image view drone
-        //drone.setFitHeight(455);
-        //drone.setFitWidth(500);
 
         //Setting the preserve ratio of the drone
         //drone.setPreserveRatio(true);

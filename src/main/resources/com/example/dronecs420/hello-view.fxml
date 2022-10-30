@@ -21,32 +21,48 @@
                         <Font name="System Bold" size="14.0" />
                      </font>
                   </Label>
-                  <Label layoutX="14.0" layoutY="476.0" text="3. Drone Actions">
+                  <Label layoutX="14.0" layoutY="486.0" text="3. Drone Actions">
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font>
                   </Label>
+                  <Button layoutX="47.0" layoutY="506.0" mnemonicParsing="false" text="Visit Item/Item Container" />
                   <TreeView fx:id="treeView" layoutX="59.0" layoutY="45.0" onContextMenuRequested="#selectItem" onMouseClicked="#selectItem" prefHeight="200.0" prefWidth="200.0" />
-                  <VBox layoutX="42.0" layoutY="272.0" prefHeight="160.0" prefWidth="256.0">
+                  <VBox fx:id="itemCmds" layoutX="40.0" layoutY="260.0" prefHeight="160.0" prefWidth="256.0" visible="false">
                      <children>
                         <Label alignment="CENTER" contentDisplay="RIGHT" prefHeight="27.0" prefWidth="255.0" text="Item Commands" textAlignment="CENTER">
                            <font>
                               <Font size="15.0" />
                            </font>
                         </Label>
-                        <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="266.0" text="Rename" />
-                        <Button layoutX="10.0" layoutY="37.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="266.0" text="Change Location" />
-                        <Button layoutX="10.0" layoutY="37.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="266.0" text="Change Price" />
-                        <Button layoutX="10.0" layoutY="90.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="266.0" text="Change Dimensions" />
-                        <Button layoutX="10.0" layoutY="116.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="266.0" text="Delete" />
+                        <Button fx:id="itemRenameBtn" mnemonicParsing="false" onAction="#itemRenameClick" prefHeight="26.0" prefWidth="266.0" text="Rename" />
+                        <Button layoutX="10.0" layoutY="37.0" mnemonicParsing="false" onAction="#itemChangeLClick" prefHeight="26.0" prefWidth="266.0" text="Change Location" />
+                        <Button layoutX="10.0" layoutY="37.0" mnemonicParsing="false" onAction="#itemChangePClick" prefHeight="26.0" prefWidth="266.0" text="Change Price" />
+                        <Button layoutX="10.0" layoutY="90.0" mnemonicParsing="false" onAction="#itemChangeDClick" prefHeight="26.0" prefWidth="266.0" text="Change Dimensions" />
+                        <Button layoutX="10.0" layoutY="116.0" mnemonicParsing="false" onAction="#itemDeleteClick" prefHeight="26.0" prefWidth="266.0" text="Delete" />
                      </children>
                   </VBox>
-                  <Button layoutX="48.0" layoutY="501.0" mnemonicParsing="false" text="Visit Item/Item Container" />
-                  <Button layoutX="48.0" layoutY="533.0" mnemonicParsing="false" text="Scan Farm" />
-                  <Button layoutX="49.0" layoutY="567.0" mnemonicParsing="false" text="Go Home" visible="false" />
+                  <VBox fx:id="itemContCmds" layoutX="40.0" layoutY="260.0" prefHeight="211.0" prefWidth="256.0">
+                     <children>
+                        <Label alignment="CENTER" contentDisplay="RIGHT" prefHeight="27.0" prefWidth="255.0" text="Item Container Commands" textAlignment="CENTER">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Label>
+                        <Button mnemonicParsing="false" onAction="#itemContRenameClick" prefHeight="26.0" prefWidth="266.0" text="Rename" />
+                        <Button mnemonicParsing="false" onAction="#itemContChangeLClick" prefHeight="26.0" prefWidth="266.0" text="Change Location" />
+                        <Button mnemonicParsing="false" onAction="#itemContChangePClick" prefHeight="26.0" prefWidth="266.0" text="Change Price" />
+                        <Button mnemonicParsing="false" onAction="#itemContChangeDClick" prefHeight="26.0" prefWidth="266.0" text="Change Dimensions" />
+                        <Button mnemonicParsing="false" onAction="#itemContAddItemClick" prefHeight="26.0" prefWidth="266.0" text="Add Item" />
+                        <Button layoutX="10.0" layoutY="143.0" mnemonicParsing="false" onAction="#itemContAddItemCClick" prefHeight="26.0" prefWidth="266.0" text="Add Item Container" />
+                        <Button layoutX="10.0" layoutY="169.0" mnemonicParsing="false" onAction="#itemContDeleteClick" prefHeight="26.0" prefWidth="256.0" text="Delete" />
+                     </children>
+                  </VBox>
+                  <Button layoutX="47.0" layoutY="537.0" mnemonicParsing="false" text="Scan Farm" />
+                  <Button layoutX="48.0" layoutY="567.0" mnemonicParsing="false" text="Go Home" visible="false" />
                </children>
             </AnchorPane>
-          <AnchorPane fx:id="myImageView" minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+          <AnchorPane fx:id="Farm" minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                <children>
                   <Label layoutX="389.0" layoutY="15.0" text="(800, 600)">
                      <font>
