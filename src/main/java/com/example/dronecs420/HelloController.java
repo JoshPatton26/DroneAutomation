@@ -49,11 +49,33 @@ public class HelloController implements Initializable{
     @FXML
     private VBox itemContCmds;
 
-    private String name;
+    @FXML
+    private VBox droneBtns;
+
+    @FXML
+    private VBox droneBtns2;
+
+    @FXML
+    private Button goHome;
 
     @FXML
     protected void onHelloButtonClick() {
         welcomeText.setText("Welcome to JavaFX Application!");
+    }
+
+    @FXML
+    void goHomeClick(ActionEvent event) {
+
+    }
+
+    @FXML
+    void scanFarmBtn(ActionEvent event) {
+
+    }
+
+    @FXML
+    void visitItemBtn(ActionEvent event) {
+
     }
 
     @FXML
@@ -462,10 +484,23 @@ public class HelloController implements Initializable{
         if(item.isLeaf()){
             this.itemCmds.setVisible(true);
             this.itemContCmds.setVisible(false);
+            
         }else{
             this.itemCmds.setVisible(false);
             this.itemContCmds.setVisible(true);
         }
+
+        if(item.getValue() == "Drone"){
+            this.droneBtns2.setVisible(true);
+        }else{
+            this.droneBtns2.setVisible(false);
+        }
+
+        // if(item.getValue() == "Drone"){
+        //     this.goHome.setVisible(true);
+        // }else{
+        //     this.goHome.setVisible(false);
+        // }
 
         if(item != null){
             System.out.println(item.getValue());
