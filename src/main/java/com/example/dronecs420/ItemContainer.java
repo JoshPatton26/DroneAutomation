@@ -31,7 +31,6 @@ public abstract class ItemContainer {
     }
 
 
-
     // name field
     private String name;
 
@@ -83,7 +82,6 @@ public abstract class ItemContainer {
         // sets height to containerheight
         this.height = containerheight;
     }
-
 
     class ItemContainer extends ItemsClass {}
 
