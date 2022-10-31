@@ -347,7 +347,7 @@ public class HelloController implements Initializable{
         if(result.isPresent()){
             System.out.println(width.getText() + " " + height.getText());
         }
-        //Drawing the Reactangle
+        //Drawing the Rectangle
         Rectangle rectangle = new Rectangle();
 
         //Assigning a new variable to change the txt field to double
@@ -492,6 +492,29 @@ public class HelloController implements Initializable{
 
         treeView.setRoot(rootItem);
     }
+
+
+    /*
+    public void MakeRectangle(String name){
+        String temp = name;
+        String temp_name = name;
+
+        //Drawing the Reactangle
+        Rectangle yo = new Rectangle();
+
+        temp.setX(150.0f);
+        temp.setY(75.0f);
+        temp.setWidth(50.0f);
+        temp.setHeight(50.0f);
+        temp.setFill(Color.TRANSPARENT);
+        temp.setStroke(Color.BLACK);
+
+        StackPane stack = new StackPane();
+
+        stack.getChildren().addAll(temp, temp_name);
+        stack.setVisible(true);
+        Farm.getChildren().add(stack);
+    } */
 
     //Printing out the Item Values when selecting each specific Item or Item Container
     public TreeItem<String> selectItem(){
