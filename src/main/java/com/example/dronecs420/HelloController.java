@@ -203,6 +203,7 @@ public class HelloController implements Initializable{
         System.out.println(delete);
         boolean remove = delete.getParent().getChildren().remove(delete);
 
+        //Farm.getChildren().remove(2, 3);
     }
 
     @FXML
@@ -404,6 +405,17 @@ public class HelloController implements Initializable{
     void itemContDeleteClick(ActionEvent event) {
         TreeItem delete = (TreeItem)treeView.getSelectionModel().getSelectedItem();
         boolean remove = delete.getParent().getChildren().remove(delete);
+
+        // Farm.getChildren().remove(4, 6);
+        // Farm.getChildren().remove(8, 10);
+
+        // if(delete.getValue() == "Barn"){
+        //     Farm.getChildren().remove(4, 6);
+        //     Farm.getChildren().remove(8, 10);
+        // }else if(delete.getValue() == "Storage Builder"){
+        //     Farm.getChildren().remove(6, 8);
+        //     Farm.getChildren().remove(10, 12);
+        // }
     }
 
     @FXML
@@ -433,22 +445,22 @@ public class HelloController implements Initializable{
 
         //Branch_Items
         TreeItem<String> Command_Center = new TreeItem<>("Command Center");
-        makeRectangle(Command_Center.getValue(), 150.0, 10.0, 120.0, 100.0);
+        makeRectangle(Command_Center.getValue(), 150.0, 10.0, 120.0, 100.0); // Farm item #2 & 3
         TreeItem<String> Barn_Branch = new TreeItem<>("Barn");
-        makeRectangle(Barn_Branch.getValue(), 20.0, 150.0, 100.0, 200.0);
+        makeRectangle(Barn_Branch.getValue(), 20.0, 150.0, 100.0, 200.0); // Farm item #4 & 5
         TreeItem<String> StorageBuilder_Branch = new TreeItem<>("Storage Builder");
-        makeRectangle(StorageBuilder_Branch.getValue(), 335.0, 150.0, 100.0, 200.0);
-        TreeItem<String> CropField_Branch = new TreeItem<>("Crop Field");
-        makeRectangle(CropField_Branch.getValue(), 30.0, 400.0, 400.0, 200.0);
+        makeRectangle(StorageBuilder_Branch.getValue(), 335.0, 150.0, 100.0, 200.0); // Farm item #6 & 7
+        TreeItem<String> CropField_Branch = new TreeItem<>("Crop Field"); 
+        makeRectangle(CropField_Branch.getValue(), 30.0, 400.0, 400.0, 200.0); // Farm item #8 & 9
 
         //Leaf Items
         TreeItem<String> CommandCenter_LeafItem1 = new TreeItem<>("Drone");
         TreeItem<String> Barn_LeafItem1 = new TreeItem<>("Milk Storage");
-        makeRectangle(Barn_LeafItem1.getValue(), 20.0, 300.0, 100.0, 50.0);
+        makeRectangle(Barn_LeafItem1.getValue(), 20.0, 300.0, 100.0, 50.0); // Farm item #10 & 11
         TreeItem<String> StorageBuilder_LeafItem1 = new TreeItem<>("Tractor");
-        makeRectangle(StorageBuilder_LeafItem1.getValue(), 350.0, 250.0, 50.0, 50.0);
+        makeRectangle(StorageBuilder_LeafItem1.getValue(), 350.0, 250.0, 50.0, 50.0); // Farm item #12 & 13
         TreeItem<String> CropField_LeftItem1 = new TreeItem<>("Soy Crop");
-        makeRectangle(CropField_LeftItem1.getValue(), 350.0, 400.0, 80.0, 200.0);
+        makeRectangle(CropField_LeftItem1.getValue(), 350.0, 400.0, 80.0, 200.0); // Farm item #14 & 15
 
         //Adding all the Branches & Leaves in the TreeView
         //Add all the Leaves
