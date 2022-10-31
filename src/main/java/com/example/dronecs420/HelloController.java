@@ -21,6 +21,7 @@ import javafx.scene.control.SpinnerValueFactory.IntegerSpinnerValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -248,6 +249,9 @@ public class HelloController implements Initializable{
         TreeItem<String> defaultchild = new TreeItem<>("Default");
         treeBranch.getChildren().add(defaultchild);
 
+        //The text up top of the rectangle
+        Text text = new Text(result.get());
+
         //Drawing the Reactangle
         Rectangle rectangle = new Rectangle();
 
@@ -258,7 +262,11 @@ public class HelloController implements Initializable{
         rectangle.setFill(Color.TRANSPARENT);
         rectangle.setStroke(Color.BLACK);
 
-        Farm.getChildren().addAll(rectangle);
+        StackPane stack = new StackPane();
+
+        stack.getChildren().addAll(rectangle, text);
+        stack.setVisible(true);
+        Farm.getChildren().add(stack);
 
     }
 
@@ -286,6 +294,10 @@ public class HelloController implements Initializable{
         TreeItem<String> parent = selectItem();
         parent.getChildren().add(treeItem);
 
+        //The text up top of the rectangle
+        Text text = new Text(result.get());
+
+
         //Drawing the Reactangle
         Rectangle rectangle = new Rectangle();
 
@@ -296,7 +308,11 @@ public class HelloController implements Initializable{
         rectangle.setFill(Color.TRANSPARENT);
         rectangle.setStroke(Color.BLACK);
 
-        Farm.getChildren().add(rectangle);
+        StackPane stack = new StackPane();
+
+        stack.getChildren().addAll(rectangle, text);
+        stack.setVisible(true);
+        Farm.getChildren().add(stack);
 
     }
 
