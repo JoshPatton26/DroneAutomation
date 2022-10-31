@@ -488,6 +488,7 @@ public class HelloController implements Initializable{
         rectangle.setHeight(height);
         rectangle.setFill(Color.TRANSPARENT);
         rectangle.setStroke(Color.BLACK);
+        rectangle.setId(name);
 
         text.setLayoutX(rectangle.getX() + 5);
         text.setLayoutY(rectangle.getY() + 10);
