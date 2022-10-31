@@ -27,6 +27,38 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import javafx.scene.text.Text;
+import javafx.animation.PathTransition;
+import javafx.animation.RotateTransition;
+import javafx.util.Duration;
+import javafx.animation.PathTransition;
+import javafx.animation.RotateTransition;
+import javafx.fxml.FXML;
+import javafx.scene.Group;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
+import java.net.URL;
+import java.net.URL;
+import java.util.Optional;
+import java.util.ResourceBundle;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
+import javafx.scene.control.ButtonBar.ButtonData;
+import javafx.scene.control.SpinnerValueFactory.IntegerSpinnerValueFactory;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.*;
+import javafx.stage.Stage;
+import javafx.scene.text.Text;
+import javafx.util.Duration;
 
 
 import java.util.ResourceBundle;
@@ -69,14 +101,54 @@ public class HelloController implements Initializable{
 
     }
 
+    private RotateTransition rotate = new RotateTransition();
+    private PathTransition pathTransition = new PathTransition();
     @FXML
     void scanFarmBtn(ActionEvent event) {
-
+        Path path = new Path();
+        rotate.setNode(ImageView);
+        rotate.setDuration(Duration.seconds(1));
+        path.getElements().add(new MoveTo(-100,50));
+        rotate.setByAngle(90);
+        path.getElements().add(new VLineTo(525));
+        path.getElements().add(new HLineTo(-75));
+        path.getElements().add(new VLineTo(50));
+        path.getElements().add(new HLineTo(-50));
+        path.getElements().add(new VLineTo(525));
+        path.getElements().add(new HLineTo(-25));
+        path.getElements().add(new VLineTo(50));
+        path.getElements().add(new HLineTo(0));
+        path.getElements().add(new VLineTo(525));
+        path.getElements().add(new HLineTo(25));
+        path.getElements().add(new VLineTo(50));
+        path.getElements().add(new HLineTo(50));
+        path.getElements().add(new VLineTo(525));
+        path.getElements().add(new HLineTo(75));
+        path.getElements().add(new VLineTo(50));
+        path.getElements().add(new HLineTo(100));
+        path.getElements().add(new VLineTo(525));
+        path.getElements().add(new HLineTo(125));
+        path.getElements().add(new VLineTo(50));
+        path.getElements().add(new HLineTo(150));
+        path.getElements().add(new VLineTo(525));
+        path.getElements().add(new HLineTo(175));
+        path.getElements().add(new VLineTo(50));
+        path.getElements().add(new HLineTo(200));
+        path.getElements().add(new VLineTo(525));
+        path.getElements().add(new HLineTo(225));
+        path.getElements().add(new VLineTo(50));
+        path.getElements().add(new ClosePath());
+        pathTransition.setNode(ImageView);
+        pathTransition.setDuration(Duration.seconds(15));
+        pathTransition.setPath(path);
+        pathTransition.play();
+        rotate.play();
     }
 
     @FXML
     void visitItemBtn(ActionEvent event) {
-
+        //int x = treeView.getSelectionModel().getSelectedItem().getValue().getLocX();
+        //int y = treeView.getSelectionModel().getSelectedItem().getValue().getLocX();
     }
 
     @FXML
