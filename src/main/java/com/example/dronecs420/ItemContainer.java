@@ -51,9 +51,18 @@ public class ItemContainer extends ItemsClass {
     }
 
     // this function deletes the container
-    public void deleteContainer(ItemContainer self) {
-        self = null;
-
+    public void deleteContainer(ItemContainer icontainer) {
+        //remove icontainer from containerlist
+        if (!icontainer.equals(this)){
+            this.containerList.remove(icontainer);
+        }
+        //hopefully delete self
+        else if (icontainer.equals(this)){
+            this.containerList = null;
+        }
+        else{
+            //do nothing
+        }
     }
 
     public void addItemContainer(ItemContainer icontainer){
