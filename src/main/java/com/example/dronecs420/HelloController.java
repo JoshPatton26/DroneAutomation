@@ -297,7 +297,6 @@ public class HelloController implements Initializable{
         //The text up top of the rectangle
         Text text = new Text(result.get());
 
-
         //Drawing the Reactangle
         Rectangle rectangle = new Rectangle();
 
