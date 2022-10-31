@@ -512,12 +512,6 @@ public class HelloController implements Initializable{
             this.droneBtns2.setVisible(false);
         }
 
-        // if(item.getValue() == "Drone"){
-        //     this.goHome.setVisible(true);
-        // }else{
-        //     this.goHome.setVisible(false);
-        // }
-
         if(item != null){
             System.out.println(item.getValue());
         }
