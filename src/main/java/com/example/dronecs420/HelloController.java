@@ -249,25 +249,7 @@ public class HelloController implements Initializable{
         TreeItem<String> defaultchild = new TreeItem<>("Default");
         treeBranch.getChildren().add(defaultchild);
 
-        //The text up top of the rectangle
-        Text text = new Text(result.get());
-
-        //Drawing the Reactangle
-        Rectangle rectangle = new Rectangle();
-
-        rectangle.setX(150.0f);
-        rectangle.setY(75.0f);
-        rectangle.setWidth(90.0f);
-        rectangle.setHeight(90.0f);
-        rectangle.setFill(Color.TRANSPARENT);
-        rectangle.setStroke(Color.BLACK);
-
-        StackPane stack = new StackPane();
-
-        stack.getChildren().addAll(rectangle, text);
-        stack.setVisible(true);
-        Farm.getChildren().add(stack);
-
+        makeRectangle(result.get(), 0, 0, 100.0, 75.0);
     }
 
     @FXML
@@ -294,25 +276,7 @@ public class HelloController implements Initializable{
         TreeItem<String> parent = selectItem();
         parent.getChildren().add(treeItem);
 
-        //The text up top of the rectangle
-        Text text = new Text(result.get());
-
-        //Drawing the Reactangle
-        Rectangle rectangle = new Rectangle();
-
-        rectangle.setX(150.0f);
-        rectangle.setY(75.0f);
-        rectangle.setWidth(50.0f);
-        rectangle.setHeight(50.0f);
-        rectangle.setFill(Color.TRANSPARENT);
-        rectangle.setStroke(Color.BLACK);
-
-        StackPane stack = new StackPane();
-
-        stack.getChildren().addAll(rectangle, text);
-        stack.setVisible(true);
-        Farm.getChildren().add(stack);
-
+        makeRectangle(result.get(), 0, 0, 100.0, 75.0);
     }
 
     @FXML
@@ -469,15 +433,22 @@ public class HelloController implements Initializable{
 
         //Branch_Items
         TreeItem<String> Command_Center = new TreeItem<>("Command Center");
+        makeRectangle(Command_Center.getValue(), 150.0, 10.0, 120.0, 100.0);
         TreeItem<String> Barn_Branch = new TreeItem<>("Barn");
+        makeRectangle(Barn_Branch.getValue(), 20.0, 150.0, 100.0, 200.0);
         TreeItem<String> StorageBuilder_Branch = new TreeItem<>("Storage Builder");
+        makeRectangle(StorageBuilder_Branch.getValue(), 335.0, 150.0, 100.0, 200.0);
         TreeItem<String> CropField_Branch = new TreeItem<>("Crop Field");
+        makeRectangle(CropField_Branch.getValue(), 30.0, 400.0, 400.0, 200.0);
 
         //Leaf Items
         TreeItem<String> CommandCenter_LeafItem1 = new TreeItem<>("Drone");
         TreeItem<String> Barn_LeafItem1 = new TreeItem<>("Milk Storage");
+        makeRectangle(Barn_LeafItem1.getValue(), 20.0, 300.0, 100.0, 50.0);
         TreeItem<String> StorageBuilder_LeafItem1 = new TreeItem<>("Tractor");
+        makeRectangle(StorageBuilder_LeafItem1.getValue(), 350.0, 250.0, 50.0, 50.0);
         TreeItem<String> CropField_LeftItem1 = new TreeItem<>("Soy Crop");
+        makeRectangle(CropField_LeftItem1.getValue(), 350.0, 400.0, 80.0, 200.0);
 
         //Adding all the Branches & Leaves in the TreeView
         //Add all the Leaves
@@ -492,28 +463,30 @@ public class HelloController implements Initializable{
         treeView.setRoot(rootItem);
     }
 
-
-    /*
-    public void MakeRectangle(String name){
-        String temp = name;
-        String temp_name = name;
+    public void makeRectangle(String name, double x, double y, double width, double height){
+        //The text up top of the rectangle
+        Text text = new Text(name);
 
         //Drawing the Reactangle
-        Rectangle yo = new Rectangle();
+        Rectangle rectangle = new Rectangle();
 
-        temp.setX(150.0f);
-        temp.setY(75.0f);
-        temp.setWidth(50.0f);
-        temp.setHeight(50.0f);
-        temp.setFill(Color.TRANSPARENT);
-        temp.setStroke(Color.BLACK);
+        rectangle.setX(x);
+        rectangle.setY(y);
+        rectangle.setWidth(width);
+        rectangle.setHeight(height);
+        rectangle.setFill(Color.TRANSPARENT);
+        rectangle.setStroke(Color.BLACK);
 
-        StackPane stack = new StackPane();
+        text.setLayoutX(rectangle.getX() + 5);
+        text.setLayoutY(rectangle.getY() + 10);
 
-        stack.getChildren().addAll(temp, temp_name);
-        stack.setVisible(true);
-        Farm.getChildren().add(stack);
-    } */
+        Farm.getChildren().add(rectangle);
+        Farm.getChildren().add(text);
+    } 
+
+    public void removeRectangle(){
+
+    }
 
     //Printing out the Item Values when selecting each specific Item or Item Container
     public TreeItem<String> selectItem(){
