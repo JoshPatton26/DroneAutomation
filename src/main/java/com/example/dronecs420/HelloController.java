@@ -7,8 +7,6 @@ import javafx.scene.control.*;
 
 import java.net.URL;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.beans.value.ChangeListener;
@@ -92,13 +90,6 @@ public class HelloController implements Initializable{
 
     @FXML
     private Button goHome;
-    
-    public int itemId = 0;
-    public int itemContainerId = 0;
-    public int selectedItemId = 0;
-    public int selectedItemContainerId = 0;
-    public List<ItemsClass> itemList = new ArrayList<ItemsClass>();
-    public List<ItemContainer> itemContainerList = new ArrayList<ItemContainer>();
 
     @FXML
     protected void onHelloButtonClick() {
@@ -153,29 +144,7 @@ public class HelloController implements Initializable{
         pathTransition.play();
         rotate.play();
     }
-    
-    int getSelectedItem() {
-    	int itemIndex = 0;
-    	for(int i = 0; i<itemList.size(); i++) {
-    		if(itemList.get(i).getId() == selectedItemId) {
-    			itemIndex = i;
-    		}
-    	}
-    	
-    	return itemIndex;
-    }
-    
-    int getSelectedItemContainer() {
-    	int itemContainerIndex = 0;
-    	for(int i = 0; i<itemList.size(); i++) {
-    		if(itemContainerList.get(i).getId() == selectedItemId) {
-    			itemContainerIndex = i;
-    		}
-    	}
-    	
-    	return itemContainerIndex;
-    }
-    
+
     @FXML
     void visitItemBtn(ActionEvent event) {
         //int x = treeView.getSelectionModel().getSelectedItem().getValue().getLocX();
@@ -184,8 +153,6 @@ public class HelloController implements Initializable{
 
     @FXML
     void itemChangeDClick(ActionEvent event) {
-    	int itemIndex = getSelectedItem();
-    	
         // Create dialog box.
         Dialog<Double> changeLoc = new Dialog<>();
         changeLoc.setTitle("Dimensions");
@@ -214,19 +181,20 @@ public class HelloController implements Initializable{
         Optional<Double> result = changeLoc.showAndWait();
         if(result.isPresent()){
             System.out.println(width.getText() + " " + height.getText());
-            
-            System.out.println("Changed Width + Height of " + itemList.get(itemIndex).getName() + " " + itemList.get(itemIndex).getWidth() + " " + itemList.get(itemIndex).getHeight());
-            itemList.get(itemIndex).setWidth(Integer.parseInt(width.getText()));
-            itemList.get(itemIndex).setHeight(Integer.parseInt(height.getText()));
         }
         //Drawing the Reactangle
         Rectangle rectangle = new Rectangle();
 
+
+        //Assigning a new variable to change the txt field to double
+        double user_width = Double.parseDouble(width.getText());
+        double user_height = Double.parseDouble(height.getText());
+
         //Setting up the new rectangle
-        rectangle.setX(itemList.get(itemIndex).getLx());
-        rectangle.setY(itemList.get(itemIndex).getLy());
-        rectangle.setWidth(itemList.get(itemIndex).getWidth());
-        rectangle.setHeight(itemList.get(itemIndex).getHeight());
+        rectangle.setX(150.0f);
+        rectangle.setY(75.0f);
+        rectangle.setWidth(user_width);
+        rectangle.setHeight(user_height);
         rectangle.setFill(Color.TRANSPARENT);
         rectangle.setStroke(Color.BLACK);
 
@@ -237,8 +205,6 @@ public class HelloController implements Initializable{
 
     @FXML
     void itemChangeLClick(ActionEvent event) {
-    	int itemIndex = getSelectedItem();
-    	
         // Create dialog box.
         Dialog<Double> changeDim = new Dialog<>();
         changeDim.setTitle("Location");
@@ -266,19 +232,20 @@ public class HelloController implements Initializable{
         Optional<Double> result = changeDim.showAndWait();
         if(result.isPresent()){
             System.out.println(xvalue.getText() + " " + yvalue.getText());
-            itemList.get(itemIndex).setLx(Integer.parseInt(xvalue.getText()));
-            itemList.get(itemIndex).setLy(Integer.parseInt(yvalue.getText()));
-            System.out.println("Changed X + Y of " + itemList.get(itemIndex).getName() + " " + itemList.get(itemIndex).getLx() + " " + itemList.get(itemIndex).getLy());
         }
 
         //Drawing the Rectangle
         Rectangle rectangle = new Rectangle();
 
+        //Assigning a new variable to change the txt field to double
+        double user_xvalue = Double.parseDouble(xvalue.getText());
+        double user_yvalue = Double.parseDouble(yvalue.getText());
+
         //Setting up the new rectangle
-        rectangle.setX(itemList.get(itemIndex).getLx());
-        rectangle.setY(itemList.get(itemIndex).getLy());
-        rectangle.setWidth(itemList.get(itemIndex).getWidth());
-        rectangle.setHeight(itemList.get(itemIndex).getHeight());
+        rectangle.setX(user_xvalue);
+        rectangle.setY(user_yvalue);
+        rectangle.setWidth(50.0f);
+        rectangle.setHeight(50.0f);
         rectangle.setFill(Color.TRANSPARENT);
         rectangle.setStroke(Color.BLACK);
 
@@ -289,8 +256,6 @@ public class HelloController implements Initializable{
 
     @FXML
     void itemChangePClick(ActionEvent event) {
-    	int itemIndex = getSelectedItem();
-    	
         // Create the TextInputDialog box.
         TextInputDialog priceItem = new TextInputDialog();
         priceItem.setTitle("New Price");
@@ -301,17 +266,11 @@ public class HelloController implements Initializable{
         Optional<String> result = priceItem.showAndWait();
         if(result.isPresent()){
             System.out.println(result.get());
-            itemList.get(itemIndex).setPrice(Integer.parseInt(result.get()));
-            System.out.println("Changed Price of " + itemList.get(itemIndex).getName() + " " + itemList.get(itemIndex).getPrice());
         }
     }
 
     @FXML
     void itemDeleteClick(ActionEvent event) {
-    	int itemIndex = getSelectedItem();
-    	System.out.println("Deleted " + itemList.get(itemIndex).getName());
-    	itemList.remove(itemIndex);
-    	
         TreeItem delete = (TreeItem)treeView.getSelectionModel().getSelectedItem();
         System.out.println(delete);
         boolean remove = delete.getParent().getChildren().remove(delete);
@@ -321,8 +280,6 @@ public class HelloController implements Initializable{
 
     @FXML
     void itemRenameClick(ActionEvent event) {
-    	int itemIndex = getSelectedItem();
-    	
         // Create the TextInputDialog box.
         TextInputDialog renameItem = new TextInputDialog();
         renameItem.setTitle("Rename");
@@ -333,8 +290,6 @@ public class HelloController implements Initializable{
         Optional<String> result = renameItem.showAndWait();
         if(result.isPresent()){
             System.out.println(result.get());
-            itemList.get(itemIndex).setName(result.get());
-            System.out.println("Changed Name of " + itemList.get(itemIndex).getName());
         }
 
         // Rename TreeItem item value.
@@ -343,7 +298,7 @@ public class HelloController implements Initializable{
     }
 
     @FXML
-    void itemContAddItemCClick(ActionEvent event) { 	
+    void itemContAddItemCClick(ActionEvent event) {
         // Create the TextInputDialog box.
         TextInputDialog renameItem = new TextInputDialog();
         renameItem.setTitle("Add Item Container");
@@ -355,11 +310,6 @@ public class HelloController implements Initializable{
         if(result.isPresent()){
             System.out.println(result.get());
         }
-        
-        //Add Item Container
-        itemContainerId++;
-        ItemContainer container = new ItemContainer(result.get(), 0, 0, 0, 0, 0, 0, itemContainerId);
-        itemContainerList.add(container);
 
         // Create new TreeItem branch node.
         TreeItem<String> treeBranch = new TreeItem<>(result.get());
@@ -377,7 +327,6 @@ public class HelloController implements Initializable{
 
     @FXML
     void itemContAddItemClick(ActionEvent event) {
-    	
         // Create the TextInputDialog box.
         TextInputDialog renameItem = new TextInputDialog();
         renameItem.setTitle("Add Item");
@@ -392,9 +341,7 @@ public class HelloController implements Initializable{
         }
         // Create a new item.
         String itemName = result.get();
-        itemId++;
-        ItemsClass item = new ItemsClass(itemName, 0, 0, 0, 0, 0, 0, itemId);
-        itemList.add(item);
+        ItemsClass item = new ItemsClass(itemName, 0, 0, 0, 0, 0, 0);
         System.out.println(item.getName());
 
         // Create new TreeItem leaf node.
@@ -407,8 +354,6 @@ public class HelloController implements Initializable{
 
     @FXML
     void itemContChangeDClick(ActionEvent event) {
-    	int itemContainerIndex = getSelectedItemContainer();
-    	
         // Create dialog box.
         Dialog<Double> changeLoc = new Dialog<>();
         changeLoc.setTitle("Dimensions");
@@ -437,20 +382,19 @@ public class HelloController implements Initializable{
         Optional<Double> result = changeLoc.showAndWait();
         if(result.isPresent()){
             System.out.println(width.getText() + " " + height.getText());
-            itemContainerList.get(itemContainerIndex).setWidth(Integer.parseInt(width.getText()));
-            itemContainerList.get(itemContainerIndex).setHeight(Integer.parseInt(height.getText()));
-            System.out.println("Changed Width + Height of " + itemContainerList.get(itemContainerIndex).getName() + " " + itemContainerList.get(itemContainerIndex).getWidth() + " " + itemList.get(itemContainerIndex).getHeight());
         }
         //Drawing the Rectangle
         Rectangle rectangle = new Rectangle();
 
-
+        //Assigning a new variable to change the txt field to double
+        double user_width = Double.parseDouble(width.getText());
+        double user_height = Double.parseDouble(height.getText());
 
         //Setting up the new rectangle
-        rectangle.setX(itemContainerList.get(itemContainerIndex).getLx());
-        rectangle.setY(itemContainerList.get(itemContainerIndex).getLy());
-        rectangle.setWidth(itemContainerList.get(itemContainerIndex).getWidth());
-        rectangle.setHeight(itemContainerList.get(itemContainerIndex).getHeight());
+        rectangle.setX(150.0f);
+        rectangle.setY(75.0f);
+        rectangle.setWidth(user_width);
+        rectangle.setHeight(user_height);
         rectangle.setFill(Color.TRANSPARENT);
         rectangle.setStroke(Color.BLACK);
 
@@ -465,8 +409,6 @@ public class HelloController implements Initializable{
 
     @FXML
     void itemContChangeLClick(ActionEvent event) {
-    	int itemContainerIndex = getSelectedItemContainer();
-    	
         // Create dialog box.
         Dialog<Double> changeDim = new Dialog<>();
         changeDim.setTitle("Location");
@@ -494,21 +436,20 @@ public class HelloController implements Initializable{
         Optional<Double> result = changeDim.showAndWait();
         if(result.isPresent()){
             System.out.println(xvalue.getText() + " " + yvalue.getText());
-            itemContainerList.get(itemContainerIndex).setLx(Integer.parseInt(xvalue.getText()));
-            itemContainerList.get(itemContainerIndex).setLy(Integer.parseInt(yvalue.getText()));
-            System.out.println("Changed X + Y of " + itemContainerList.get(itemContainerIndex).getName() + " " + itemContainerList.get(itemContainerIndex).getLx() + " " + itemContainerList.get(itemContainerIndex).getLy());
-            
         }
 
         //Drawing the Reactangle
         Rectangle rectangle = new Rectangle();
 
+        //Assigning a new variable to change the txt field to double
+        double user_xvalue = Double.parseDouble(xvalue.getText());
+        double user_yvalue = Double.parseDouble(yvalue.getText());
 
         //Setting up the new rectangle
-        rectangle.setX(itemContainerList.get(itemContainerIndex).getLx());
-        rectangle.setY(itemContainerList.get(itemContainerIndex).getLy());
-        rectangle.setWidth(itemContainerList.get(itemContainerIndex).getWidth());
-        rectangle.setHeight(itemContainerList.get(itemContainerIndex).getHeight());
+        rectangle.setX(user_xvalue);
+        rectangle.setY(user_yvalue);
+        rectangle.setWidth(90.0f);
+        rectangle.setHeight(90.0f);
         rectangle.setFill(Color.TRANSPARENT);
         rectangle.setStroke(Color.BLACK);
 
@@ -519,8 +460,6 @@ public class HelloController implements Initializable{
 
     @FXML
     void itemContChangePClick(ActionEvent event) {
-    	int itemContainerIndex = getSelectedItemContainer();
-    	
         // Create the TextInputDialog box.
         TextInputDialog renameItem = new TextInputDialog();
         renameItem.setTitle("New Price");
@@ -531,21 +470,13 @@ public class HelloController implements Initializable{
         Optional<String> result = renameItem.showAndWait();
         if(result.isPresent()){
             System.out.println(result.get());
-            itemContainerList.get(itemContainerIndex).setPrice(Integer.parseInt(result.get()));
-            System.out.println("Changed Price of " + itemContainerList.get(itemContainerIndex).getName() + " " + itemContainerList.get(itemContainerIndex).getPrice());
         }
     }
 
     @FXML
     void itemContDeleteClick(ActionEvent event) {
-    	int itemContainerIndex = getSelectedItemContainer();
-    	
-    	itemContainerList.remove(itemContainerIndex);
-    	
         TreeItem delete = (TreeItem)treeView.getSelectionModel().getSelectedItem();
         boolean remove = delete.getParent().getChildren().remove(delete);
-        
-        
 
         // Farm.getChildren().remove(4, 6);
         // Farm.getChildren().remove(8, 10);
@@ -561,8 +492,6 @@ public class HelloController implements Initializable{
 
     @FXML
     void itemContRenameClick(ActionEvent event) {
-    	int itemContainerIndex = getSelectedItemContainer();
-    	
         // Create the TextInputDialog box.
         TextInputDialog renameItem = new TextInputDialog();
         renameItem.setTitle("Rename");
@@ -573,8 +502,6 @@ public class HelloController implements Initializable{
         Optional<String> result = renameItem.showAndWait();
         if(result.isPresent()){
             System.out.println(result.get());
-            itemContainerList.get(itemContainerIndex).setName(result.get());
-            System.out.println("Changed Name of " + itemContainerList.get(itemContainerIndex).getName());
         }
 
         // Rename TreeItem item container value.
@@ -589,49 +516,22 @@ public class HelloController implements Initializable{
         rootItem.setExpanded(true);
 
         //Branch_Items
-        itemContainerId++;
-        TreeItem<String> Command_Center = new TreeItem<>("Command Center_" + itemContainerId);
-        ItemContainer itemContainer = new ItemContainer("Command Center", 0, 0, 0, 0, 0, 0, itemContainerId);
-        itemContainerList.add(itemContainer);
+        TreeItem<String> Command_Center = new TreeItem<>("Command Center");
         makeRectangle(Command_Center.getValue(), 150.0, 10.0, 120.0, 100.0); // Farm item #2 & 3
-        
-        itemContainerId++;
-        TreeItem<String> Barn_Branch = new TreeItem<>("Barn_" + itemContainerId);
-        itemContainer = new ItemContainer("Barn", 0, 0, 0, 0, 0, 0, itemContainerId);
-        itemContainerList.add(itemContainer);
+        TreeItem<String> Barn_Branch = new TreeItem<>("Barn");
         makeRectangle(Barn_Branch.getValue(), 20.0, 150.0, 100.0, 200.0); // Farm item #4 & 5
-        
-        itemContainerId++;
-        TreeItem<String> StorageBuilder_Branch = new TreeItem<>("Storage Builder_" + itemContainerId);
-        itemContainer = new ItemContainer("Storage Builder", 0, 0, 0, 0, 0, 0, itemContainerId);
-        itemContainerList.add(itemContainer);
+        TreeItem<String> StorageBuilder_Branch = new TreeItem<>("Storage Builder");
         makeRectangle(StorageBuilder_Branch.getValue(), 335.0, 150.0, 100.0, 200.0); // Farm item #6 & 7
-        
-        itemContainerId++;
-        TreeItem<String> CropField_Branch = new TreeItem<>("Crop Field_"+ itemContainerId);
-        itemContainer = new ItemContainer("Crop Field", 0, 0, 0, 0, 0, 0, itemContainerId);
-        itemContainerList.add(itemContainer);
+        TreeItem<String> CropField_Branch = new TreeItem<>("Crop Field"); 
         makeRectangle(CropField_Branch.getValue(), 30.0, 400.0, 400.0, 200.0); // Farm item #8 & 9
 
         //Leaf Items
         TreeItem<String> CommandCenter_LeafItem1 = new TreeItem<>("Drone");
-        
-        itemId++;
-        TreeItem<String> Barn_LeafItem1 = new TreeItem<>("Milk Storage_"+ itemId);
-        ItemsClass item = new ItemsClass("Milk Storage", 0, 0, 0, 0, 0, 0, itemId);
-        itemList.add(item);
+        TreeItem<String> Barn_LeafItem1 = new TreeItem<>("Milk Storage");
         makeRectangle(Barn_LeafItem1.getValue(), 20.0, 300.0, 100.0, 50.0); // Farm item #10 & 11
-        
-        itemId++;
-        TreeItem<String> StorageBuilder_LeafItem1 = new TreeItem<>("Tractor_"+ itemId);
-        item = new ItemsClass("Tractor", 0, 0, 0, 0, 0, 0, itemId);
-        itemList.add(item);
+        TreeItem<String> StorageBuilder_LeafItem1 = new TreeItem<>("Tractor");
         makeRectangle(StorageBuilder_LeafItem1.getValue(), 350.0, 250.0, 50.0, 50.0); // Farm item #12 & 13
-        
-        itemId++;
-        TreeItem<String> CropField_LeftItem1 = new TreeItem<>("Soy Crop_"+ itemId);
-        item = new ItemsClass("Soy Crop", 0, 0, 0, 0, 0, 0, itemId);
-        itemList.add(item);
+        TreeItem<String> CropField_LeftItem1 = new TreeItem<>("Soy Crop");
         makeRectangle(CropField_LeftItem1.getValue(), 350.0, 400.0, 80.0, 200.0); // Farm item #14 & 15
 
         //Adding all the Branches & Leaves in the TreeView
@@ -694,7 +594,6 @@ public class HelloController implements Initializable{
 
         if(item != null){
             System.out.println(item.getValue());
-            selectedItemId = Integer.parseInt(item.getValue().substring(item.getValue().lastIndexOf("_")+1));
         }
 
         return item;
