@@ -1,8 +1,8 @@
 package com.example.dronecs420;
 
+import javafx.animation.*;
 import javafx.fxml.FXML;
-import javafx.scene.Group;
-import javafx.scene.Scene;
+import javafx.scene.*;
 import javafx.scene.control.*;
 
 import java.net.URL;
@@ -16,6 +16,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.SpinnerValueFactory.IntegerSpinnerValueFactory;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
@@ -24,8 +25,6 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.scene.text.Text;
-import javafx.animation.PathTransition;
-import javafx.animation.RotateTransition;
 import javafx.util.Duration;
 import javafx.animation.PathTransition;
 import javafx.animation.RotateTransition;
@@ -54,6 +53,7 @@ import javafx.scene.shape.*;
 import javafx.stage.Stage;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
+import javafx.scene.transform.*;
 
 
 import java.util.ResourceBundle;
@@ -88,7 +88,7 @@ public class HelloController implements Initializable{
 
     @FXML
     protected void onHelloButtonClick() {
-        welcomeText.setText("Welcome to JavaFX Application!");
+        welcomeText.setText("sWelcome to JavaFX Application!");
     }
 
     @FXML
