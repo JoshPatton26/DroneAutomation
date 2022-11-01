@@ -369,12 +369,12 @@ public class HelloController implements Initializable{
         TreeItem<String> defaultchild = new TreeItem<>("Default");
         treeBranch.getChildren().add(defaultchild);
 
-        // Create new ItemContainer
-        ItemContainer container = new ItemContainer(result.get(), 0, 50, 50, 50, 50, 50);
+        // // Create new ItemContainer
+        // ItemContainer container = new ItemContainer(result.get(), 0, 50, 50, 50, 50, 50);
 
-        // Create new item and add it to the item container.
-        ItemsClass newitem = new ItemsClass(defaultchild.toString(), 0, 0, 0, 0, 0, 0);
-        container.addItem(newitem);
+        // // Create new item and add it to the item container.
+        // ItemsClass newitem = new ItemsClass(defaultchild.toString(), 0, 0, 0, 0, 0, 0);
+        // container.addItem(newitem);
 
         makeRectangle(result.get(), 0, 0, 100.0, 75.0);
     }
@@ -580,11 +580,7 @@ public class HelloController implements Initializable{
         //Branch_Items
         TreeItem<String> Command_Center = new TreeItem<>("Command_Center");
         makeRectangle(Command_Center.getValue(), 150.0, 10.0, 120.0, 100.0); // Farm item #2 & 3
-        
-        itemContainerId++;
-        TreeItem<String> Barn_Branch = new TreeItem<>("Barn_" + itemContainerId);
-        itemContainer = new ItemContainer("Barn", 0, 0, 0, 0, 0, 0, itemContainerId);
-        itemContainerList.add(itemContainer);
+        TreeItem<String> Barn_Branch = new TreeItem<>("Barn");
         makeRectangle(Barn_Branch.getValue(), 20.0, 150.0, 100.0, 200.0); // Farm item #4 & 5
         TreeItem<String> StorageBuilder_Branch = new TreeItem<>("Storage_Builder");
         makeRectangle(StorageBuilder_Branch.getValue(), 335.0, 150.0, 100.0, 200.0); // Farm item #6 & 7
@@ -595,11 +591,7 @@ public class HelloController implements Initializable{
         TreeItem<String> CommandCenter_LeafItem1 = new TreeItem<>("Drone");
         TreeItem<String> Barn_LeafItem1 = new TreeItem<>("Milk_Storage");
         makeRectangle(Barn_LeafItem1.getValue(), 20.0, 300.0, 100.0, 50.0); // Farm item #10 & 11
-        
-        itemId++;
-        TreeItem<String> StorageBuilder_LeafItem1 = new TreeItem<>("Tractor_"+ itemId);
-        item = new ItemsClass("Tractor", 0, 0, 0, 0, 0, 0, itemId);
-        itemList.add(item);
+        TreeItem<String> StorageBuilder_LeafItem1 = new TreeItem<>("Tractor");
         makeRectangle(StorageBuilder_LeafItem1.getValue(), 350.0, 250.0, 50.0, 50.0); // Farm item #12 & 13
         TreeItem<String> CropField_LeftItem1 = new TreeItem<>("Soy_Crop");
         makeRectangle(CropField_LeftItem1.getValue(), 350.0, 400.0, 80.0, 200.0); // Farm item #14 & 15
