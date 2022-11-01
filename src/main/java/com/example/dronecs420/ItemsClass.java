@@ -8,8 +8,9 @@ public class ItemsClass {
     private int length;
     private int width;
     private int height;
+    private int id;
 
-    public ItemsClass(String iname, int iprice, double ix, double iy, int ilength, int iwidth, int iheight){
+    public ItemsClass(String iname, int iprice, double ix, double iy, int ilength, int iwidth, int iheight, int iid){
         this.name = iname;
         this.price = iprice;
         this.Lx = ix;
@@ -17,6 +18,7 @@ public class ItemsClass {
         this.length = ilength;
         this.width = iwidth;
         this.height = iheight;
+        this.id = iid;
     }
 
     public ItemsClass() {
@@ -82,5 +84,13 @@ public class ItemsClass {
 
     public void setPrice(int price) {
         this.price = price;
+    }
+    
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }
