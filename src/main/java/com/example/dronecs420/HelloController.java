@@ -178,24 +178,9 @@ public class HelloController implements Initializable{
             System.out.println(width.getText() + " " + height.getText());
         }
 
-<<<<<<< HEAD
         //Assigning a new variable to change the txt field to double
         double user_width = Double.parseDouble(width.getText());
         double user_height = Double.parseDouble(height.getText());
-=======
-
-        //Assigning a new variable to change the txt field to double
-        double user_width = Double.parseDouble(width.getText());
-        double user_height = Double.parseDouble(height.getText());
-
-        //Setting up the new rectangle
-        rectangle.setX(150.0f);
-        rectangle.setY(75.0f);
-        rectangle.setWidth(user_width);
-        rectangle.setHeight(user_height);
-        rectangle.setFill(Color.TRANSPARENT);
-        rectangle.setStroke(Color.BLACK);
->>>>>>> parent of 75f2e87 (items are now tracked and represented via lists)
 
         // Create a temp variable to use lookup() function to find the rectangle id.
         String temp = "#"+selectItem().getValue().toString();
@@ -242,22 +227,8 @@ public class HelloController implements Initializable{
         double user_xvalue = Double.parseDouble(xvalue.getText());
         double user_yvalue = Double.parseDouble(yvalue.getText());
 
-<<<<<<< HEAD
         // Create a temp variable to use lookup() function to find the rectangle id.
         String temp = "#"+selectItem().getValue().toString();
-=======
-        //Assigning a new variable to change the txt field to double
-        double user_xvalue = Double.parseDouble(xvalue.getText());
-        double user_yvalue = Double.parseDouble(yvalue.getText());
-
-        //Setting up the new rectangle
-        rectangle.setX(user_xvalue);
-        rectangle.setY(user_yvalue);
-        rectangle.setWidth(50.0f);
-        rectangle.setHeight(50.0f);
-        rectangle.setFill(Color.TRANSPARENT);
-        rectangle.setStroke(Color.BLACK);
->>>>>>> parent of 75f2e87 (items are now tracked and represented via lists)
 
         // Remove the rectangle and text based off the id.
         Farm.getChildren().remove(Farm.lookup(temp));
@@ -408,8 +379,6 @@ public class HelloController implements Initializable{
             System.out.println(width.getText() + " " + height.getText());
         }
 
-<<<<<<< HEAD
-        // Assigning a new variable to change the txt field to double
         double user_width = Double.parseDouble(width.getText());
         double user_height = Double.parseDouble(height.getText());
 
@@ -419,26 +388,6 @@ public class HelloController implements Initializable{
         // Remove the rectangle and text based off the id.
         Farm.getChildren().remove(Farm.lookup(temp));
         Farm.getChildren().remove(Farm.lookup(temp+"text"));
-=======
-        //Assigning a new variable to change the txt field to double
-        double user_width = Double.parseDouble(width.getText());
-        double user_height = Double.parseDouble(height.getText());
-
-        //Setting up the new rectangle
-        rectangle.setX(150.0f);
-        rectangle.setY(75.0f);
-        rectangle.setWidth(user_width);
-        rectangle.setHeight(user_height);
-        rectangle.setFill(Color.TRANSPARENT);
-        rectangle.setStroke(Color.BLACK);
-
-        TreeItem<String> item = (TreeItem<String>) treeView.getSelectionModel().getSelectedItem();
-
-        Farm.getChildren().remove(item);
-
-        //Adding the rectangle to the Panel
-        Farm.getChildren().add(rectangle);
->>>>>>> parent of 75f2e87 (items are now tracked and represented via lists)
 
         makeRectangle(selectItem().getValue(), 0, 0, user_width, user_height);
     }
@@ -473,36 +422,18 @@ public class HelloController implements Initializable{
         if(result.isPresent()){
             System.out.println(xvalue.getText() + " " + yvalue.getText());
         }
-        // Assigning a new variable to change the txt field to double
+
         double user_xvalue = Double.parseDouble(xvalue.getText());
         double user_yvalue = Double.parseDouble(yvalue.getText());
 
         // Create a temp variable to use lookup() function to find the rectangle id.
         String temp = "#"+selectItem().getValue().toString();
 
-<<<<<<< HEAD
         // Remove the rectangle and text based off the id.
         Farm.getChildren().remove(Farm.lookup(temp));
         Farm.getChildren().remove(Farm.lookup(temp+"text"));
 
         makeRectangle(selectItem().getValue(), user_xvalue, user_yvalue, 50, 50);
-=======
-        //Assigning a new variable to change the txt field to double
-        double user_xvalue = Double.parseDouble(xvalue.getText());
-        double user_yvalue = Double.parseDouble(yvalue.getText());
-
-        //Setting up the new rectangle
-        rectangle.setX(user_xvalue);
-        rectangle.setY(user_yvalue);
-        rectangle.setWidth(90.0f);
-        rectangle.setHeight(90.0f);
-        rectangle.setFill(Color.TRANSPARENT);
-        rectangle.setStroke(Color.BLACK);
-
-        //Adding the rectangle to the Panel
-        Farm.getChildren().add(rectangle);
-
->>>>>>> parent of 75f2e87 (items are now tracked and represented via lists)
     }
 
     @FXML
@@ -522,15 +453,28 @@ public class HelloController implements Initializable{
 
     @FXML
     void itemContDeleteClick(ActionEvent event) {
-        TreeItem delete = (TreeItem)treeView.getSelectionModel().getSelectedItem();
-        boolean remove = delete.getParent().getChildren().remove(delete);
+        if(Farm.getChildren() == null){
+            TreeItem delete = (TreeItem)treeView.getSelectionModel().getSelectedItem();
+            boolean remove = delete.getParent().getChildren().remove(delete);
+            // Create a temp variable to use lookup() function to find the rectangle id.
+            String temp = "#"+delete.getValue().toString();
 
-        // Create a temp variable to use lookup() function to find the rectangle id.
-        String temp = "#"+delete.getValue().toString();
+            // Remove the rectangle and text based off the id.
+            Farm.getChildren().remove(Farm.lookup(temp));
+            Farm.getChildren().remove(Farm.lookup(temp+"text"));
+        }else{
+            // Create dialog box.
+            Dialog<Double> changeDim = new Dialog<>();
+            changeDim.setTitle("ERROR");
+            changeDim.setHeaderText("Delete all leaf nodes first");
+            changeDim.setResizable(true);
 
-        // Remove the rectangle and text based off the id.
-        Farm.getChildren().remove(Farm.lookup(temp));
-        Farm.getChildren().remove(Farm.lookup(temp+"text"));
+            // Add button to close dialog box after user enters values.
+            ButtonType okButton = new ButtonType("Okay", ButtonData.OK_DONE);
+            changeDim.getDialogPane().getButtonTypes().add(okButton);
+
+            Optional<Double> result = changeDim.showAndWait();
+        }
     }
 
     @FXML
@@ -559,40 +503,22 @@ public class HelloController implements Initializable{
         rootItem.setExpanded(true);
 
         //Branch_Items
-<<<<<<< HEAD
         TreeItem<String> Command_Center = new TreeItem<>("Command_Center");
         makeRectangle(Command_Center.getValue(), 150.0, 10.0, 120.0, 100.0); // Farm item #2 & 3
         TreeItem<String> Barn_Branch = new TreeItem<>("Barn");
         makeRectangle(Barn_Branch.getValue(), 20.0, 150.0, 100.0, 200.0); // Farm item #4 & 5
         TreeItem<String> StorageBuilder_Branch = new TreeItem<>("Storage_Builder");
         makeRectangle(StorageBuilder_Branch.getValue(), 335.0, 150.0, 100.0, 200.0); // Farm item #6 & 7
-        TreeItem<String> CropField_Branch = new TreeItem<>("Crop_Field"); 
-=======
-        TreeItem<String> Command_Center = new TreeItem<>("Command Center");
-        makeRectangle(Command_Center.getValue(), 150.0, 10.0, 120.0, 100.0); // Farm item #2 & 3
-        TreeItem<String> Barn_Branch = new TreeItem<>("Barn");
-        makeRectangle(Barn_Branch.getValue(), 20.0, 150.0, 100.0, 200.0); // Farm item #4 & 5
-        TreeItem<String> StorageBuilder_Branch = new TreeItem<>("Storage Builder");
-        makeRectangle(StorageBuilder_Branch.getValue(), 335.0, 150.0, 100.0, 200.0); // Farm item #6 & 7
-        TreeItem<String> CropField_Branch = new TreeItem<>("Crop Field"); 
->>>>>>> parent of 75f2e87 (items are now tracked and represented via lists)
+        TreeItem<String> CropField_Branch = new TreeItem<>("Crop_Field");
         makeRectangle(CropField_Branch.getValue(), 30.0, 400.0, 400.0, 200.0); // Farm item #8 & 9
 
         //Leaf Items
         TreeItem<String> CommandCenter_LeafItem1 = new TreeItem<>("Drone");
-<<<<<<< HEAD
         TreeItem<String> Barn_LeafItem1 = new TreeItem<>("Milk_Storage");
         makeRectangle(Barn_LeafItem1.getValue(), 20.0, 300.0, 100.0, 50.0); // Farm item #10 & 11
         TreeItem<String> StorageBuilder_LeafItem1 = new TreeItem<>("Tractor");
         makeRectangle(StorageBuilder_LeafItem1.getValue(), 350.0, 250.0, 50.0, 50.0); // Farm item #12 & 13
         TreeItem<String> CropField_LeftItem1 = new TreeItem<>("Soy_Crop");
-=======
-        TreeItem<String> Barn_LeafItem1 = new TreeItem<>("Milk Storage");
-        makeRectangle(Barn_LeafItem1.getValue(), 20.0, 300.0, 100.0, 50.0); // Farm item #10 & 11
-        TreeItem<String> StorageBuilder_LeafItem1 = new TreeItem<>("Tractor");
-        makeRectangle(StorageBuilder_LeafItem1.getValue(), 350.0, 250.0, 50.0, 50.0); // Farm item #12 & 13
-        TreeItem<String> CropField_LeftItem1 = new TreeItem<>("Soy Crop");
->>>>>>> parent of 75f2e87 (items are now tracked and represented via lists)
         makeRectangle(CropField_LeftItem1.getValue(), 350.0, 400.0, 80.0, 200.0); // Farm item #14 & 15
 
         //Adding all the Branches & Leaves in the TreeView
