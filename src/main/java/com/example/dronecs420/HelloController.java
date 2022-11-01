@@ -1,8 +1,8 @@
 package com.example.dronecs420;
 
-import javafx.animation.*;
 import javafx.fxml.FXML;
-import javafx.scene.*;
+import javafx.scene.Group;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 
 import java.net.URL;
@@ -20,7 +20,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.SpinnerValueFactory.IntegerSpinnerValueFactory;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
@@ -30,6 +29,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import javafx.scene.text.Text;
+import javafx.animation.PathTransition;
+import javafx.animation.RotateTransition;
 import javafx.util.Duration;
 import javafx.animation.PathTransition;
 import javafx.animation.RotateTransition;
@@ -60,7 +61,6 @@ import javafx.scene.shape.*;
 import javafx.stage.Stage;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
-import javafx.scene.transform.*;
 
 
 import java.util.ResourceBundle;
@@ -102,19 +102,12 @@ public class HelloController implements Initializable{
 
     @FXML
     protected void onHelloButtonClick() {
-        welcomeText.setText("sWelcome to JavaFX Application!");
+        welcomeText.setText("Welcome to JavaFX Application!");
     }
 
     @FXML
     void goHomeClick(ActionEvent event) {
-        TranslateTransition translate = new TranslateTransition();
-        TreeItem<Object> commandCenter = new TreeItem<Object>(new ItemContainer("Command Center", 0, 174, 32, 100, 76, 66));
 
-
-        translate.setNode(ImageView);
-        translate.setToX(174 - ImageView.getLayoutX());
-        translate.setToY(32 - ImageView.getLayoutY());
-        translate.play();
     }
 
     private RotateTransition rotate = new RotateTransition();
