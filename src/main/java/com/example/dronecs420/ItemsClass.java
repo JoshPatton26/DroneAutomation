@@ -8,6 +8,9 @@ public class ItemsClass {
     private int length;
     private int width;
     private int height;
+    private int ini_price;
+    private int cur_price;
+    private final boolean container = false;
     
     @Override
     public boolean equals(Object obj) {
@@ -21,7 +24,7 @@ public class ItemsClass {
         return false;
     }       
 
-    public ItemsClass(String iname, int iprice, double ix, double iy, int ilength, int iwidth, int iheight){
+    public ItemsClass(String iname, int iprice, double ix, double iy, int ilength, int iwidth, int iheight, int initial_price){
         this.name = iname;
         this.price = iprice;
         this.Lx = ix;
@@ -29,6 +32,8 @@ public class ItemsClass {
         this.length = ilength;
         this.width = iwidth;
         this.height = iheight;
+        this.ini_price = initial_price;
+        this.cur_price = initial_price;
     }
 
     public ItemsClass() {
@@ -38,6 +43,15 @@ public class ItemsClass {
     public void deleteItem(ItemsClass self){
         self = null;
 
+    }
+
+    public boolean checkType(){
+        if (this.container){
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 
     public int getHeight() {
@@ -94,6 +108,14 @@ public class ItemsClass {
 
     public void setPrice(int price) {
         this.price = price;
+    }
+
+    public int getCur_price() {
+        return cur_price;
+    }
+
+    public void setCur_price(int cur_price) {
+        this.cur_price = cur_price;
     }
 }
 

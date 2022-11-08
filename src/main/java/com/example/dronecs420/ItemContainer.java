@@ -36,6 +36,8 @@ public class ItemContainer extends ItemsClass {
         return false;
     }
 
+    private final boolean container = true;
+
     // ItemContainer constructor
     public ItemContainer(String containername, int containerprice, double containerx, double containery, int containerlength, int containerwidth, int containerheight) {
         // arguments
@@ -135,6 +137,31 @@ public class ItemContainer extends ItemsClass {
         }
     }
 
+    public ItemsClass searchItems(String searchname, ItemContainer container){
+        //create string buffer
+        String buffer = "";
+        this.containerList = container.containerList;
+        //iterate through containerList
+        for (int i = 0; i < containerList.size(); i++){
+            //checks if item is itemContainer type, then iterates into it
+            if (containerList.get(i).checkType()){
+                searchItems(searchname, (ItemContainer) containerList.get(i));
+            }
+            else{
+                buffer = containerList.get(i).getName();
+                if (buffer.contains(searchname)){
+                    return containerList.get(i);
+                }
+            }
+        }
+        if (this.checkType()){
+            System.out.println("Item not found in ItemContainer");
+        }
+        else{
+            System.out.println("Item not found");
+        }
+        return null;
+    }
     public void addItemContainer(ItemContainer icontainer){
         this.containerList.add(icontainer);
     }
