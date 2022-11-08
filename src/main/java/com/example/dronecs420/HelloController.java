@@ -198,14 +198,11 @@ public class HelloController implements Initializable{
         double user_width = Double.parseDouble(width.getText());
         double user_height = Double.parseDouble(height.getText());
 
-        // Create a temp variable to use lookup() function to find the rectangle id.
-        String temp = "#"+selectItem().getValue().toString();
+        // Delete old rectangle.
+        deleteRectangle(selectItem().getValue().toString());
 
-        // Remove the rectangle and text based off the id.
-        Farm.getChildren().remove(Farm.lookup(temp));
-        Farm.getChildren().remove(Farm.lookup(temp+"text"));
-
-        makeRectangle(selectItem().getValue(), 200, 200, user_width, user_height);
+        // Make new rectangle with new dimesions.
+        makeRectangle(selectItem().getValue(), 200, 250, user_width, user_height);
     }
 
     @FXML
@@ -243,13 +240,10 @@ public class HelloController implements Initializable{
         double user_xvalue = Double.parseDouble(xvalue.getText());
         double user_yvalue = Double.parseDouble(yvalue.getText());
 
-        // Create a temp variable to use lookup() function to find the rectangle id.
-        String temp = "#"+selectItem().getValue().toString();
+        // Delete old rectangle.
+        deleteRectangle(selectItem().getValue().toString());
 
-        // Remove the rectangle and text based off the id.
-        Farm.getChildren().remove(Farm.lookup(temp));
-        Farm.getChildren().remove(Farm.lookup(temp+"text"));
-
+        // Make new rectangle with new coordinates.
         makeRectangle(selectItem().getValue(), user_xvalue, user_yvalue, 50, 50);
     }
 
@@ -274,12 +268,8 @@ public class HelloController implements Initializable{
         System.out.println(delete);
         boolean remove = delete.getParent().getChildren().remove(delete);
 
-        // Create a temp variable to use lookup() function to find the rectangle id.
-        String temp = "#"+delete.getValue().toString();
-
-        // Remove the rectangle and text based off the id.
-        Farm.getChildren().remove(Farm.lookup(temp));
-        Farm.getChildren().remove(Farm.lookup(temp+"text"));
+        // Delete rectangle.
+        deleteRectangle(delete.getValue().toString());
     }
 
     @FXML
@@ -405,17 +395,15 @@ public class HelloController implements Initializable{
             System.out.println(width.getText() + " " + height.getText());
         }
 
+        // Convert values to doubles.
         double user_width = Double.parseDouble(width.getText());
         double user_height = Double.parseDouble(height.getText());
 
-        // Create a temp variable to use lookup() function to find the rectangle id.
-        String temp = "#"+selectItem().getValue().toString();
+        // Delete old rectangle.
+        deleteRectangle(selectItem().getValue().toString());
 
-        // Remove the rectangle and text based off the id.
-        Farm.getChildren().remove(Farm.lookup(temp));
-        Farm.getChildren().remove(Farm.lookup(temp+"text"));
-
-        makeRectangle(selectItem().getValue(), 0, 0, user_width, user_height);
+        // Make new rectangle with new dimensions.
+        makeRectangle(selectItem().getValue(), 200, 250, user_width, user_height);
     }
 
     @FXML
@@ -452,13 +440,10 @@ public class HelloController implements Initializable{
         double user_xvalue = Double.parseDouble(xvalue.getText());
         double user_yvalue = Double.parseDouble(yvalue.getText());
 
-        // Create a temp variable to use lookup() function to find the rectangle id.
-        String temp = "#"+selectItem().getValue().toString();
+        // Delete old rectangle.
+        deleteRectangle(selectItem().getValue().toString());
 
-        // Remove the rectangle and text based off the id.
-        Farm.getChildren().remove(Farm.lookup(temp));
-        Farm.getChildren().remove(Farm.lookup(temp+"text"));
-
+        // Add new rectangle with new coordinates.
         makeRectangle(selectItem().getValue(), user_xvalue, user_yvalue, 50, 50);
     }
 
@@ -482,24 +467,22 @@ public class HelloController implements Initializable{
         if(Farm.getChildren() == null){
             TreeItem delete = (TreeItem)treeView.getSelectionModel().getSelectedItem();
             boolean remove = delete.getParent().getChildren().remove(delete);
-            // Create a temp variable to use lookup() function to find the rectangle id.
-            String temp = "#"+delete.getValue().toString();
 
-            // Remove the rectangle and text based off the id.
-            Farm.getChildren().remove(Farm.lookup(temp));
-            Farm.getChildren().remove(Farm.lookup(temp+"text"));
+            // Delete rectangle.
+            deleteRectangle(delete.getValue().toString());
         }else{
             // Create dialog box.
-            Dialog<Double> changeDim = new Dialog<>();
-            changeDim.setTitle("ERROR");
-            changeDim.setHeaderText("Delete all leaf nodes first");
-            changeDim.setResizable(true);
+            Dialog<Double> errmsg = new Dialog<>();
+            errmsg.setTitle("ERROR");
+            errmsg.setHeaderText("Delete all leaf nodes first");
+            errmsg.setResizable(true);
 
             // Add button to close dialog box after user enters values.
             ButtonType okButton = new ButtonType("Okay", ButtonData.OK_DONE);
-            changeDim.getDialogPane().getButtonTypes().add(okButton);
+            errmsg.getDialogPane().getButtonTypes().add(okButton);
 
-            Optional<Double> result = changeDim.showAndWait();
+            // Display the dialog box.
+            errmsg.showAndWait();
         }
     }
 
@@ -584,6 +567,15 @@ public class HelloController implements Initializable{
 
         Farm.getChildren().add(rectangle);
         Farm.getChildren().add(text);
+    }
+
+    public void deleteRectangle(String name){
+        // Create a temp variable to use lookup() function to find the rectangle id.
+        String temp = "#"+name;
+
+        // Remove the rectangle and text based off the id.
+        Farm.getChildren().remove(Farm.lookup(temp));
+        Farm.getChildren().remove(Farm.lookup(temp+"text"));
     }
 
     //Printing out the Item Values when selecting each specific Item or Item Container
