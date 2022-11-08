@@ -336,7 +336,7 @@ public class HelloController implements Initializable{
         }
         // Create a new item.
         String itemName = result.get();
-        ItemsClass item = new ItemsClass(itemName, 0, 0, 0, 0, 0, 0);
+        ItemsClass item = new ItemsClass(itemName, 0, 0, 0, 0, 0, 0, 0);
         System.out.println(item.getName());
 
         // Create new TreeItem leaf node.
