@@ -168,7 +168,7 @@ public class HelloController implements Initializable{
     	
     	int itemIndex = -1;
     	String type = "";
-    	ItemsClass item = new ItemsClass(selectedItem, 0, 0, 0, 0, 0, 0);
+    	ItemsClass item = new ItemsClass(selectedItem, 0, 0, 0, 0, 0, 0, 0);
     	ItemContainer itemContainer = new ItemContainer(selectedItem, 0, 0, 0, 0, 0, 0);
     	for(int i = 0; i<itemList.size(); i++)
     	{
@@ -255,10 +255,6 @@ public class HelloController implements Initializable{
 
         // Delete old rectangle.
         deleteRectangle(selectItem().getValue().toString());
-
-        // Remove the rectangle and text based off the id.
-        Farm.getChildren().remove(Farm.lookup(temp));
-        Farm.getChildren().remove(Farm.lookup(temp+"text"));
 
         makeRectangle(((ItemsClass) itemList.get(itemIndex)).getName(), ((ItemsClass) itemList.get(itemIndex)).getLx(), ((ItemsClass) itemList.get(itemIndex)).getLy(), ((ItemsClass) itemList.get(itemIndex)).getWidth(), ((ItemsClass) itemList.get(itemIndex)).getHeight());
     }
@@ -438,7 +434,7 @@ public class HelloController implements Initializable{
         }
         // Create a new item.
         String itemName = result.get();
-        ItemsClass item = new ItemsClass(itemName, 0, 0, 0, 0, 100, 75);
+        ItemsClass item = new ItemsClass(itemName, 0, 0, 0, 0, 100, 75, 0);
         itemList.add(item);
 
         System.out.println(item.getName());
@@ -490,17 +486,9 @@ public class HelloController implements Initializable{
             System.out.println("Changed Width + Height of " + ((ItemContainer) itemList.get(itemIndex)).getName() + " " + ((ItemContainer) itemList.get(itemIndex)).getWidth() + " " + ((ItemContainer) itemList.get(itemIndex)).getHeight());
         }
 
-        // Convert values to doubles.
-        double user_width = Double.parseDouble(width.getText());
-        double user_height = Double.parseDouble(height.getText());
-
         // Delete old rectangle.
         deleteRectangle(selectItem().getValue().toString());
-
-        // Remove the rectangle and text based off the id.
-        Farm.getChildren().remove(Farm.lookup(temp));
-        Farm.getChildren().remove(Farm.lookup(temp+"text"));
-
+        
         makeRectangle(((ItemContainer) itemList.get(itemIndex)).getName(), ((ItemContainer) itemList.get(itemIndex)).getLx(), ((ItemContainer) itemList.get(itemIndex)).getLy(), ((ItemContainer) itemList.get(itemIndex)).getWidth(), ((ItemContainer) itemList.get(itemIndex)).getHeight());
     }
 
@@ -665,17 +653,17 @@ public class HelloController implements Initializable{
         TreeItem<String> CommandCenter_LeafItem1 = new TreeItem<>("Drone");
         
         TreeItem<String> Barn_LeafItem1 = new TreeItem<>("Milk_Storage");
-        ItemsClass item = new ItemsClass("Milk_Storage", 0, 20, 300, 0, 100, 50);
+        ItemsClass item = new ItemsClass("Milk_Storage", 0, 20, 300, 0, 100, 50, 0);
         itemList.add(item);
         makeRectangle(Barn_LeafItem1.getValue(), 20.0, 300.0, 100.0, 50.0); // Farm item #10 & 11
         
         TreeItem<String> StorageBuilder_LeafItem1 = new TreeItem<>("Tractor");
-        item = new ItemsClass("Tractor", 0, 350, 250, 0, 50, 50);
+        item = new ItemsClass("Tractor", 0, 350, 250, 0, 50, 50, 0);
         itemList.add(item);
         makeRectangle(StorageBuilder_LeafItem1.getValue(), 350.0, 250.0, 50.0, 50.0); // Farm item #12 & 13
         
         TreeItem<String> CropField_LeftItem1 = new TreeItem<>("Soy_Crop");
-        item = new ItemsClass("Soy_Crop", 0, 350, 400, 0, 80, 200);
+        item = new ItemsClass("Soy_Crop", 0, 350, 400, 0, 80, 200, 0);
         itemList.add(item);
         makeRectangle(CropField_LeftItem1.getValue(), 350.0, 400.0, 80.0, 200.0); // Farm item #14 & 15
 
