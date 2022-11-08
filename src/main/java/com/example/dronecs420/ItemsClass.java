@@ -8,6 +8,18 @@ public class ItemsClass {
     private int length;
     private int width;
     private int height;
+    
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        ItemsClass other = (ItemsClass) obj;
+        if (name == other.name)
+            return true;
+        return false;
+    }       
 
     public ItemsClass(String iname, int iprice, double ix, double iy, int ilength, int iwidth, int iheight){
         this.name = iname;
@@ -84,3 +96,4 @@ public class ItemsClass {
         this.price = price;
     }
 }
+
