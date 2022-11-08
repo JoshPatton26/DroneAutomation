@@ -87,6 +87,12 @@ public class HelloController implements Initializable{
     private Button goHome;
 
     @FXML
+    private Label purchasePriceValue;
+
+    @FXML
+    private Label CurrentMarketValue;
+
+    @FXML
     protected void onHelloButtonClick() {
         welcomeText.setText("sWelcome to JavaFX Application!");
     }
@@ -94,6 +100,16 @@ public class HelloController implements Initializable{
     @FXML
     void goHomeClick(ActionEvent event) {
         
+    }
+
+    @FXML
+    void launchSimBtn(ActionEvent event) {
+
+    }
+
+    @FXML
+    void LaunchDroneBtn(ActionEvent event) {
+
     }
 
     private RotateTransition rotate = new RotateTransition();
@@ -310,12 +326,22 @@ public class HelloController implements Initializable{
         TreeItem<String> defaultchild = new TreeItem<>("Default");
         treeBranch.getChildren().add(defaultchild);
 
-        // // Create new ItemContainer
-        // ItemContainer container = new ItemContainer(result.get(), 0, 50, 50, 50, 50, 50);
+        /* 
+        //  IN PROGRESS -Josh
+        String containerName = result.get();
+        String childName = defaultchild.toString();
+
+        // Create new ItemContainer
+        ItemContainer container = new ItemContainer(containerName, 0, 50, 50, 50, 50, 50);
+        System.out.println("ItemContainer name: "+container.getName());
 
         // // Create new item and add it to the item container.
-        // ItemsClass newitem = new ItemsClass(defaultchild.toString(), 0, 0, 0, 0, 0, 0);
-        // container.addItem(newitem);
+        ItemsClass newitem = new ItemsClass();
+        newitem.setName(childName);
+        container.addItem(newitem);
+
+        System.out.println(newitem.getName());
+        */
 
         makeRectangle(result.get(), 0, 0, 100.0, 75.0);
     }
@@ -494,6 +520,9 @@ public class HelloController implements Initializable{
         // Rename TreeItem item container value.
         TreeItem<String> item = selectItem();
         item.setValue(result.get());
+
+        // Rename the itemContainer object.
+        //ItemContainer item = searchItems(selectItem().toString(), item);
     }
 
     @Override
@@ -533,8 +562,6 @@ public class HelloController implements Initializable{
 
         treeView.setRoot(rootItem);
     }
-
-    Object[] farmInfo;
 
     public void makeRectangle(String name, double x, double y, double width, double height){
         //The text up top of the rectangle
