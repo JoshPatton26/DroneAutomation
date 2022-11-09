@@ -564,14 +564,18 @@ public class HelloController implements Initializable{
 
         text.setLayoutX(rectangle.getX() + 5);
         text.setLayoutY(rectangle.getY() + 10);
+        text.setId(name+"text");
 
         Farm.getChildren().add(rectangle);
         Farm.getChildren().add(text);
     } 
 
-    public void removeRectangle(){
+    // public void removeRectangle(String name){
+    //     String temp = "#"+name;
 
-    }
+    //     Farm.getChildren().remove(Farm.lookup(temp));
+    //     Farm.getChildren().remove(Farm.lookup(temp+"text"));
+    // }
 
     //Printing out the Item Values when selecting each specific Item or Item Container
     public TreeItem<String> selectItem(){
