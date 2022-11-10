@@ -355,6 +355,7 @@ public class HelloController implements Initializable{
     void itemRenameClick(ActionEvent event) {
         String[] info = getItemInfo();
         int itemIndex = Integer.parseInt(info[0]);
+        String old_name = selectItem().getValue();
 
         // Create the TextInputDialog box.
         TextInputDialog renameItem = new TextInputDialog();
@@ -374,6 +375,9 @@ public class HelloController implements Initializable{
         // Rename TreeItem item value.
         TreeItem<String> item = selectItem();
         item.setValue(result.get());
+
+        deleteRectangle(old_name);
+        makeRectangle(((ItemContainer) itemList.get(itemIndex)).getName(), ((ItemContainer) itemList.get(itemIndex)).getLx(), ((ItemContainer) itemList.get(itemIndex)).getLy(), ((ItemContainer) itemList.get(itemIndex)).getWidth(), ((ItemContainer) itemList.get(itemIndex)).getHeight());
     }
 
     @FXML
