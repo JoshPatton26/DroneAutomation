@@ -330,8 +330,8 @@ public class HelloController implements Initializable{
         if(result.isPresent()){
             System.out.println(result.get());
 
-            ((ItemsClass) itemList.get(itemIndex)).setPrice(Integer.parseInt(result.get()));
-            System.out.println("Changed Price of " + ((ItemsClass) itemList.get(itemIndex)).getName() + " " + ((ItemsClass) itemList.get(itemIndex)).getPrice());
+            ((ItemsClass) itemList.get(itemIndex)).setCur_price(Integer.parseInt(result.get()));
+            System.out.println("Changed Price of " + ((ItemsClass) itemList.get(itemIndex)).getName() + " " + ((ItemsClass) itemList.get(itemIndex)).getCur_price());
         }
     }
 
@@ -421,7 +421,7 @@ public class HelloController implements Initializable{
 
         System.out.println(newitem.getName());
         
-
+        // Makes new rectangle with text that matched the user input.
         makeRectangle(result.get(), 0, 0, 100.0, 75.0);
     }
 
