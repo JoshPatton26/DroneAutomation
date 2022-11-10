@@ -656,22 +656,22 @@ public class HelloController implements Initializable{
 
         //Branch_Items
         TreeItem<String> Command_Center = new TreeItem<>("Command_Center");
-        ItemContainer itemContainer = new ItemContainer("Command_Center", 0, 150, 10, 0, 120, 100);
+        ItemContainer itemContainer = new ItemContainer("Command_Center", 125000, 150, 10, 0, 120, 100);
         itemList.add(itemContainer);
         makeRectangle(Command_Center.getValue(), 150.0, 10.0, 120.0, 100.0); // Farm item #2 & 3
 
         TreeItem<String> Barn_Branch = new TreeItem<>("Barn");
-        itemContainer = new ItemContainer("Barn", 0, 20, 150, 0, 100, 200);
+        itemContainer = new ItemContainer("Barn", 45000, 20, 150, 0, 100, 200);
         itemList.add(itemContainer);
         makeRectangle(Barn_Branch.getValue(), 20.0, 150.0, 100.0, 200.0); // Farm item #4 & 5
 
         TreeItem<String> StorageBuilder_Branch = new TreeItem<>("Storage_Builder");
-        itemContainer = new ItemContainer("Storage_Builder", 0, 335, 150, 0, 100, 200);
+        itemContainer = new ItemContainer("Storage_Builder", 75000, 335, 150, 0, 100, 200);
         itemList.add(itemContainer);
         makeRectangle(StorageBuilder_Branch.getValue(), 335.0, 150.0, 100.0, 200.0); // Farm item #6 & 7
 
         TreeItem<String> CropField_Branch = new TreeItem<>("Crop_Field");
-        itemContainer = new ItemContainer("Crop_Field", 0, 30, 400, 0, 400, 200);
+        itemContainer = new ItemContainer("Crop_Field", 50000, 30, 400, 0, 400, 200);
         itemList.add(itemContainer);
         makeRectangle(CropField_Branch.getValue(), 30.0, 400.0, 400.0, 200.0); // Farm item #8 & 9
 
