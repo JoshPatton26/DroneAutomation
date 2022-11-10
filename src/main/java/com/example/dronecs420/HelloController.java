@@ -377,7 +377,7 @@ public class HelloController implements Initializable{
         item.setValue(result.get());
 
         deleteRectangle(old_name);
-        makeRectangle(((ItemContainer) itemList.get(itemIndex)).getName(), ((ItemContainer) itemList.get(itemIndex)).getLx(), ((ItemContainer) itemList.get(itemIndex)).getLy(), ((ItemContainer) itemList.get(itemIndex)).getWidth(), ((ItemContainer) itemList.get(itemIndex)).getHeight());
+        makeRectangle(((ItemsClass) itemList.get(itemIndex)).getName(), ((ItemsClass) itemList.get(itemIndex)).getLx(), ((ItemsClass) itemList.get(itemIndex)).getLy(), ((ItemsClass) itemList.get(itemIndex)).getWidth(), ((ItemsClass) itemList.get(itemIndex)).getHeight());
     }
 
     @FXML
