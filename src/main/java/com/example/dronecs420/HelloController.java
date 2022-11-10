@@ -263,6 +263,7 @@ public class HelloController implements Initializable{
         // Delete old rectangle.
         deleteRectangle(selectItem().getValue().toString());
 
+        // Make new rectangle with new height and width given by user input.
         makeRectangle(((ItemsClass) itemList.get(itemIndex)).getName(), ((ItemsClass) itemList.get(itemIndex)).getLx(), ((ItemsClass) itemList.get(itemIndex)).getLy(), ((ItemsClass) itemList.get(itemIndex)).getWidth(), ((ItemsClass) itemList.get(itemIndex)).getHeight());
     }
 
@@ -311,6 +312,7 @@ public class HelloController implements Initializable{
         // Delete old rectangle.
         deleteRectangle(selectItem().getValue().toString());
 
+        // Make new rectangle with new coordinates given by user input.
         makeRectangle(((ItemsClass) itemList.get(itemIndex)).getName(), ((ItemsClass) itemList.get(itemIndex)).getLx(), ((ItemsClass) itemList.get(itemIndex)).getLy(), ((ItemsClass) itemList.get(itemIndex)).getWidth(), ((ItemsClass) itemList.get(itemIndex)).getHeight());
     }
 
@@ -340,9 +342,10 @@ public class HelloController implements Initializable{
         String[] info = getItemInfo();
         int itemIndex = Integer.parseInt(info[0]);
 
-
+        // Delete the ItemClass object from the itemList list.
         itemList.remove(itemIndex);
 
+        // Delete the TreeItem from TreeView.
         TreeItem delete = (TreeItem)treeView.getSelectionModel().getSelectedItem();
         System.out.println(delete);
         boolean remove = delete.getParent().getChildren().remove(delete);
@@ -355,6 +358,8 @@ public class HelloController implements Initializable{
     void itemRenameClick(ActionEvent event) {
         String[] info = getItemInfo();
         int itemIndex = Integer.parseInt(info[0]);
+
+        // Store the old name before changing the ItemClass object name.
         String old_name = selectItem().getValue();
 
         // Create the TextInputDialog box.
@@ -376,7 +381,10 @@ public class HelloController implements Initializable{
         TreeItem<String> item = selectItem();
         item.setValue(result.get());
 
+        // Delete the old rectangle with the previous name.
         deleteRectangle(old_name);
+
+        // Make new rectangle with new name but all other properties are the same.
         makeRectangle(((ItemContainer) itemList.get(itemIndex)).getName(), ((ItemContainer) itemList.get(itemIndex)).getLx(), ((ItemContainer) itemList.get(itemIndex)).getLy(), ((ItemContainer) itemList.get(itemIndex)).getWidth(), ((ItemContainer) itemList.get(itemIndex)).getHeight());
     }
 
@@ -405,7 +413,6 @@ public class HelloController implements Initializable{
         TreeItem<String> defaultchild = new TreeItem<>("Default");
         treeBranch.getChildren().add(defaultchild);
 
-        
         //  IN PROGRESS -Josh
         String containerName = result.get();
         String childName = defaultchild.getValue().toString();
@@ -454,6 +461,7 @@ public class HelloController implements Initializable{
         TreeItem<String> parent = selectItem();
         parent.getChildren().add(treeItem);
 
+        // Create new rectangle for new item.
         makeRectangle(result.get(), 0, 0, 100.0, 75.0);
     }
 
@@ -499,6 +507,7 @@ public class HelloController implements Initializable{
         // Delete old rectangle.
         deleteRectangle(selectItem().getValue().toString());
 
+        // Make new rectangle with new height and width given by user input.
         makeRectangle(((ItemContainer) itemList.get(itemIndex)).getName(), ((ItemContainer) itemList.get(itemIndex)).getLx(), ((ItemContainer) itemList.get(itemIndex)).getLy(), ((ItemContainer) itemList.get(itemIndex)).getWidth(), ((ItemContainer) itemList.get(itemIndex)).getHeight());
     }
 
@@ -546,6 +555,7 @@ public class HelloController implements Initializable{
         // Delete old rectangle.
         deleteRectangle(selectItem().getValue().toString());
 
+        // Make new rectangle with new coordinates given by user input.
         makeRectangle(((ItemContainer) itemList.get(itemIndex)).getName(), ((ItemContainer) itemList.get(itemIndex)).getLx(), ((ItemContainer) itemList.get(itemIndex)).getLy(), ((ItemContainer) itemList.get(itemIndex)).getWidth(), ((ItemContainer) itemList.get(itemIndex)).getHeight());
         
     }
@@ -758,8 +768,8 @@ public class HelloController implements Initializable{
         }
 
         /* 
-            Loops through the itemList to fine the matching item name and displays 
-            the pruchase price and current market price to dashboard
+         * Loops through the itemList to fine the matching item name and displays 
+         * the pruchase price and current market price to dashboard
         */
         for(int i=0; i<itemList.size();i++){
             if(item.getValue() == ((ItemsClass) itemList.get(i)).getName()){
