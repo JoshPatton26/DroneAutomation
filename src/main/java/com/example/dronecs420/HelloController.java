@@ -421,8 +421,8 @@ public class HelloController implements Initializable{
         itemList.add(container);
 
         // Create new item and add it to the item container.
-        ItemsClass newitem = new ItemsClass();
-        newitem.setName(childName);
+        ItemsClass newitem = new ItemsClass(childName, 0, 50, 50, 50, 50, 50, 0);
+        //newitem.setName(childName);
         container.addItem(newitem);
         itemList.add(newitem);
 
@@ -612,6 +612,9 @@ public class HelloController implements Initializable{
         String[] info = getItemInfo();
         int itemIndex = Integer.parseInt(info[0]);
 
+        // Store the old name before changing the ItemClass object name.
+        String old_name = selectItem().getValue();
+
         // Create the TextInputDialog box.
         TextInputDialog renameItem = new TextInputDialog();
         renameItem.setTitle("Rename");
@@ -633,6 +636,10 @@ public class HelloController implements Initializable{
 
         // Rename the itemContainer object.
         //ItemContainer item = searchItems(selectItem().toString(), item);
+
+        // Delete the old rectangle with the previous name.
+        deleteRectangle(old_name);
+        makeRectangle(((ItemContainer) itemList.get(itemIndex)).getName(), ((ItemContainer) itemList.get(itemIndex)).getLx(), ((ItemContainer) itemList.get(itemIndex)).getLy(), ((ItemContainer) itemList.get(itemIndex)).getWidth(), ((ItemContainer) itemList.get(itemIndex)).getHeight());
     }
 
     @Override
