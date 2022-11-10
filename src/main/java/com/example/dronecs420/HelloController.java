@@ -390,9 +390,9 @@ public class HelloController implements Initializable{
             System.out.println(result.get());
         }
 
-        //Add Item Container
-        ItemContainer container = new ItemContainer(result.get(), 0, 0, 0, 0, 100, 75);
-        itemList.add(container);
+        // //Add Item Container
+        // ItemContainer container = new ItemContainer(result.get(), 0, 0, 0, 0, 100, 75);
+        // itemList.add(container);
 
         // Create new TreeItem branch node.
         TreeItem<String> treeBranch = new TreeItem<>(result.get());
@@ -405,10 +405,10 @@ public class HelloController implements Initializable{
         TreeItem<String> defaultchild = new TreeItem<>("Default");
         treeBranch.getChildren().add(defaultchild);
 
-        /*
+        
         //  IN PROGRESS -Josh
         String containerName = result.get();
-        String childName = defaultchild.toString();
+        String childName = defaultchild.getValue().toString();
 
         // Create new ItemContainer
         ItemContainer container = new ItemContainer(containerName, 0, 50, 50, 50, 50, 50);
@@ -420,7 +420,7 @@ public class HelloController implements Initializable{
         container.addItem(newitem);
 
         System.out.println(newitem.getName());
-        */
+        
 
         makeRectangle(result.get(), 0, 0, 100.0, 75.0);
     }
@@ -540,16 +540,11 @@ public class HelloController implements Initializable{
         double user_xvalue = Double.parseDouble(xvalue.getText());
         double user_yvalue = Double.parseDouble(yvalue.getText());
 
-        // Create a temp variable to use lookup() function to find the rectangle id.
-        String temp = "#"+selectItem().getValue().toString()+itemIndex;
-
-        // Remove the rectangle and text based off the id.
-        Farm.getChildren().remove(Farm.lookup(temp));
-        Farm.getChildren().remove(Farm.lookup(temp+"text"));
-
-        makeRectangle(((ItemContainer) itemList.get(itemIndex)).getName(), ((ItemContainer) itemList.get(itemIndex)).getLx(), ((ItemContainer) itemList.get(itemIndex)).getLy(), ((ItemContainer) itemList.get(itemIndex)).getWidth(), ((ItemContainer) itemList.get(itemIndex)).getHeight());
         // Delete old rectangle.
         deleteRectangle(selectItem().getValue().toString());
+
+        makeRectangle(((ItemContainer) itemList.get(itemIndex)).getName(), ((ItemContainer) itemList.get(itemIndex)).getLx(), ((ItemContainer) itemList.get(itemIndex)).getLy(), ((ItemContainer) itemList.get(itemIndex)).getWidth(), ((ItemContainer) itemList.get(itemIndex)).getHeight());
+        
     }
 
     @FXML
@@ -660,17 +655,17 @@ public class HelloController implements Initializable{
         TreeItem<String> CommandCenter_LeafItem1 = new TreeItem<>("Drone");
 
         TreeItem<String> Barn_LeafItem1 = new TreeItem<>("Milk_Storage");
-        ItemsClass item = new ItemsClass("Milk_Storage", 0, 20, 300, 0, 100, 50, 0);
+        ItemsClass item = new ItemsClass("Milk_Storage", 1500, 20, 300, 0, 100, 50, 4500);
         itemList.add(item);
         makeRectangle(Barn_LeafItem1.getValue(), 20.0, 300.0, 100.0, 50.0); // Farm item #10 & 11
 
         TreeItem<String> StorageBuilder_LeafItem1 = new TreeItem<>("Tractor");
-        item = new ItemsClass("Tractor", 0, 350, 250, 0, 50, 50, 0);
+        item = new ItemsClass("Tractor", 25000, 350, 250, 0, 50, 50, 35000);
         itemList.add(item);
         makeRectangle(StorageBuilder_LeafItem1.getValue(), 350.0, 250.0, 50.0, 50.0); // Farm item #12 & 13
 
         TreeItem<String> CropField_LeftItem1 = new TreeItem<>("Soy_Crop");
-        item = new ItemsClass("Soy_Crop", 0, 350, 400, 0, 80, 200, 0);
+        item = new ItemsClass("Soy_Crop", 5000, 350, 400, 0, 80, 200, 10000);
         itemList.add(item);
         makeRectangle(CropField_LeftItem1.getValue(), 350.0, 400.0, 80.0, 200.0); // Farm item #14 & 15
 
@@ -741,6 +736,17 @@ public class HelloController implements Initializable{
         if(item != null){
             System.out.println(item.getValue());
             selectedItem = item.getValue();
+        }
+
+        /* 
+            Loops through the itemList to fine the matching item name and displays 
+            the pruchase price and current market price to dashboard
+        */
+        for(int i=0; i<itemList.size();i++){
+            if(item.getValue() == ((ItemsClass) itemList.get(i)).getName()){
+                purchasePriceValue.setText("$"+Integer.toString(((ItemsClass) itemList.get(i)).getPrice())+".00");
+                CurrentMarketValue.setText("$"+Integer.toString(((ItemsClass) itemList.get(i)).getCur_price())+".00");
+            }
         }
 
         return item;
