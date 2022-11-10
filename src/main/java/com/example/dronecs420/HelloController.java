@@ -383,6 +383,8 @@ public class HelloController implements Initializable{
 
         // Delete the old rectangle with the previous name.
         deleteRectangle(old_name);
+
+        // Create new rectangle with new name.
         makeRectangle(((ItemsClass) itemList.get(itemIndex)).getName(), ((ItemsClass) itemList.get(itemIndex)).getLx(), ((ItemsClass) itemList.get(itemIndex)).getLy(), ((ItemsClass) itemList.get(itemIndex)).getWidth(), ((ItemsClass) itemList.get(itemIndex)).getHeight());
     }
 
@@ -428,8 +430,10 @@ public class HelloController implements Initializable{
 
         System.out.println("Item name: "+newitem.getName());
         
-        // Makes new rectangle with text that matched the user input.
+        // Creates new rectangle for item container, with text that matches the user input.
         makeRectangle(result.get(), 0, 0, 100.0, 75.0);
+
+        // Create new rectangle for item, with text that matches the user input.
         makeRectangle(childName, 0, 0, 50, 50);
     }
 
@@ -639,6 +643,8 @@ public class HelloController implements Initializable{
 
         // Delete the old rectangle with the previous name.
         deleteRectangle(old_name);
+
+        // Make new rectangle with new name.
         makeRectangle(((ItemContainer) itemList.get(itemIndex)).getName(), ((ItemContainer) itemList.get(itemIndex)).getLx(), ((ItemContainer) itemList.get(itemIndex)).getLy(), ((ItemContainer) itemList.get(itemIndex)).getWidth(), ((ItemContainer) itemList.get(itemIndex)).getHeight());
     }
 
