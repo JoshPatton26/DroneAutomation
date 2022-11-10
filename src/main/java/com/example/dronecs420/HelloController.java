@@ -390,10 +390,6 @@ public class HelloController implements Initializable{
             System.out.println(result.get());
         }
 
-        // //Add Item Container
-        // ItemContainer container = new ItemContainer(result.get(), 0, 0, 0, 0, 100, 75);
-        // itemList.add(container);
-
         // Create new TreeItem branch node.
         TreeItem<String> treeBranch = new TreeItem<>(result.get());
 
@@ -415,7 +411,7 @@ public class HelloController implements Initializable{
         System.out.println("Item container name: "+container.getName());
         itemList.add(container);
 
-        // // Create new item and add it to the item container.
+        // Create new item and add it to the item container.
         ItemsClass newitem = new ItemsClass();
         newitem.setName(childName);
         container.addItem(newitem);
