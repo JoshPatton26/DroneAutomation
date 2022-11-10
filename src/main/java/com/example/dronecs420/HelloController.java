@@ -412,17 +412,20 @@ public class HelloController implements Initializable{
 
         // Create new ItemContainer
         ItemContainer container = new ItemContainer(containerName, 0, 50, 50, 50, 50, 50);
-        System.out.println("ItemContainer name: "+container.getName());
+        System.out.println("Item container name: "+container.getName());
+        itemList.add(container);
 
         // // Create new item and add it to the item container.
         ItemsClass newitem = new ItemsClass();
         newitem.setName(childName);
         container.addItem(newitem);
+        itemList.add(newitem);
 
-        System.out.println(newitem.getName());
+        System.out.println("Item name: "+newitem.getName());
         
         // Makes new rectangle with text that matched the user input.
         makeRectangle(result.get(), 0, 0, 100.0, 75.0);
+        makeRectangle(childName, 0, 0, 50, 50);
     }
 
     @FXML
@@ -682,13 +685,20 @@ public class HelloController implements Initializable{
         treeView.setRoot(rootItem);
     }
 
+    /*
+     * Function used to create new rectangles and text within and adds them to the dashboard.
+     * Accepts a string that will match the label within the rectangle, and will be the rectangle and labels id.
+     * Accepts X and Y coordinates that will be used to place the rectangle on the dashboard.
+     * Accepts width and height whivh will be used to make the rectangle to a specific size.
+     */
     public void makeRectangle(String name, double x, double y, double width, double height){
-        //The text up top of the rectangle
+        // Create the text to go on the top of the rectangle
         Text text = new Text(name);
 
-        //Drawing the Reactangle
+        // Drawing the Rectangle
         Rectangle rectangle = new Rectangle();
 
+        // Set up all the properties of the rectangle.
         rectangle.setX(x);
         rectangle.setY(y);
         rectangle.setWidth(width);
@@ -697,14 +707,20 @@ public class HelloController implements Initializable{
         rectangle.setStroke(Color.BLACK);
         rectangle.setId(name);
 
+        // Set up all the properties of the label contained within the rectangle.
         text.setLayoutX(rectangle.getX() + 5);
         text.setLayoutY(rectangle.getY() + 10);
         text.setId(name+"text");
 
+        // Add objects to the AnchorPane.
         Farm.getChildren().add(rectangle);
         Farm.getChildren().add(text);
     }
 
+    /*
+     * Function used to delete the rectangles and text within on the dashboard.
+     * Accepts a string that will match the label and rectangle id.
+     */
     public void deleteRectangle(String name){
         // Create a temp variable to use lookup() function to find the rectangle id.
         String temp = "#"+name;
@@ -718,6 +734,7 @@ public class HelloController implements Initializable{
     public TreeItem<String> selectItem(){
         TreeItem<String> item = (TreeItem<String>) treeView.getSelectionModel().getSelectedItem();
 
+        // Check to see if the selected item is a branch or leaf and show the respective commands.
         if(item.isLeaf()){
             this.itemCmds.setVisible(true);
             this.itemContCmds.setVisible(false);
@@ -727,12 +744,14 @@ public class HelloController implements Initializable{
             this.itemContCmds.setVisible(true);
         }
 
+        // If drone is selected, show the "go home" button.
         if(item.getValue() == "Drone"){
             this.droneBtns2.setVisible(true);
         }else{
             this.droneBtns2.setVisible(false);
         }
 
+        // Testing purposes.
         if(item != null){
             System.out.println(item.getValue());
             selectedItem = item.getValue();
