@@ -1,6 +1,6 @@
 package com.example.dronecs420;
 
-public class ItemsClass {
+public class ItemsClass implements Visitable {
     private int price;
     private String name;
     private double Lx;
@@ -23,6 +23,18 @@ public class ItemsClass {
             return true;
         return false;
     }
+//    @Override
+//    public <E> boolean equals(E element){
+//        if (this == element)
+//            return true;
+//        if (element == null)
+//            return false;
+//        ItemsClass other = (ItemsClass) element;
+//        if (((ItemsClass) element).name == other.name)
+//            return true;
+//        return false;
+//
+//    }
 
     public ItemsClass(String iname, int iprice, double ix, double iy, int ilength, int iwidth, int iheight, int initial_price){
         this.name = iname;
@@ -116,5 +128,10 @@ public class ItemsClass {
 
     public void setCur_price(int cur_price) {
         this.cur_price = cur_price;
+    }
+
+    @Override
+    public int accept(Visitor visitor) {
+        return visitor.visit(this);
     }
 }

@@ -1,7 +1,8 @@
 package com.example.dronecs420;
 
 import java.util.ArrayList;
-public class ItemContainer extends ItemsClass {
+import java.util.Iterator;
+public class ItemContainer extends ItemsClass implements Visitable {
 
     ArrayList<ItemsClass> containerList = new ArrayList<ItemsClass>();
     // name field
@@ -24,6 +25,9 @@ public class ItemContainer extends ItemsClass {
     // height field
     private int height;
 
+    // price field
+    private int cur_price;
+
     @Override
     public boolean equals(Object obj) {
         if (this == obj)
@@ -35,11 +39,22 @@ public class ItemContainer extends ItemsClass {
             return true;
         return false;
     }
+//@Override
+//    public <E> boolean equals2(E element){
+//        if (this == element)
+//            return true;
+//        if (element == null)
+//            return false;
+//        ItemContainer other = (ItemContainer) element;
+//        if (((ItemContainer) element).name == other.name)
+//            return true;
+//        return false;
+//    }
 
     private final boolean container = true;
 
     // ItemContainer constructor
-    public ItemContainer(String containername, int containerprice, double containerx, double containery, int containerlength, int containerwidth, int containerheight) {
+    public ItemContainer(String containername, int containerprice, double containerx, double containery, int containerlength, int containerwidth, int containerheight, int cur_price) {
         // arguments
 
         // sets name field to containername
@@ -63,6 +78,7 @@ public class ItemContainer extends ItemsClass {
         // sets height to containerheight
         this.height = containerheight;
 
+        this.cur_price = cur_price;
     }
 
     public int getHeight() {
@@ -169,4 +185,18 @@ public class ItemContainer extends ItemsClass {
         this.containerList.add(item);
     }
 
+    @Override
+    public int getCur_price() {
+        return cur_price;
+    }
+
+    @Override
+    public void setCur_price(int cur_price) {
+        this.cur_price = cur_price;
+    }
+
+    @Override
+    public int accept(Visitor visitor) {
+        return visitor.visit(this);
+    }
 }

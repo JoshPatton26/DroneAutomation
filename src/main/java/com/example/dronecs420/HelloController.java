@@ -2,64 +2,27 @@ package com.example.dronecs420;
 
 import javafx.animation.*;
 import javafx.fxml.FXML;
-import javafx.scene.*;
 import javafx.scene.control.*;
 
-import java.net.URL;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
+
 import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ButtonBar.ButtonData;
-import javafx.scene.control.SpinnerValueFactory.IntegerSpinnerValueFactory;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Region;
-import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.stage.Stage;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
 import javafx.animation.PathTransition;
 import javafx.animation.RotateTransition;
-import javafx.fxml.FXML;
-import javafx.scene.Group;
-import javafx.scene.Scene;
-import javafx.scene.control.*;
-import java.net.URL;
-import java.net.URL;
-import java.util.Optional;
-import java.util.ResourceBundle;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
-import javafx.scene.control.ButtonBar.ButtonData;
-import javafx.scene.control.SpinnerValueFactory.IntegerSpinnerValueFactory;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
 import javafx.scene.shape.*;
-import javafx.stage.Stage;
-import javafx.scene.text.Text;
-import javafx.util.Duration;
-import javafx.scene.transform.*;
-
-
-import java.util.ResourceBundle;
 
 public class HelloController implements Initializable{
     @FXML
@@ -108,7 +71,7 @@ public class HelloController implements Initializable{
     @FXML
     void goHomeClick(ActionEvent event) {
         TranslateTransition translate = new TranslateTransition();
-        TreeItem<Object> commandCenter = new TreeItem<Object>(new ItemContainer("Command Center", 0, 174, 32, 100, 76, 66));
+        TreeItem<Object> commandCenter = new TreeItem<Object>(new ItemContainer("Command Center", 0, 174, 32, 100, 76, 66, 0));
 
 
         translate.setNode(ImageView);
@@ -176,7 +139,7 @@ public class HelloController implements Initializable{
         int itemIndex = -1;
         String type = "";
         ItemsClass item = new ItemsClass(selectedItem, 0, 0, 0, 0, 0, 0, 0);
-        ItemContainer itemContainer = new ItemContainer(selectedItem, 0, 0, 0, 0, 0, 0);
+        ItemContainer itemContainer = new ItemContainer(selectedItem, 0, 0, 0, 0, 0, 0, 0);
         for(int i = 0; i<itemList.size(); i++)
         {
             System.out.println(i + ": " + ((ItemsClass) itemList.get(i)).getName());
@@ -418,7 +381,7 @@ public class HelloController implements Initializable{
         String childName = defaultchild.getValue().toString();
 
         // Create new ItemContainer
-        ItemContainer container = new ItemContainer(containerName, 0, 50, 50, 50, 50, 50);
+        ItemContainer container = new ItemContainer(containerName, 0, 50, 50, 50, 50, 50, 0);
         System.out.println("Item container name: "+container.getName());
         itemList.add(container);
 
@@ -656,22 +619,22 @@ public class HelloController implements Initializable{
 
         //Branch_Items
         TreeItem<String> Command_Center = new TreeItem<>("Command_Center");
-        ItemContainer itemContainer = new ItemContainer("Command_Center", 125000, 150, 10, 0, 120, 100);
+        ItemContainer itemContainer = new ItemContainer("Command_Center", 125000, 150, 10, 0, 120, 100, 0);
         itemList.add(itemContainer);
         makeRectangle(Command_Center.getValue(), 150.0, 10.0, 120.0, 100.0); // Farm item #2 & 3
 
         TreeItem<String> Barn_Branch = new TreeItem<>("Barn");
-        itemContainer = new ItemContainer("Barn", 45000, 20, 150, 0, 100, 200);
+        itemContainer = new ItemContainer("Barn", 45000, 20, 150, 0, 100, 200, 0);
         itemList.add(itemContainer);
         makeRectangle(Barn_Branch.getValue(), 20.0, 150.0, 100.0, 200.0); // Farm item #4 & 5
 
         TreeItem<String> StorageBuilder_Branch = new TreeItem<>("Storage_Builder");
-        itemContainer = new ItemContainer("Storage_Builder", 75000, 335, 150, 0, 100, 200);
+        itemContainer = new ItemContainer("Storage_Builder", 75000, 335, 150, 0, 100, 200, 0);
         itemList.add(itemContainer);
         makeRectangle(StorageBuilder_Branch.getValue(), 335.0, 150.0, 100.0, 200.0); // Farm item #6 & 7
 
         TreeItem<String> CropField_Branch = new TreeItem<>("Crop_Field");
-        itemContainer = new ItemContainer("Crop_Field", 50000, 30, 400, 0, 400, 200);
+        itemContainer = new ItemContainer("Crop_Field", 50000, 30, 400, 0, 400, 200, 0);
         itemList.add(itemContainer);
         makeRectangle(CropField_Branch.getValue(), 30.0, 400.0, 400.0, 200.0); // Farm item #8 & 9
 
