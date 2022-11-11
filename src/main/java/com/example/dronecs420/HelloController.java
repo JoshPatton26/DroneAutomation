@@ -346,11 +346,18 @@ public class HelloController implements Initializable{
             System.out.println(result.get());
             
             if(type == "item") {
-            	(itemList.get(itemIndex)).setPrice(Integer.parseInt(result.get()));
-                System.out.println("Changed Price of " + (itemList.get(itemIndex)).getName() + " " + (itemList.get(itemIndex)).getPrice());
+                if(itemList.get(itemIndex).getPrice() == 0){
+                    (itemList.get(itemIndex)).setPrice(Integer.parseInt(result.get()));
+                    System.out.println("Changed Price of " + (itemList.get(itemIndex)).getName() + " " + (itemList.get(itemIndex)).getPrice());
+                    (itemList.get(itemIndex)).setCur_price(Integer.parseInt(result.get()));
+                    System.out.println("Changed Current Price of " + (itemList.get(itemIndex)).getName() + " " + (itemList.get(itemIndex)).getCur_price());
+                }else{
+                    (itemList.get(itemIndex)).setCur_price(Integer.parseInt(result.get()));
+                    System.out.println("Changed Current Price of " + (itemList.get(itemIndex)).getName() + " " + (itemList.get(itemIndex)).getCur_price());
+                }
             }else if (type == "itemContainer") {
-            	(containerList.get(itemIndex)).setPrice(Integer.parseInt(result.get()));
-                System.out.println("Changed Price of " + (containerList.get(itemIndex)).getName() + " " + (containerList.get(itemIndex)).getPrice());
+            	(containerList.get(itemIndex)).setCur_price(Integer.parseInt(result.get()));
+                System.out.println("Changed Price of " + (containerList.get(itemIndex)).getName() + " " + (containerList.get(itemIndex)).getCur_price());
             }
         }
     }
@@ -610,8 +617,16 @@ public class HelloController implements Initializable{
         if(result.isPresent()){
             System.out.println(result.get());
 
-            (containerList.get(itemIndex)).setPrice(Integer.parseInt(result.get()));
-            System.out.println("Changed Price of " + (containerList.get(itemIndex)).getName() + " " + (containerList.get(itemIndex)).getPrice());
+            if(containerList.get(itemIndex).getPrice() == 0){
+                (containerList.get(itemIndex)).setPrice(Integer.parseInt(result.get()));
+                System.out.println("Changed Price of " + (containerList.get(itemIndex)).getName() + " " + (containerList.get(itemIndex)).getPrice());
+                (containerList.get(itemIndex)).setCur_price(Integer.parseInt(result.get()));
+                System.out.println("Changed Current Price of " + (containerList.get(itemIndex)).getName() + " " + (containerList.get(itemIndex)).getCur_price());
+            }else{
+                (containerList.get(itemIndex)).setCur_price(Integer.parseInt(result.get()));
+                System.out.println("Changed Current Price of " + (containerList.get(itemIndex)).getName() + " " + (containerList.get(itemIndex)).getCur_price());
+            }
+            
         }
     }
 
@@ -858,9 +873,9 @@ public class HelloController implements Initializable{
 
     /*
      * Function used to create new rectangles and text within and adds them to the dashboard.
-     * Accepts a string that will match the label within the rectangle, and will be the rectangle and labels id.
+     * Accepts a string that will match the label within the rectangle, and will be the rectangle and labels ID.
      * Accepts X and Y coordinates that will be used to place the rectangle on the dashboard.
-     * Accepts width and height whivh will be used to make the rectangle to a specific size.
+     * Accepts width and height which will be used to make the rectangle to a specific size.
      */
     public void makeRectangle(String name, double x, double y, double width, double height){
         //Make sure the rectangles name doesn't have spaces
@@ -932,13 +947,20 @@ public class HelloController implements Initializable{
         }
 
         /* 
-         * Loops through the itemList to fine the matching item name and displays 
+         * Loops through the itemList to find the matching item name and displays 
          * the pruchase price and current market price to dashboard
         */
         for(int i=0; i<itemList.size();i++){
             if(item.getValue() == ((ItemsClass) itemList.get(i)).getName()){
                 purchasePriceValue.setText("$"+Integer.toString(((ItemsClass) itemList.get(i)).getPrice())+".00");
                 CurrentMarketValue.setText("$"+Integer.toString(((ItemsClass) itemList.get(i)).getCur_price())+".00");
+            }
+        }
+
+        for(int i=0; i<containerList.size();i++){
+            if(item.getValue() == ((ItemsClass) containerList.get(i)).getName()){
+                purchasePriceValue.setText("$"+Integer.toString(((ItemsClass) containerList.get(i)).getPrice())+".00");
+                CurrentMarketValue.setText("$"+Integer.toString(((ItemsClass) containerList.get(i)).getCur_price())+".00");
             }
         }
 
