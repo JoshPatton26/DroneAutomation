@@ -2,6 +2,7 @@ package com.example.dronecs420;
 
 public class ItemsClass {
     private int price;
+    private String parent;
     private String name;
     private double Lx;
     private double Ly;
@@ -24,8 +25,9 @@ public class ItemsClass {
         return false;
     }
 
-    public ItemsClass(String iname, int iprice, double ix, double iy, int ilength, int iwidth, int iheight, int initial_price){
-        this.name = iname;
+    public ItemsClass(String iparent, String iname, int iprice, double ix, double iy, int ilength, int iwidth, int iheight, int initial_price){
+        this.parent = iparent;
+    	this.name = iname;
         this.price = iprice;
         this.Lx = ix;
         this.Ly = iy;
@@ -100,6 +102,14 @@ public class ItemsClass {
 
     public void setName(String name) {
         this.name = name;
+    }
+    
+    public String getParent() {
+        return parent;
+    }
+
+    public void setParent(String parent) {
+        this.parent = parent;
     }
 
     public int getPrice() {

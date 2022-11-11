@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.scene.*;
 import javafx.scene.control.*;
 
+import java.io.*;
 import java.net.URL;
 import java.net.URL;
 import java.util.ArrayList;
@@ -32,8 +33,6 @@ import javafx.util.Duration;
 import javafx.animation.PathTransition;
 import javafx.animation.RotateTransition;
 import javafx.fxml.FXML;
-import javafx.scene.Group;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import java.net.URL;
 import java.net.URL;
@@ -91,8 +90,8 @@ public class HelloController implements Initializable{
 
     public String selectedItem = "";
 
-    public List<Object> itemList = new ArrayList<Object>();
-    //public List<ItemContainer> itemList = new ArrayList<ItemContainer>();
+    public List<ItemsClass> itemList = new ArrayList<ItemsClass>();
+    public List<ItemContainer> containerList = new ArrayList<ItemContainer>();
 
     @FXML
     private Label purchasePriceValue;
@@ -108,7 +107,7 @@ public class HelloController implements Initializable{
     @FXML
     void goHomeClick(ActionEvent event) {
         TranslateTransition translate = new TranslateTransition();
-        TreeItem<Object> commandCenter = new TreeItem<Object>(new ItemContainer("Command Center", 0, 174, 32, 100, 76, 66));
+        //TreeItem<Object> commandCenter = new TreeItem<Object>(new ItemContainer("Command Center", 0, 174, 32, 100, 76, 66));
 
 
         translate.setNode(ImageView);
@@ -175,21 +174,38 @@ public class HelloController implements Initializable{
 
         int itemIndex = -1;
         String type = "";
-        ItemsClass item = new ItemsClass(selectedItem, 0, 0, 0, 0, 0, 0, 0);
-        ItemContainer itemContainer = new ItemContainer(selectedItem, 0, 0, 0, 0, 0, 0);
-        for(int i = 0; i<itemList.size(); i++)
-        {
-            System.out.println(i + ": " + ((ItemsClass) itemList.get(i)).getName());
-        }
+        ItemsClass item = new ItemsClass(selectItem().getParent().getValue(), selectedItem, 0, 0, 0, 0, 0, 0, 0);
+        ItemContainer itemContainer = new ItemContainer(selectItem().getParent().getValue(), selectedItem, 0, 0, 0, 0, 0, 0);
 
-        if( itemList.indexOf(item) != -1) {
-            itemIndex = itemList.indexOf(item);
-            type = "item";
-        }else if( itemList.indexOf(itemContainer) != -1) {
-            itemIndex = itemList.indexOf(itemContainer);
-            type = "itemContainer";
+        try {
+        	for(int i=0; i<itemList.size(); i++) {
+        		String name = itemList.get(i).getName();
+        		if(name.equals(selectedItem)) {
+            		type = "item";
+            		itemIndex = i;
+            	}
+        	}
+        }catch(IndexOutOfBoundsException e) {
+        	for(int i=0; i<itemList.size();i++) {
+        		System.out.println(itemList.get(i).getName());
+        	}
+        	System.out.println("Not an item");
+        	System.out.println(e);
         }
-
+        
+        try {
+        	for(int i=0; i<containerList.size(); i++) {
+        		String name = containerList.get(i).getName();
+        		if(name.equals(selectedItem)) {
+            		type = "itemContainer";
+            		itemIndex= i;
+            	}
+        	}
+        }catch(IndexOutOfBoundsException e) {
+        	System.out.println("Not an item container");
+        	System.out.println(e);
+        }
+        
         String[] info = new String[2];
         info[0] = Integer.toString(itemIndex);
         info[1] = type;
@@ -207,11 +223,11 @@ public class HelloController implements Initializable{
         double y = -1;
 
         if(type == "item") {
-            x = ((ItemsClass) itemList.get(itemIndex)).getLx();
-            y = ((ItemsClass) itemList.get(itemIndex)).getLy();
+            x = (itemList.get(itemIndex)).getLx();
+            y = (itemList.get(itemIndex)).getLy();
         }else if (type == "itemContainer") {
-            x = ((ItemContainer) itemList.get(itemIndex)).getLx();
-            y = ((ItemContainer) itemList.get(itemIndex)).getLy();
+            x = (containerList.get(itemIndex)).getLx();
+            y = (containerList.get(itemIndex)).getLy();
         }
 
         System.out.println("x: " + x + ", y: " + y);
@@ -222,6 +238,7 @@ public class HelloController implements Initializable{
     void itemChangeDClick(ActionEvent event) {
         String[] info = getItemInfo();
         int itemIndex = Integer.parseInt(info[0]);
+        String type = info[1];
 
         // Create dialog box.
         Dialog<Double> changeLoc = new Dialog<>();
@@ -251,25 +268,31 @@ public class HelloController implements Initializable{
         Optional<Double> result = changeLoc.showAndWait();
         if(result.isPresent()){
             System.out.println(width.getText() + " " + height.getText());
-            System.out.println("Changed Width + Height of " + ((ItemsClass) itemList.get(itemIndex)).getName() + " " + ((ItemsClass) itemList.get(itemIndex)).getWidth() + " " + ((ItemsClass) itemList.get(itemIndex)).getHeight());
-            ((ItemsClass) itemList.get(itemIndex)).setWidth(Integer.parseInt(width.getText()));
-            ((ItemsClass) itemList.get(itemIndex)).setHeight(Integer.parseInt(height.getText()));
+            if(type == "item") {
+            	System.out.println("Changed Width + Height of " + (itemList.get(itemIndex)).getName() + " " + (itemList.get(itemIndex)).getWidth() + " " + (itemList.get(itemIndex)).getHeight());
+                (itemList.get(itemIndex)).setWidth(Integer.parseInt(width.getText()));
+                (itemList.get(itemIndex)).setHeight(Integer.parseInt(height.getText()));
+                
+                // Delete old rectangle.
+                deleteRectangle(selectItem().getValue().toString());
+                makeRectangle((itemList.get(itemIndex)).getName(), (itemList.get(itemIndex)).getLx(), (itemList.get(itemIndex)).getLy(), (itemList.get(itemIndex)).getWidth(), (itemList.get(itemIndex)).getHeight());
+            }else if (type == "itemContainer") {
+            	System.out.println("Changed Width + Height of " + (containerList.get(itemIndex)).getName() + " " + (containerList.get(itemIndex)).getWidth() + " " + (containerList.get(itemIndex)).getHeight());
+                (containerList.get(itemIndex)).setWidth(Integer.parseInt(width.getText()));
+                (containerList.get(itemIndex)).setHeight(Integer.parseInt(height.getText()));
+                
+             // Delete old rectangle.
+                deleteRectangle(selectItem().getValue().toString());
+                makeRectangle((containerList.get(itemIndex)).getName(), (containerList.get(itemIndex)).getLx(), (containerList.get(itemIndex)).getLy(), (containerList.get(itemIndex)).getWidth(), (containerList.get(itemIndex)).getHeight());
+            }
         }
-
-        //Assigning a new variable to change the txt field to double
-        double user_width = Double.parseDouble(width.getText());
-        double user_height = Double.parseDouble(height.getText());
-
-        // Delete old rectangle.
-        deleteRectangle(selectItem().getValue().toString());
-
-        makeRectangle(((ItemsClass) itemList.get(itemIndex)).getName(), ((ItemsClass) itemList.get(itemIndex)).getLx(), ((ItemsClass) itemList.get(itemIndex)).getLy(), ((ItemsClass) itemList.get(itemIndex)).getWidth(), ((ItemsClass) itemList.get(itemIndex)).getHeight());
     }
 
     @FXML
     void itemChangeLClick(ActionEvent event) {
         String[] info = getItemInfo();
         int itemIndex = Integer.parseInt(info[0]);
+        String type = info[1];
 
         // Create dialog box.
         Dialog<Double> changeDim = new Dialog<>();
@@ -298,26 +321,32 @@ public class HelloController implements Initializable{
         Optional<Double> result = changeDim.showAndWait();
         if(result.isPresent()){
             System.out.println(xvalue.getText() + " " + yvalue.getText());
-
-            ((ItemsClass) itemList.get(itemIndex)).setLx(Integer.parseInt(xvalue.getText()));
-            ((ItemsClass) itemList.get(itemIndex)).setLy(Integer.parseInt(yvalue.getText()));
-            System.out.println("Changed X + Y of " + ((ItemsClass) itemList.get(itemIndex)).getName() + " " + ((ItemsClass) itemList.get(itemIndex)).getLx() + " " + ((ItemsClass) itemList.get(itemIndex)).getLy());
+            
+            if(type == "item") {
+            	(itemList.get(itemIndex)).setLx(Integer.parseInt(xvalue.getText()));
+                (itemList.get(itemIndex)).setLy(Integer.parseInt(yvalue.getText()));
+                System.out.println("Changed X + Y of " + (itemList.get(itemIndex)).getName() + " " + (itemList.get(itemIndex)).getLx() + " " + (itemList.get(itemIndex)).getLy());
+                
+                // Delete old rectangle.
+                deleteRectangle(selectItem().getValue().toString());
+                makeRectangle((itemList.get(itemIndex)).getName(), (itemList.get(itemIndex)).getLx(), (itemList.get(itemIndex)).getLy(), (itemList.get(itemIndex)).getWidth(), (itemList.get(itemIndex)).getHeight());
+            }else if (type == "itemContainer") {
+            	(containerList.get(itemIndex)).setLx(Integer.parseInt(xvalue.getText()));
+                (containerList.get(itemIndex)).setLy(Integer.parseInt(yvalue.getText()));
+                System.out.println("Changed X + Y of " + (containerList.get(itemIndex)).getName() + " " + (containerList.get(itemIndex)).getLx() + " " + (containerList.get(itemIndex)).getLy());
+                
+                // Delete old rectangle.
+                deleteRectangle(selectItem().getValue().toString());
+                makeRectangle((containerList.get(itemIndex)).getName(), (containerList.get(itemIndex)).getLx(), (containerList.get(itemIndex)).getLy(), (containerList.get(itemIndex)).getWidth(), (containerList.get(itemIndex)).getHeight());
+            }
         }
-
-        //Assigning a new variable to change the txt field to double
-        double user_xvalue = Double.parseDouble(xvalue.getText());
-        double user_yvalue = Double.parseDouble(yvalue.getText());
-
-        // Delete old rectangle.
-        deleteRectangle(selectItem().getValue().toString());
-
-        makeRectangle(((ItemsClass) itemList.get(itemIndex)).getName(), ((ItemsClass) itemList.get(itemIndex)).getLx(), ((ItemsClass) itemList.get(itemIndex)).getLy(), ((ItemsClass) itemList.get(itemIndex)).getWidth(), ((ItemsClass) itemList.get(itemIndex)).getHeight());
     }
 
     @FXML
     void itemChangePClick(ActionEvent event) {
         String[] info = getItemInfo();
         int itemIndex = Integer.parseInt(info[0]);
+        String type = info[1];
 
         // Create the TextInputDialog box.
         TextInputDialog priceItem = new TextInputDialog();
@@ -329,9 +358,14 @@ public class HelloController implements Initializable{
         Optional<String> result = priceItem.showAndWait();
         if(result.isPresent()){
             System.out.println(result.get());
-
-            ((ItemsClass) itemList.get(itemIndex)).setPrice(Integer.parseInt(result.get()));
-            System.out.println("Changed Price of " + ((ItemsClass) itemList.get(itemIndex)).getName() + " " + ((ItemsClass) itemList.get(itemIndex)).getPrice());
+            
+            if(type == "item") {
+            	(itemList.get(itemIndex)).setPrice(Integer.parseInt(result.get()));
+                System.out.println("Changed Price of " + (itemList.get(itemIndex)).getName() + " " + (itemList.get(itemIndex)).getPrice());
+            }else if (type == "itemContainer") {
+            	(containerList.get(itemIndex)).setPrice(Integer.parseInt(result.get()));
+                System.out.println("Changed Price of " + (containerList.get(itemIndex)).getName() + " " + (containerList.get(itemIndex)).getPrice());
+            }
         }
     }
 
@@ -339,22 +373,37 @@ public class HelloController implements Initializable{
     void itemDeleteClick(ActionEvent event) {
         String[] info = getItemInfo();
         int itemIndex = Integer.parseInt(info[0]);
+        String type = info[1];
 
 
-        itemList.remove(itemIndex);
+        if(type == "item") {
+        	itemList.remove(itemIndex);
+        	
+        	TreeItem delete = (TreeItem)treeView.getSelectionModel().getSelectedItem();
+            System.out.println(delete);
+            boolean remove = delete.getParent().getChildren().remove(delete);
 
-        TreeItem delete = (TreeItem)treeView.getSelectionModel().getSelectedItem();
-        System.out.println(delete);
-        boolean remove = delete.getParent().getChildren().remove(delete);
+            // Delete rectangle.
+            System.out.println("item to be deleted string: " + delete.getValue().toString());
+            deleteRectangle(delete.getValue().toString());
+        }else if (type == "itemContainer") {
+        	containerList.remove(itemIndex);
+            
+        	TreeItem delete = (TreeItem)treeView.getSelectionModel().getSelectedItem();
+            System.out.println(delete);
+            boolean remove = delete.getParent().getChildren().remove(delete);
 
-        // Delete rectangle.
-        deleteRectangle(delete.getValue().toString());
+            // Delete rectangle.
+            System.out.println("item to be deleted string: " + delete.getValue().toString());
+            deleteRectangle(delete.getValue().toString());
+        }
     }
 
     @FXML
     void itemRenameClick(ActionEvent event) {
         String[] info = getItemInfo();
         int itemIndex = Integer.parseInt(info[0]);
+        String type = info[1];
 
         // Create the TextInputDialog box.
         TextInputDialog renameItem = new TextInputDialog();
@@ -366,63 +415,78 @@ public class HelloController implements Initializable{
         Optional<String> result = renameItem.showAndWait();
         if(result.isPresent()){
             System.out.println(result.get());
+            
+            if(type == "item") {
+            	(itemList.get(itemIndex)).setName(result.get());
+                System.out.println("Changed Name of " + (itemList.get(itemIndex)).getName());
+                
+             // Delete old rectangle.
+                deleteRectangle(selectItem().getValue().toString());
 
-            ((ItemsClass) itemList.get(itemIndex)).setName(result.get());
-            System.out.println("Changed Name of " + ((ItemsClass) itemList.get(itemIndex)).getName());
+                makeRectangle((itemList.get(itemIndex)).getName(), (itemList.get(itemIndex)).getLx(), (itemList.get(itemIndex)).getLy(), (itemList.get(itemIndex)).getWidth(), (itemList.get(itemIndex)).getHeight());
+                
+                // Rename TreeItem item value.
+                TreeItem<String> item = selectItem();
+                item.setValue(result.get());
+            }else if (type == "itemContainer") {
+            	(containerList.get(itemIndex)).setName(result.get());
+                System.out.println("Changed Name of " + (containerList.get(itemIndex)).getName());
+                
+                // Delete old rectangle.
+                deleteRectangle(selectItem().getValue().toString());
+
+                makeRectangle((containerList.get(itemIndex)).getName(), (containerList.get(itemIndex)).getLx(), (containerList.get(itemIndex)).getLy(), (containerList.get(itemIndex)).getWidth(), (containerList.get(itemIndex)).getHeight());
+                
+                // Rename TreeItem item value.
+                TreeItem<String> item = selectItem();
+                item.setValue(result.get());
+            }
         }
-
-        // Rename TreeItem item value.
-        TreeItem<String> item = selectItem();
-        item.setValue(result.get());
     }
 
     @FXML
     void itemContAddItemCClick(ActionEvent event) {
+        
         // Create the TextInputDialog box.
         TextInputDialog renameItem = new TextInputDialog();
         renameItem.setTitle("Add Item Container");
-        renameItem.setHeaderText("Enter new item container name: \nUse '_' instead of spaces");
         renameItem.setContentText("Name: ");
 
         // Capture the users input.
         Optional<String> result = renameItem.showAndWait();
         if(result.isPresent()){
             System.out.println(result.get());
+            
+            // Create new TreeItem branch node.
+            TreeItem<String> treeBranch = new TreeItem<>(result.get());
+
+            // Get parent (root node)
+            TreeItem<String> parent = selectItem();
+            parent.getChildren().add(treeBranch);
+
+            // Add default child so commands don't read it as a leaf.
+            String childName = (result.get() + " Child");
+            TreeItem<String> defaultchild = new TreeItem<>(childName);
+            treeBranch.getChildren().add(defaultchild);
+            
+            //Add Item Container
+            ItemContainer container = new ItemContainer(parent.getValue(), result.get(), 0, 0, 0, 0, 100, 75);
+            containerList.add(container);
+
+            // Add Default Item
+            ItemsClass newitem = new ItemsClass(container.getName(), childName, 0, 0, 0, 0, 50, 35, 0);
+            newitem.setName(result.get() +" Child");
+            container.addItem(newitem);
+            itemList.add(newitem);
+
+            System.out.println(newitem.getName());
+            
+            //Make Container Rectangle
+            makeRectangle(container.getName(), container.getLx(), container.getLy(), container.getWidth(), container.getHeight());
+            
+            //Make Child Rectangle
+            makeRectangle(newitem.getName(), newitem.getLx(), newitem.getLy(), newitem.getWidth(), newitem.getHeight());
         }
-
-        // //Add Item Container
-        // ItemContainer container = new ItemContainer(result.get(), 0, 0, 0, 0, 100, 75);
-        // itemList.add(container);
-
-        // Create new TreeItem branch node.
-        TreeItem<String> treeBranch = new TreeItem<>(result.get());
-
-        // Get parent (root node)
-        TreeItem<String> parent = selectItem();
-        parent.getChildren().add(treeBranch);
-
-        // Add default child so commands don't read it as a leaf.
-        TreeItem<String> defaultchild = new TreeItem<>("Default");
-        treeBranch.getChildren().add(defaultchild);
-
-        
-        //  IN PROGRESS -Josh
-        String containerName = result.get();
-        String childName = defaultchild.getValue().toString();
-
-        // Create new ItemContainer
-        ItemContainer container = new ItemContainer(containerName, 0, 50, 50, 50, 50, 50);
-        System.out.println("ItemContainer name: "+container.getName());
-
-        // // Create new item and add it to the item container.
-        ItemsClass newitem = new ItemsClass();
-        newitem.setName(childName);
-        container.addItem(newitem);
-
-        System.out.println(newitem.getName());
-        
-
-        makeRectangle(result.get(), 0, 0, 100.0, 75.0);
     }
 
     @FXML
@@ -430,28 +494,27 @@ public class HelloController implements Initializable{
         // Create the TextInputDialog box.
         TextInputDialog renameItem = new TextInputDialog();
         renameItem.setTitle("Add Item");
-        renameItem.setHeaderText("Enter new item name: \nUse '_' instead of spaces");
         renameItem.setContentText("Name: ");
 
         // Capture the users input.
         Optional<String> result = renameItem.showAndWait();
         if(result.isPresent()){
             System.out.println(result.get());
+            
+            // Create a new item.
+            String itemName = result.get();
+            ItemsClass item = new ItemsClass(selectItem().getValue(), itemName, 0, 0, 0, 0, 100, 75, 0);
+            itemList.add(item);
 
+            System.out.println(item.getName());
+
+            // Create new TreeItem leaf node.
+            TreeItem<String> treeItem = new TreeItem<>(result.get());
+            TreeItem<String> parent = selectItem();
+            parent.getChildren().add(treeItem);
+
+            makeRectangle(item.getName(), item.getLx(), item.getLy(), item.getHeight(), item.getWidth());
         }
-        // Create a new item.
-        String itemName = result.get();
-        ItemsClass item = new ItemsClass(itemName, 0, 0, 0, 0, 100, 75, 0);
-        itemList.add(item);
-
-        System.out.println(item.getName());
-
-        // Create new TreeItem leaf node.
-        TreeItem<String> treeItem = new TreeItem<>(result.get());
-        TreeItem<String> parent = selectItem();
-        parent.getChildren().add(treeItem);
-
-        makeRectangle(result.get(), 0, 0, 100.0, 75.0);
     }
 
     @FXML
@@ -488,15 +551,17 @@ public class HelloController implements Initializable{
         if(result.isPresent()){
             System.out.println(width.getText() + " " + height.getText());
 
-            ((ItemContainer) itemList.get(itemIndex)).setWidth(Integer.parseInt(width.getText()));
-            ((ItemContainer) itemList.get(itemIndex)).setHeight(Integer.parseInt(height.getText()));
-            System.out.println("Changed Width + Height of " + ((ItemContainer) itemList.get(itemIndex)).getName() + " " + ((ItemContainer) itemList.get(itemIndex)).getWidth() + " " + ((ItemContainer) itemList.get(itemIndex)).getHeight());
+            (containerList.get(itemIndex)).setWidth(Integer.parseInt(width.getText()));
+            (containerList.get(itemIndex)).setHeight(Integer.parseInt(height.getText()));
+            System.out.println("Changed Width + Height of " + (containerList.get(itemIndex)).getName() + " " + (containerList.get(itemIndex)).getWidth() + " " + (containerList.get(itemIndex)).getHeight());
+            
+         // Delete old rectangle.
+            deleteRectangle(selectItem().getValue().toString());
+
+            makeRectangle((containerList.get(itemIndex)).getName(), (containerList.get(itemIndex)).getLx(), (containerList.get(itemIndex)).getLy(), (containerList.get(itemIndex)).getWidth(), (containerList.get(itemIndex)).getHeight());
         }
 
-        // Delete old rectangle.
-        deleteRectangle(selectItem().getValue().toString());
-
-        makeRectangle(((ItemContainer) itemList.get(itemIndex)).getName(), ((ItemContainer) itemList.get(itemIndex)).getLx(), ((ItemContainer) itemList.get(itemIndex)).getLy(), ((ItemContainer) itemList.get(itemIndex)).getWidth(), ((ItemContainer) itemList.get(itemIndex)).getHeight());
+        
     }
 
     @FXML
@@ -532,18 +597,15 @@ public class HelloController implements Initializable{
         if(result.isPresent()){
             System.out.println(xvalue.getText() + " " + yvalue.getText());
 
-            ((ItemContainer) itemList.get(itemIndex)).setLx(Integer.parseInt(xvalue.getText()));
-            ((ItemContainer) itemList.get(itemIndex)).setLy(Integer.parseInt(yvalue.getText()));
-            System.out.println("Changed X + Y of " + ((ItemContainer) itemList.get(itemIndex)).getName() + " " + ((ItemContainer) itemList.get(itemIndex)).getLx() + " " + ((ItemContainer) itemList.get(itemIndex)).getLy());
+            (containerList.get(itemIndex)).setLx(Integer.parseInt(xvalue.getText()));
+            (containerList.get(itemIndex)).setLy(Integer.parseInt(yvalue.getText()));
+            System.out.println("Changed X + Y of " + (containerList.get(itemIndex)).getName() + " " + (containerList.get(itemIndex)).getLx() + " " + (containerList.get(itemIndex)).getLy());
+            
+         // Delete old rectangle.
+            deleteRectangle(selectItem().getValue().toString());
+
+            makeRectangle((containerList.get(itemIndex)).getName(), (containerList.get(itemIndex)).getLx(), (containerList.get(itemIndex)).getLy(), (containerList.get(itemIndex)).getWidth(), (containerList.get(itemIndex)).getHeight());
         }
-
-        double user_xvalue = Double.parseDouble(xvalue.getText());
-        double user_yvalue = Double.parseDouble(yvalue.getText());
-
-        // Delete old rectangle.
-        deleteRectangle(selectItem().getValue().toString());
-
-        makeRectangle(((ItemContainer) itemList.get(itemIndex)).getName(), ((ItemContainer) itemList.get(itemIndex)).getLx(), ((ItemContainer) itemList.get(itemIndex)).getLy(), ((ItemContainer) itemList.get(itemIndex)).getWidth(), ((ItemContainer) itemList.get(itemIndex)).getHeight());
         
     }
 
@@ -563,8 +625,8 @@ public class HelloController implements Initializable{
         if(result.isPresent()){
             System.out.println(result.get());
 
-            ((ItemContainer) itemList.get(itemIndex)).setPrice(Integer.parseInt(result.get()));
-            System.out.println("Changed Price of " + ((ItemContainer) itemList.get(itemIndex)).getName() + " " + ((ItemContainer) itemList.get(itemIndex)).getPrice());
+            (containerList.get(itemIndex)).setPrice(Integer.parseInt(result.get()));
+            System.out.println("Changed Price of " + (containerList.get(itemIndex)).getName() + " " + (containerList.get(itemIndex)).getPrice());
         }
     }
 
@@ -574,7 +636,7 @@ public class HelloController implements Initializable{
         int itemIndex = Integer.parseInt(info[0]);
 
         if(Farm.getChildren() == null){
-            itemList.remove(itemIndex);
+            containerList.remove(itemIndex);
             TreeItem delete = (TreeItem)treeView.getSelectionModel().getSelectedItem();
             boolean remove = delete.getParent().getChildren().remove(delete);
 
@@ -606,27 +668,160 @@ public class HelloController implements Initializable{
         renameItem.setTitle("Rename");
         renameItem.setHeaderText("Enter new name: ");
         renameItem.setContentText("Name: ");
-
+        
         // Capture the users input.
         Optional<String> result = renameItem.showAndWait();
         if(result.isPresent()){
             System.out.println(result.get());
 
-            ((ItemContainer) itemList.get(itemIndex)).setName(result.get());
-            System.out.println("Changed Name of " + ((ItemContainer) itemList.get(itemIndex)).getName());
+            (containerList.get(itemIndex)).setName(result.get());
+            System.out.println("Changed Name of " + (containerList.get(itemIndex)).getName());
+            
+            // Delete old rectangle.
+            deleteRectangle(selectItem().getValue().toString());
+
+            makeRectangle((containerList.get(itemIndex)).getName(), (containerList.get(itemIndex)).getLx(), (containerList.get(itemIndex)).getLy(), (containerList.get(itemIndex)).getWidth(), (containerList.get(itemIndex)).getHeight());
+            
+            // Rename TreeItem item container value.
+            TreeItem<String> item = selectItem();
+            item.setValue(result.get());
         }
-
-        // Rename TreeItem item container value.
-        TreeItem<String> item = selectItem();
-        item.setValue(result.get());
-
-        // Rename the itemContainer object.
-        //ItemContainer item = searchItems(selectItem().toString(), item);
     }
 
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
+    	String storagePath = "src/main/resources/com/example/dronecs420/storage.txt";
+    	File storageFile = new File(storagePath);
+    	FileReader fr = null;
+    	BufferedReader reader = null;
+    	
+		try {
+			fr = new FileReader(storageFile);
+			
+		} catch (FileNotFoundException e) {
+			System.out.println("ERROR: Failed to open file reader for storage file");
+			e.printStackTrace();
+		}
+    	
+		reader = new BufferedReader(fr);
+		String line = null;
+		String current = null;
+		String rest = null;
+		ItemsClass item = null;
+		ItemContainer container = null;
+		List<TreeItem<String>> treeContainers = new ArrayList<TreeItem<String>>();
+		
+    	try {
+    		while ((line = reader.readLine()) != null) {
+    			current = line.substring(0, line.indexOf(","));
+    			rest = line.substring(line.indexOf(",")+1, line.length());
+    			
+    			if(current.equals("item")) {
+    				current = rest.substring(0, rest.indexOf(","));
+    				String parent = current;
+    				
+    				rest = rest.substring(rest.indexOf(",")+1, rest.length());
+    				current = rest.substring(0, rest.indexOf(","));
+    				String name = current;
+    				
+    				rest = rest.substring(rest.indexOf(",")+1, rest.length());
+    				current = rest.substring(0, rest.indexOf(","));
+    				int price = Integer.parseInt(current);
 
+    				rest = rest.substring(rest.indexOf(",")+1, rest.length());
+    				current = rest.substring(0, rest.indexOf(","));
+    				double x = Double.parseDouble(current);
+
+    				rest = rest.substring(rest.indexOf(",")+1, rest.length());
+    				current = rest.substring(0, rest.indexOf(","));
+    				double y = Double.parseDouble(current);
+    				
+    				rest = rest.substring(rest.indexOf(",")+1, rest.length());
+    				current = rest.substring(0, rest.indexOf(","));
+    				int length = Integer.parseInt(current);
+    				
+    				rest = rest.substring(rest.indexOf(",")+1, rest.length());
+    				current = rest.substring(0, rest.indexOf(","));
+    				int width = Integer.parseInt(current);
+    				
+    				rest = rest.substring(rest.indexOf(",")+1, rest.length());
+    				current = rest.substring(0, rest.indexOf(","));
+    				int height = Integer.parseInt(current);
+    				
+    				rest = rest.substring(rest.indexOf(",")+1, rest.length());
+    				current = rest.substring(0, rest.indexOf(";"));
+    				int initialPrice = Integer.parseInt(current);
+    				
+    				item = new ItemsClass(parent, name, price, x, y, length, width, height, initialPrice);
+    		        itemList.add(item);
+    		        
+    		        TreeItem<String> node = new TreeItem<>(name);
+    		        makeRectangle(name, x, y, width, height);
+    		        
+    		        treeContainers.add(node);
+    			}else if(current.equals("itemContainer")) {
+    				current = rest.substring(0, rest.indexOf(","));
+    				String parent = current;
+    				
+    				rest = rest.substring(rest.indexOf(",")+1, rest.length());
+    				current = rest.substring(0, rest.indexOf(","));
+    				String name = current;
+    				
+    				rest = rest.substring(rest.indexOf(",")+1, rest.length());
+    				current = rest.substring(0, rest.indexOf(","));
+    				int price = Integer.parseInt(current);
+
+    				rest = rest.substring(rest.indexOf(",")+1, rest.length());
+    				current = rest.substring(0, rest.indexOf(","));
+    				double x = Double.parseDouble(current);
+
+    				rest = rest.substring(rest.indexOf(",")+1, rest.length());
+    				current = rest.substring(0, rest.indexOf(","));
+    				double y = Double.parseDouble(current);
+    				
+    				rest = rest.substring(rest.indexOf(",")+1, rest.length());
+    				current = rest.substring(0, rest.indexOf(","));
+    				int length = Integer.parseInt(current);
+    				
+    				rest = rest.substring(rest.indexOf(",")+1, rest.length());
+    				current = rest.substring(0, rest.indexOf(","));
+    				int width = Integer.parseInt(current);
+    				
+    				rest = rest.substring(rest.indexOf(",")+1, rest.length());
+    				current = rest.substring(0, rest.indexOf(";"));
+    				int height = Integer.parseInt(current);
+    				
+    				container = new ItemContainer(parent, name, price, x, y, length, width, height);
+    		        containerList.add(container);
+    		        
+    		        TreeItem<String> node = new TreeItem<>(name);
+    		        makeRectangle(name, x, y, width, height);
+    		        
+    		        treeContainers.add(node);
+    			}
+    		 }
+    		formTree(treeContainers);
+		} catch (IOException e) {
+			System.out.println("ERROR: Failed to read storage file");
+			e.printStackTrace();
+		}
+    	
+    	for(int i=0; i<itemList.size(); i++) {
+    		System.out.println(itemList.get(i));
+    	}
+    	
+    	System.out.println(itemList.size());		
+    			
+    	/*
+    	 try {
+			storageFile.createNewFile();
+		} catch (IOException e) {
+			System.out.println("ERROR: Failed to write to storage file");
+			e.printStackTrace();
+		}
+    	 */
+    	
+    	/*
         TreeItem<String> rootItem = new TreeItem<>("Root");
         rootItem.setExpanded(true);
 
@@ -679,11 +874,69 @@ public class HelloController implements Initializable{
         //Add all the Branches
         rootItem.getChildren().addAll(Command_Center, Barn_Branch, StorageBuilder_Branch, CropField_Branch);
 
-        treeView.setRoot(rootItem);
+        treeView.setRoot(rootItem);*/
+    }
+    
+    public void formTree(List<TreeItem<String>> treeContainers){
+    	List<TreeItem<String>> addedContainers = new ArrayList<TreeItem<String>>();
+    	//Set root node
+		TreeItem<String> rootItem = new TreeItem<>("Root");
+        rootItem.setExpanded(true);
+        
+    	TreeItem<String> parent;
+    	TreeItem<String> child;
+    	for(int i=0; i<treeContainers.size(); i++) {
+    		parent = treeContainers.get(i);
+    		for(int j=0; j<treeContainers.size(); j++) {
+        		child = treeContainers.get(j);
+        		for(int z=0; z<itemList.size(); z++) {
+        			if(itemList.get(z).getName().equals(child.getValue())) {
+        				String itemParent = ((ItemsClass) itemList.get(z)).getParent();
+        				if((itemParent.equals(parent.getValue()))) {
+            				if(addedContainers.indexOf(child) == -1) {
+            					addedContainers.add(child);
+            					parent.getChildren().add(child);
+                				System.out.println("added to container");
+            				}
+            			}else if((itemParent.equals("Root"))) {
+            				if(addedContainers.indexOf(child) == -1) {
+            					addedContainers.add(child);
+            					rootItem.getChildren().add(child);
+                				System.out.println("added to root");
+            				}
+            			}
+        			}
+  
+        		}
+        		for(int y=0; y<containerList.size(); y++) {
+        			if(((containerList.get(y)).getName().equals(child.getValue()))) {
+        				String containerParent = (containerList.get(y)).getParent();
+        				if(((containerParent.equals(parent.getValue())))) {
+        					if(addedContainers.indexOf(child) == -1) {
+            					addedContainers.add(child);
+            					parent.getChildren().add(child);
+                				System.out.println("added to container");
+            				}
+            			}else if((containerParent.equals("Root"))) {
+            				if(addedContainers.indexOf(child) == -1) {
+            					addedContainers.add(child);
+            					rootItem.getChildren().add(child);
+                				System.out.println("added to root");
+            				}
+            			}
+        			}
+        		}
+        	}
+    	}
+    	
+    	treeView.setRoot(rootItem);
     }
 
     public void makeRectangle(String name, double x, double y, double width, double height){
-        //The text up top of the rectangle
+        //Make sure the rectangles name doesn't have spaces
+    	name = name.replaceAll(" ", "_");
+    	
+    	//The text up top of the rectangle
         Text text = new Text(name);
 
         //Drawing the Reactangle
@@ -707,7 +960,7 @@ public class HelloController implements Initializable{
 
     public void deleteRectangle(String name){
         // Create a temp variable to use lookup() function to find the rectangle id.
-        String temp = "#"+name;
+        String temp = "#"+name.replaceAll(" ", "_");
 
         // Remove the rectangle and text based off the id.
         Farm.getChildren().remove(Farm.lookup(temp));
