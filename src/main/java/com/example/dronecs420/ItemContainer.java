@@ -5,24 +5,13 @@ import java.util.Iterator;
 public class ItemContainer extends ItemsClass implements Visitable {
 
     ArrayList<ItemsClass> containerList = new ArrayList<ItemsClass>();
-    // name field
+    private String parent;
     private String name;
-    // price field
     private int price;
-
-    //  x Location field
     private double Lx;
-
-    // y location field
     private double Ly;
-
-    // length field
     private int length;
-
-    // width field
     private int width;
-
-    // height field
     private int height;
 
     // price field
@@ -53,31 +42,15 @@ public class ItemContainer extends ItemsClass implements Visitable {
 
     private final boolean container = true;
 
-    // ItemContainer constructor
-    public ItemContainer(String containername, int containerprice, double containerx, double containery, int containerlength, int containerwidth, int containerheight, int cur_price) {
-        // arguments
-
-        // sets name field to containername
-        this.name = containername;
-
-        // sets price field to containerprice
-        this.price = containerprice;
-
-        // sets x location to containerx
-        this.Lx = containerx;
-
-        // sets y location to containery
-        this.Ly = containery;
-
-        // sets length to containerlength
-        this.length = containerlength;
-
-        // sets width to containerwidth
-        this.width = containerwidth;
-
-        // sets height to containerheight
-        this.height = containerheight;
-
+    public ItemContainer(String cparent, String cname, int cprice, double cx, double cy, int clength, int cwidth, int cheight) {
+    	this.parent = cparent;
+        this.name = cname;
+        this.price = cprice;
+        this.Lx = cx;
+        this.Ly = cy;
+        this.length = clength;
+        this.width = cwidth;
+        this.height = cheight;
         this.cur_price = cur_price;
     }
 
@@ -127,6 +100,14 @@ public class ItemContainer extends ItemsClass implements Visitable {
 
     public void setName(String name) {
         this.name = name;
+    }
+    
+    public void setParent(String parent) {
+        this.parent = parent;
+    }
+    
+    public String getParent() {
+        return parent;
     }
 
     public int getPrice() {
