@@ -345,6 +345,7 @@ public class HelloController implements Initializable{
         if(result.isPresent()){
             System.out.println(result.get());
             
+            // If price is equal to 0, set both price and cur_price, else just change cur_price.
             if(type == "item") {
                 if(itemList.get(itemIndex).getPrice() == 0){
                     (itemList.get(itemIndex)).setPrice(Integer.parseInt(result.get()));
@@ -617,6 +618,7 @@ public class HelloController implements Initializable{
         if(result.isPresent()){
             System.out.println(result.get());
 
+            // If price is equal to 0, set both price and cur_price, else just change cur_price.
             if(containerList.get(itemIndex).getPrice() == 0){
                 (containerList.get(itemIndex)).setPrice(Integer.parseInt(result.get()));
                 System.out.println("Changed Price of " + (containerList.get(itemIndex)).getName() + " " + (containerList.get(itemIndex)).getPrice());
@@ -957,6 +959,10 @@ public class HelloController implements Initializable{
             }
         }
 
+        /* 
+         * Loops through the containerList to find the matching item container name and displays 
+         * the pruchase price and current market price to dashboard
+        */
         for(int i=0; i<containerList.size();i++){
             if(item.getValue() == ((ItemsClass) containerList.get(i)).getName()){
                 purchasePriceValue.setText("$"+Integer.toString(((ItemsClass) containerList.get(i)).getPrice())+".00");
