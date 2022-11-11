@@ -63,9 +63,9 @@
                         <Button mnemonicParsing="false" onAction="#scanFarmBtn" text="Scan Farm" />
                      </children>
                   </VBox>
-                  <VBox fx:id="droneBtns2" layoutX="118.0" layoutY="567.0" prefHeight="27.0" prefWidth="71.0" spacing="5.0" visible="false">
+                  <VBox fx:id="droneBtns2" layoutX="118.0" layoutY="570.0" prefHeight="27.0" prefWidth="71.0" spacing="5.0" visible="false">
                      <children>
-                        <Button fx:id="goHome" mnemonicParsing="false" onAction="#goHomeClick" text="Go Home" />
+                        <Button fx:id="goHome" mnemonicParsing="false" onAction="#goHomeClick" prefHeight="26.0" prefWidth="77.0" text="Go Home" />
                      </children>
                   </VBox>
                   <Label layoutX="80.0" layoutY="465.0" text="Purchase Price:">

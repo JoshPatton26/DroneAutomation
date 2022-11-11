@@ -2,32 +2,23 @@ package com.example.dronecs420;
 
 import javafx.animation.*;
 import javafx.fxml.FXML;
-import javafx.scene.*;
 import javafx.scene.control.*;
 
 import java.io.*;
-import java.net.URL;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
+
 import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ButtonBar.ButtonData;
-import javafx.scene.control.SpinnerValueFactory.IntegerSpinnerValueFactory;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Region;
-import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.stage.Stage;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
 import javafx.animation.PathTransition;
@@ -52,13 +43,6 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.*;
-import javafx.stage.Stage;
-import javafx.scene.text.Text;
-import javafx.util.Duration;
-import javafx.scene.transform.*;
-
-
-import java.util.ResourceBundle;
 
 public class HelloController implements Initializable{
     @FXML
@@ -108,6 +92,7 @@ public class HelloController implements Initializable{
     void goHomeClick(ActionEvent event) {
         TranslateTransition translate = new TranslateTransition();
         //TreeItem<Object> commandCenter = new TreeItem<Object>(new ItemContainer("Command Center", 0, 174, 32, 100, 76, 66));
+
 
 
         translate.setNode(ImageView);
@@ -174,6 +159,7 @@ public class HelloController implements Initializable{
 
         int itemIndex = -1;
         String type = "";
+
         ItemsClass item = new ItemsClass(selectItem().getParent().getValue(), selectedItem, 0, 0, 0, 0, 0, 0, 0);
         ItemContainer itemContainer = new ItemContainer(selectItem().getParent().getValue(), selectedItem, 0, 0, 0, 0, 0, 0);
 
@@ -375,7 +361,6 @@ public class HelloController implements Initializable{
         int itemIndex = Integer.parseInt(info[0]);
         String type = info[1];
 
-
         if(type == "item") {
         	itemList.remove(itemIndex);
         	
@@ -404,6 +389,9 @@ public class HelloController implements Initializable{
         String[] info = getItemInfo();
         int itemIndex = Integer.parseInt(info[0]);
         String type = info[1];
+
+        // Store the old name before changing the ItemClass object name.
+        String old_name = selectItem().getValue();
 
         // Create the TextInputDialog box.
         TextInputDialog renameItem = new TextInputDialog();
@@ -560,8 +548,6 @@ public class HelloController implements Initializable{
 
             makeRectangle((containerList.get(itemIndex)).getName(), (containerList.get(itemIndex)).getLx(), (containerList.get(itemIndex)).getLy(), (containerList.get(itemIndex)).getWidth(), (containerList.get(itemIndex)).getHeight());
         }
-
-        
     }
 
     @FXML
@@ -606,7 +592,6 @@ public class HelloController implements Initializable{
 
             makeRectangle((containerList.get(itemIndex)).getName(), (containerList.get(itemIndex)).getLx(), (containerList.get(itemIndex)).getLy(), (containerList.get(itemIndex)).getWidth(), (containerList.get(itemIndex)).getHeight());
         }
-        
     }
 
     @FXML
@@ -662,6 +647,9 @@ public class HelloController implements Initializable{
     void itemContRenameClick(ActionEvent event) {
         String[] info = getItemInfo();
         int itemIndex = Integer.parseInt(info[0]);
+
+        // Store the old name before changing the ItemClass object name.
+        String old_name = selectItem().getValue();
 
         // Create the TextInputDialog box.
         TextInputDialog renameItem = new TextInputDialog();
@@ -868,16 +856,23 @@ public class HelloController implements Initializable{
     	treeView.setRoot(rootItem);
     }
 
+    /*
+     * Function used to create new rectangles and text within and adds them to the dashboard.
+     * Accepts a string that will match the label within the rectangle, and will be the rectangle and labels id.
+     * Accepts X and Y coordinates that will be used to place the rectangle on the dashboard.
+     * Accepts width and height whivh will be used to make the rectangle to a specific size.
+     */
     public void makeRectangle(String name, double x, double y, double width, double height){
         //Make sure the rectangles name doesn't have spaces
-    	name = name.replaceAll(" ", "_");
+    	  name = name.replaceAll(" ", "_");
     	
-    	//The text up top of the rectangle
+    	  //The text up top of the rectangle
         Text text = new Text(name);
 
-        //Drawing the Reactangle
+        // Drawing the Rectangle
         Rectangle rectangle = new Rectangle();
 
+        // Set up all the properties of the rectangle.
         rectangle.setX(x);
         rectangle.setY(y);
         rectangle.setWidth(width);
@@ -886,14 +881,20 @@ public class HelloController implements Initializable{
         rectangle.setStroke(Color.BLACK);
         rectangle.setId(name);
 
+        // Set up all the properties of the label contained within the rectangle.
         text.setLayoutX(rectangle.getX() + 5);
         text.setLayoutY(rectangle.getY() + 10);
         text.setId(name+"text");
 
+        // Add objects to the AnchorPane.
         Farm.getChildren().add(rectangle);
         Farm.getChildren().add(text);
     }
 
+    /*
+     * Function used to delete the rectangles and text within on the dashboard.
+     * Accepts a string that will match the label and rectangle id.
+     */
     public void deleteRectangle(String name){
         // Create a temp variable to use lookup() function to find the rectangle id.
         String temp = "#"+name.replaceAll(" ", "_");
@@ -907,6 +908,7 @@ public class HelloController implements Initializable{
     public TreeItem<String> selectItem(){
         TreeItem<String> item = (TreeItem<String>) treeView.getSelectionModel().getSelectedItem();
 
+        // Check to see if the selected item is a branch or leaf and show the respective commands.
         if(item.isLeaf()){
             this.itemCmds.setVisible(true);
             this.itemContCmds.setVisible(false);
@@ -916,20 +918,22 @@ public class HelloController implements Initializable{
             this.itemContCmds.setVisible(true);
         }
 
+        // If drone is selected, show the "go home" button.
         if(item.getValue() == "Drone"){
             this.droneBtns2.setVisible(true);
         }else{
             this.droneBtns2.setVisible(false);
         }
 
+        // Testing purposes.
         if(item != null){
             System.out.println(item.getValue());
             selectedItem = item.getValue();
         }
 
         /* 
-            Loops through the itemList to fine the matching item name and displays 
-            the pruchase price and current market price to dashboard
+         * Loops through the itemList to fine the matching item name and displays 
+         * the pruchase price and current market price to dashboard
         */
         for(int i=0; i<itemList.size();i++){
             if(item.getValue() == ((ItemsClass) itemList.get(i)).getName()){
