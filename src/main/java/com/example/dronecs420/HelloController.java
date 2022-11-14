@@ -442,7 +442,9 @@ public class HelloController implements Initializable{
 
     @FXML
     void itemContAddItemCClick(ActionEvent event) {
-        
+        // Used to determine whether the given name matches any existing objects.
+        boolean matching = false;
+
         // Create the TextInputDialog box.
         TextInputDialog renameItem = new TextInputDialog();
         renameItem.setTitle("Add Item Container");
@@ -452,41 +454,49 @@ public class HelloController implements Initializable{
         Optional<String> result = renameItem.showAndWait();
         if(result.isPresent()){
             System.out.println(result.get());
-            
-            // Create new TreeItem branch node.
-            TreeItem<String> treeBranch = new TreeItem<>(result.get());
 
-            // Get parent (root node)
-            TreeItem<String> parent = selectItem();
-            parent.getChildren().add(treeBranch);
-
-            // Add default child so commands don't read it as a leaf.
-            String childName = (result.get() + " Child");
-            TreeItem<String> defaultchild = new TreeItem<>(childName);
-            treeBranch.getChildren().add(defaultchild);
+            // Call matchingName() function and save result.
+            matching = matchingName(result.get());
             
-            //Add Item Container
-            ItemContainer container = new ItemContainer(parent.getValue(), result.get(), 0, 0, 0, 0, 100, 75);
-            containerList.add(container);
+            if(matching == false){
+                // Create new TreeItem branch node.
+                TreeItem<String> treeBranch = new TreeItem<>(result.get());
 
-            // Add Default Item
-            ItemsClass newitem = new ItemsClass(container.getName(), childName, 0, 0, 0, 0, 50, 35, 0);
-            newitem.setName(result.get() +" Child");
-            container.addItem(newitem);
-            itemList.add(newitem);
+                // Get parent (root node)
+                TreeItem<String> parent = selectItem();
+                parent.getChildren().add(treeBranch);
 
-            System.out.println(newitem.getName());
-            
-            //Make Container Rectangle
-            makeRectangle(container.getName(), container.getLx(), container.getLy(), container.getWidth(), container.getHeight());
-            
-            //Make Child Rectangle
-            makeRectangle(newitem.getName(), newitem.getLx(), newitem.getLy(), newitem.getWidth(), newitem.getHeight());
+                // Add default child so commands don't read it as a leaf.
+                String childName = (result.get() + " Child");
+                TreeItem<String> defaultchild = new TreeItem<>(childName);
+                treeBranch.getChildren().add(defaultchild);
+                
+                //Add Item Container
+                ItemContainer container = new ItemContainer(parent.getValue(), result.get(), 0, 0, 0, 0, 100, 75);
+                containerList.add(container);
+
+                // Add Default Item
+                ItemsClass newitem = new ItemsClass(container.getName(), childName, 0, 0, 0, 0, 50, 35, 0);
+                newitem.setName(result.get() +" Child");
+                container.addItem(newitem);
+                itemList.add(newitem);
+
+                System.out.println(newitem.getName());
+                
+                //Make Container Rectangle
+                makeRectangle(container.getName(), container.getLx(), container.getLy(), container.getWidth(), container.getHeight());
+                
+                //Make Child Rectangle
+                makeRectangle(newitem.getName(), newitem.getLx(), newitem.getLy(), newitem.getWidth(), newitem.getHeight());
+            }
         }
     }
 
     @FXML
     void itemContAddItemClick(ActionEvent event) {
+        // Used to determine whether the given name matches any existing objects.
+        boolean matching = false;
+
         // Create the TextInputDialog box.
         TextInputDialog renameItem = new TextInputDialog();
         renameItem.setTitle("Add Item");
@@ -496,20 +506,25 @@ public class HelloController implements Initializable{
         Optional<String> result = renameItem.showAndWait();
         if(result.isPresent()){
             System.out.println(result.get());
-            
-            // Create a new item.
-            String itemName = result.get();
-            ItemsClass item = new ItemsClass(selectItem().getValue(), itemName, 0, 0, 0, 0, 100, 75, 0);
-            itemList.add(item);
 
-            System.out.println(item.getName());
+            // Call matchingName() function and save result.
+            matching = matchingName(result.get());
 
-            // Create new TreeItem leaf node.
-            TreeItem<String> treeItem = new TreeItem<>(result.get());
-            TreeItem<String> parent = selectItem();
-            parent.getChildren().add(treeItem);
+            if(matching = false){
+                // Create a new item.
+                String itemName = result.get();
+                ItemsClass item = new ItemsClass(selectItem().getValue(), itemName, 0, 0, 0, 0, 100, 75, 0);
+                itemList.add(item);
 
-            makeRectangle(item.getName(), item.getLx(), item.getLy(), item.getHeight(), item.getWidth());
+                System.out.println(item.getName());
+
+                // Create new TreeItem leaf node.
+                TreeItem<String> treeItem = new TreeItem<>(result.get());
+                TreeItem<String> parent = selectItem();
+                parent.getChildren().add(treeItem);
+
+                makeRectangle(item.getName(), item.getLx(), item.getLy(), item.getHeight(), item.getWidth());
+            }  
         }
     }
 
@@ -919,6 +934,54 @@ public class HelloController implements Initializable{
         // Remove the rectangle and text based off the id.
         Farm.getChildren().remove(Farm.lookup(temp));
         Farm.getChildren().remove(Farm.lookup(temp+"text"));
+    }
+
+    public boolean matchingName(String name){
+        boolean match = false;
+
+        // Loop through all ItemClass objects and see if name matches. If so, set match to true.
+        for(int i=0; i<itemList.size(); i++){
+            if(name.equals(itemList.get(i).getName())){
+                // Set the matching variable to true.
+                match = true;
+
+                // Create dialog box.
+                Dialog<Double> errmsg = new Dialog<>();
+                errmsg.setTitle("ERROR");
+                errmsg.setHeaderText("Cannot create an object with a matching name.");
+                errmsg.setResizable(true);
+
+                // Add button to close dialog box after user enters values.
+                ButtonType okButton = new ButtonType("Okay", ButtonData.OK_DONE);
+                errmsg.getDialogPane().getButtonTypes().add(okButton);
+
+                // Display the dialog box.
+                errmsg.showAndWait();
+            }
+        }
+
+        // Loop through all ItemContainer objects and see if name matches. If so, set match to true.
+        for(int i=0; i<containerList.size(); i++){
+            if(name.equals(containerList.get(i).getName())){
+                // Set the matching variable to true.
+                match = true;
+
+                // Create dialog box.
+                Dialog<Double> errmsg = new Dialog<>();
+                errmsg.setTitle("ERROR");
+                errmsg.setHeaderText("Cannot create an object with a matching name.");
+                errmsg.setResizable(true);
+
+                // Add button to close dialog box after user enters values.
+                ButtonType okButton = new ButtonType("Okay", ButtonData.OK_DONE);
+                errmsg.getDialogPane().getButtonTypes().add(okButton);
+
+                // Display the dialog box.
+                errmsg.showAndWait();
+            }
+        }
+
+        return match;
     }
 
     //Printing out the Item Values when selecting each specific Item or Item Container
