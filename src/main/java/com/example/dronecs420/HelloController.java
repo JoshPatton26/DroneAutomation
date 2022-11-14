@@ -595,7 +595,7 @@ public class HelloController implements Initializable{
             (containerList.get(itemIndex)).setLy(Integer.parseInt(yvalue.getText()));
             System.out.println("Changed X + Y of " + (containerList.get(itemIndex)).getName() + " " + (containerList.get(itemIndex)).getLx() + " " + (containerList.get(itemIndex)).getLy());
             
-         // Delete old rectangle.
+            // Delete old rectangle.
             deleteRectangle(selectItem().getValue().toString());
 
             makeRectangle((containerList.get(itemIndex)).getName(), (containerList.get(itemIndex)).getLx(), (containerList.get(itemIndex)).getLy(), (containerList.get(itemIndex)).getWidth(), (containerList.get(itemIndex)).getHeight());
@@ -924,6 +924,7 @@ public class HelloController implements Initializable{
     //Printing out the Item Values when selecting each specific Item or Item Container
     public TreeItem<String> selectItem(){
         TreeItem<String> item = (TreeItem<String>) treeView.getSelectionModel().getSelectedItem();
+        int childCMV = 0, childPPV = 0, parentCMV = 0, parentPPV = 0;
 
         // Check to see if the selected item is a branch or leaf and show the respective commands.
         if(item.isLeaf()){
@@ -950,23 +951,35 @@ public class HelloController implements Initializable{
 
         /* 
          * Loops through the itemList to find the matching item name and displays 
-         * the pruchase price and current market price to dashboard
+         * the pruchase price and current market price of that item to dashboard
+         * 
+         * Also, checks to see if selected TreeItem is equal to any itemList's parent,
+         * if so get a sum of all that parents childrens price values.
         */
         for(int i=0; i<itemList.size();i++){
             if(item.getValue() == ((ItemsClass) itemList.get(i)).getName()){
                 purchasePriceValue.setText("$"+Integer.toString(((ItemsClass) itemList.get(i)).getPrice())+".00");
                 CurrentMarketValue.setText("$"+Integer.toString(((ItemsClass) itemList.get(i)).getCur_price())+".00");
             }
+            if(item.getValue().equals(((ItemsClass) itemList.get(i)).getParent())){
+                childPPV += itemList.get(i).getPrice();
+                childCMV += itemList.get(i).getCur_price();
+            }
         }
 
         /* 
-         * Loops through the containerList to find the matching item container name and displays 
-         * the pruchase price and current market price to dashboard
+         * Loops through the containerList to find the matching item container name, then adds the sum of all childrens prices to 
+         * the purchase price and current market price and displays info on dashboard.
+         * 
+         * purchase price value = parent's price + all children's prices.
+         * current market value = parent's Cur_price + all children's Cur_price's.
         */
         for(int i=0; i<containerList.size();i++){
             if(item.getValue() == ((ItemsClass) containerList.get(i)).getName()){
-                purchasePriceValue.setText("$"+Integer.toString(((ItemsClass) containerList.get(i)).getPrice())+".00");
-                CurrentMarketValue.setText("$"+Integer.toString(((ItemsClass) containerList.get(i)).getCur_price())+".00");
+                parentPPV = ((ItemsClass) containerList.get(i)).getPrice() + childPPV;
+                parentCMV = ((ItemsClass) containerList.get(i)).getCur_price() + childCMV;
+                purchasePriceValue.setText("$"+Integer.toString(parentPPV)+".00");
+                CurrentMarketValue.setText("$"+Integer.toString(parentCMV)+".00");
             }
         }
 
