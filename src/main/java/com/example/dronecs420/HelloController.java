@@ -334,14 +334,33 @@ public class HelloController implements Initializable{
         int itemIndex = Integer.parseInt(info[0]);
         String type = info[1];
 
-        // Create the TextInputDialog box.
-        TextInputDialog priceItem = new TextInputDialog();
-        priceItem.setTitle("New Price");
-        priceItem.setHeaderText("Enter new price: ");
-        priceItem.setContentText("Price: ");
+        // Create dialog box.
+        Dialog<String> changePrice = new Dialog<>();
+        changePrice.setTitle("Change Prices");
+        changePrice.setHeaderText("Enter the new prices: ");
+        changePrice.setResizable(true);
+        //changeLoc.setWidth(1000.0);
 
-        // Capture the users input
-        Optional<String> result = priceItem.showAndWait();
+        // Add the attributes of the dialog box.
+        Label label1 = new Label("Purchase Price: ");
+        Label label2 = new Label("Current Market Value: ");
+        TextField pp = new TextField();
+        TextField cmv = new TextField();
+
+        // Add the layout, and add the attributes to layout.
+        GridPane grid = new GridPane();
+        grid.add(label1, 1, 1);
+        grid.add(pp, 2, 1);
+        grid.add(label2, 1, 2);
+        grid.add(cmv, 2, 2);
+        changePrice.getDialogPane().setContent(grid);
+
+        // Add button to close dialog box after user enters values.
+        ButtonType okButton = new ButtonType("Okay", ButtonData.OK_DONE);
+        changePrice.getDialogPane().getButtonTypes().add(okButton);
+
+        // Capture the users input.
+        Optional<String> result = changePrice.showAndWait();
         if(result.isPresent()){
             System.out.println(result.get());
             
@@ -622,14 +641,33 @@ public class HelloController implements Initializable{
         String[] info = getItemInfo();
         int itemIndex = Integer.parseInt(info[0]);
 
-        // Create the TextInputDialog box.
-        TextInputDialog renameItem = new TextInputDialog();
-        renameItem.setTitle("New Price");
-        renameItem.setHeaderText("Enter new price: ");
-        renameItem.setContentText("Price: ");
+        // Create dialog box.
+        Dialog<String> changePrice = new Dialog<>();
+        changePrice.setTitle("Change Prices");
+        changePrice.setHeaderText("Enter the new prices: ");
+        changePrice.setResizable(true);
+        //changeLoc.setWidth(1000.0);
+
+        // Add the attributes of the dialog box.
+        Label label1 = new Label("Purchase Price: ");
+        Label label2 = new Label("Current Market Value: ");
+        TextField pp = new TextField();
+        TextField cmv = new TextField();
+
+        // Add the layout, and add the attributes to layout.
+        GridPane grid = new GridPane();
+        grid.add(label1, 1, 1);
+        grid.add(pp, 2, 1);
+        grid.add(label2, 1, 2);
+        grid.add(cmv, 2, 2);
+        changePrice.getDialogPane().setContent(grid);
+
+        // Add button to close dialog box after user enters values.
+        ButtonType okButton = new ButtonType("Okay", ButtonData.OK_DONE);
+        changePrice.getDialogPane().getButtonTypes().add(okButton);
 
         // Capture the users input.
-        Optional<String> result = renameItem.showAndWait();
+        Optional<String> result = changePrice.showAndWait();
         if(result.isPresent()){
             System.out.println(result.get());
 
