@@ -510,7 +510,7 @@ public class HelloController implements Initializable{
             // Call matchingName() function and save result.
             matching = matchingName(result.get());
 
-            if(matching = false){
+            if(matching == false){
                 // Create a new item.
                 String itemName = result.get();
                 ItemsClass item = new ItemsClass(selectItem().getValue(), itemName, 0, 0, 0, 0, 100, 75, 0);
