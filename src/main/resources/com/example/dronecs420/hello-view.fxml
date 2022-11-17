@@ -57,15 +57,15 @@
                         <Button layoutX="10.0" layoutY="169.0" mnemonicParsing="false" onAction="#itemContDeleteClick" prefHeight="26.0" prefWidth="256.0" text="Delete" />
                      </children>
                   </VBox>
+                  <VBox fx:id="droneBtns2" focusTraversable="true" layoutX="118.0" layoutY="570.0" prefHeight="27.0" prefWidth="71.0" spacing="5.0">
+                     <children>
+                        <Button fx:id="goHome" mnemonicParsing="false" onAction="#goHomeClick" prefHeight="26.0" prefWidth="77.0" text="Go Home" />
+                     </children>
+                  </VBox>
                   <VBox fx:id="droneBtns" layoutX="40.0" layoutY="540.0" prefHeight="56.0" prefWidth="150.0" spacing="5.0">
                      <children>
                         <Button mnemonicParsing="false" onAction="#visitItemBtn" text="Visit Item/Item Container" />
                         <Button mnemonicParsing="false" onAction="#scanFarmBtn" text="Scan Farm" />
-                     </children>
-                  </VBox>
-                  <VBox fx:id="droneBtns2" layoutX="118.0" layoutY="570.0" prefHeight="27.0" prefWidth="71.0" spacing="5.0" visible="false">
-                     <children>
-                        <Button fx:id="goHome" mnemonicParsing="false" onAction="#goHomeClick" prefHeight="26.0" prefWidth="77.0" text="Go Home" />
                      </children>
                   </VBox>
                   <Label layoutX="80.0" layoutY="465.0" text="Purchase Price:">

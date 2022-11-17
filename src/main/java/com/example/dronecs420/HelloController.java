@@ -92,12 +92,10 @@ public class HelloController implements Initializable{
     void goHomeClick(ActionEvent event) {
         TranslateTransition translate = new TranslateTransition();
         //TreeItem<Object> commandCenter = new TreeItem<Object>(new ItemContainer("Command Center", 0, 174, 32, 100, 76, 66));
-
-
-
         translate.setNode(ImageView);
         translate.setToX(174 - ImageView.getLayoutX());
         translate.setToY(32 - ImageView.getLayoutY());
+        pathTransition.setDuration(Duration.seconds(15));
         translate.play();
     }
 
@@ -204,6 +202,8 @@ public class HelloController implements Initializable{
         String[] info = getItemInfo();
         int itemIndex = Integer.parseInt(info[0]);
         String type = info[1];
+        TranslateTransition translate = new TranslateTransition();
+        translate.setNode(ImageView); //ImageView = Image of the drone
 
         double x = -1;
         double y = -1;
@@ -211,9 +211,15 @@ public class HelloController implements Initializable{
         if(type == "item") {
             x = (itemList.get(itemIndex)).getLx();
             y = (itemList.get(itemIndex)).getLy();
+            translate.setToX(x - ImageView.getLayoutX());
+            translate.setToY(y - ImageView.getLayoutY());
+            translate.play();
         }else if (type == "itemContainer") {
             x = (containerList.get(itemIndex)).getLx();
             y = (containerList.get(itemIndex)).getLy();
+            translate.setToX(x - ImageView.getLayoutX());
+            translate.setToY(y - ImageView.getLayoutY());
+            translate.play();
         }
 
         System.out.println("x: " + x + ", y: " + y);
@@ -743,7 +749,7 @@ public class HelloController implements Initializable{
     	File storageFile = new File(storagePath);
     	FileReader fr = null;
     	BufferedReader reader = null;
-    	
+
 		try {
 			fr = new FileReader(storageFile);
 			
@@ -1030,11 +1036,12 @@ public class HelloController implements Initializable{
             this.itemContCmds.setVisible(true);
         }
 
-        // If drone is selected, show the "go home" button.
-        if(item.getValue() == "Drone"){
-            this.droneBtns2.setVisible(true);
+         //If drone is selected, show the "go home" button.
+        System.out.println(item.getValue());
+        if(item.getValue().equals("Drone")){
+            goHome.setVisible(true);
         }else{
-            this.droneBtns2.setVisible(false);
+            goHome.setVisible(false);
         }
 
         // Testing purposes.
