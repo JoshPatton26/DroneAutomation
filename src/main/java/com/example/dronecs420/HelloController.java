@@ -1018,6 +1018,8 @@ public class HelloController implements Initializable{
         TreeItem<String> item = (TreeItem<String>) treeView.getSelectionModel().getSelectedItem();
         int childCMV = 0, childPPV = 0, parentCMV = 0, parentPPV = 0;
 
+        ItemsVisitor visitor = new ItemsVisitor();
+
         // Check to see if the selected item is a branch or leaf and show the respective commands.
         if(item.isLeaf()){
             this.itemCmds.setVisible(true);
@@ -1049,13 +1051,13 @@ public class HelloController implements Initializable{
          * if so get a sum of all that parents childrens price values.
         */
         for(int i=0; i<itemList.size();i++){
-            if(item.getValue() == ((ItemsClass) itemList.get(i)).getName()){
+            if(item.getValue().equals(((ItemsClass) itemList.get(i)).getName())){
                 purchasePriceValue.setText("$"+Integer.toString(((ItemsClass) itemList.get(i)).getPrice())+".00");
                 CurrentMarketValue.setText("$"+Integer.toString(((ItemsClass) itemList.get(i)).getCur_price())+".00");
             }
             if(item.getValue().equals(((ItemsClass) itemList.get(i)).getParent())){
-                childPPV += itemList.get(i).getPrice();
-                childCMV += itemList.get(i).getCur_price();
+                childPPV += itemList.get(i).accept1(visitor);
+                childCMV += itemList.get(i).accept2(visitor);
             }
         }
 
@@ -1064,12 +1066,12 @@ public class HelloController implements Initializable{
          * the purchase price and current market price and displays info on dashboard.
          * 
          * purchase price value = parent's price + all children's prices.
-         * current market value = parent's Cur_price + all children's Cur_price's.
+         * current market value = all children's Cur_price's.
         */
         for(int i=0; i<containerList.size();i++){
             if(item.getValue() == ((ItemsClass) containerList.get(i)).getName()){
-                parentPPV = ((ItemsClass) containerList.get(i)).getPrice() + childPPV;
-                //parentCMV = ((ItemsClass) containerList.get(i)).getCur_price() + childCMV;
+                parentPPV = containerList.get(i).accept1(visitor) + childPPV;
+
                 purchasePriceValue.setText("$"+Integer.toString(parentPPV)+".00");
                 CurrentMarketValue.setText("$"+Integer.toString(childCMV)+".00");
             }

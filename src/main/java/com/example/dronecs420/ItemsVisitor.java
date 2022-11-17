@@ -2,15 +2,28 @@ package com.example.dronecs420;
 
 class ItemsVisitor implements Visitor {
 
+    public ItemsVisitor(){}
     @Override
-    public int visit(ItemsClass iclass) {
+    public int visit1(ItemsClass iclass) {
         //implement method for calculating market val of iclass
-        return 0;
+        return iclass.getPrice();
     }
 
     @Override
-    public int visit(ItemContainer icontainer) {
+    public int visit2(ItemsClass iclass) {
+        //implement method for calculating market val of iclass
+        return iclass.getCur_price();
+    }
+
+    @Override
+    public int visit1(ItemContainer icontainer) {
         //implement method for calculating market val of icontainer
-        return 0;
+        return icontainer.getPrice();
+    }
+
+    @Override
+    public int visit2(ItemContainer icontainer) {
+        //implement method for calculating market val of icontainer
+        return icontainer.getCur_price();
     }
 }

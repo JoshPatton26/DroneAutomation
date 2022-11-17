@@ -141,7 +141,12 @@ public class ItemsClass implements Visitable {
     }
 
     @Override
-    public int accept(Visitor visitor) {
-        return visitor.visit(this);
+    public int accept1(Visitor visitor) {
+        return visitor.visit1(this);
+    }
+
+    @Override
+    public int accept2(Visitor visitor) {
+        return visitor.visit2(this);
     }
 }
