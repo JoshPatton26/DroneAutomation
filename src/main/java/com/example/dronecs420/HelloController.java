@@ -1022,7 +1022,7 @@ public class HelloController implements Initializable{
     //Printing out the Item Values when selecting each specific Item or Item Container
     public TreeItem<String> selectItem(){
         TreeItem<String> item = (TreeItem<String>) treeView.getSelectionModel().getSelectedItem();
-        int childCMV = 0, childPPV = 0, parentCMV = 0, parentPPV = 0;
+        int childCMV = 0, childPPV = 0, parentPPV = 0;
 
         ItemsVisitor visitor = new ItemsVisitor();
 
@@ -1073,12 +1073,11 @@ public class HelloController implements Initializable{
          * the purchase price and current market price and displays info on dashboard.
          * 
          * purchase price value = parent's price + all children's prices.
-         * current market value = all children's Cur_price's.
+         * current market value = all children's cur_price's.
         */
         for(int i=0; i<containerList.size();i++){
             if(item.getValue() == ((ItemsClass) containerList.get(i)).getName()){
                 parentPPV = containerList.get(i).accept1(visitor) + childPPV;
-
                 purchasePriceValue.setText("$"+Integer.toString(parentPPV)+".00");
                 CurrentMarketValue.setText("$"+Integer.toString(childCMV)+".00");
             }
