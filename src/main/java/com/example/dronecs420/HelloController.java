@@ -335,7 +335,7 @@ public class HelloController implements Initializable{
         String type = info[1];
 
         // Create dialog box.
-        Dialog<String> changePrice = new Dialog<>();
+        Dialog<Double> changePrice = new Dialog<>();
         changePrice.setTitle("Change Prices");
         changePrice.setHeaderText("Enter the new prices: ");
         changePrice.setResizable(true);
@@ -360,23 +360,20 @@ public class HelloController implements Initializable{
         changePrice.getDialogPane().getButtonTypes().add(okButton);
 
         // Capture the users input.
-        Optional<String> result = changePrice.showAndWait();
+        Optional<Double> result = changePrice.showAndWait();
         if(result.isPresent()){
             System.out.println(result.get());
             
             // If price is equal to 0, set both price and cur_price, else just change cur_price.
             if(type == "item") {
-                if(itemList.get(itemIndex).getPrice() == 0){
-                    (itemList.get(itemIndex)).setPrice(Integer.parseInt(result.get()));
-                    System.out.println("Changed Price of " + (itemList.get(itemIndex)).getName() + " " + (itemList.get(itemIndex)).getPrice());
-                    (itemList.get(itemIndex)).setCur_price(Integer.parseInt(result.get()));
-                    System.out.println("Changed Current Price of " + (itemList.get(itemIndex)).getName() + " " + (itemList.get(itemIndex)).getCur_price());
-                }else{
-                    (itemList.get(itemIndex)).setCur_price(Integer.parseInt(result.get()));
-                    System.out.println("Changed Current Price of " + (itemList.get(itemIndex)).getName() + " " + (itemList.get(itemIndex)).getCur_price());
-                }
+                (itemList.get(itemIndex)).setPrice(Integer.parseInt(pp.getText()));
+                System.out.println("Changed Price of " + (itemList.get(itemIndex)).getName() + " " + (itemList.get(itemIndex)).getPrice());
+                (itemList.get(itemIndex)).setCur_price(Integer.parseInt(cmv.getText()));
+                System.out.println("Changed Current Price of " + (itemList.get(itemIndex)).getName() + " " + (itemList.get(itemIndex)).getCur_price());
             }else if (type == "itemContainer") {
-            	(containerList.get(itemIndex)).setCur_price(Integer.parseInt(result.get()));
+                (containerList.get(itemIndex)).setPrice(Integer.parseInt(pp.getText()));
+                System.out.println("Changed Price of " + (containerList.get(itemIndex)).getName() + " " + (containerList.get(itemIndex)).getPrice());
+            	(containerList.get(itemIndex)).setCur_price(Integer.parseInt(cmv.getText()));
                 System.out.println("Changed Price of " + (containerList.get(itemIndex)).getName() + " " + (containerList.get(itemIndex)).getCur_price());
             }
         }
@@ -642,7 +639,7 @@ public class HelloController implements Initializable{
         int itemIndex = Integer.parseInt(info[0]);
 
         // Create dialog box.
-        Dialog<String> changePrice = new Dialog<>();
+        Dialog<Double> changePrice = new Dialog<>();
         changePrice.setTitle("Change Prices");
         changePrice.setHeaderText("Enter the new prices: ");
         changePrice.setResizable(true);
@@ -667,21 +664,15 @@ public class HelloController implements Initializable{
         changePrice.getDialogPane().getButtonTypes().add(okButton);
 
         // Capture the users input.
-        Optional<String> result = changePrice.showAndWait();
+        Optional<Double> result = changePrice.showAndWait();
         if(result.isPresent()){
             System.out.println(result.get());
 
-            // If price is equal to 0, set both price and cur_price, else just change cur_price.
-            if(containerList.get(itemIndex).getPrice() == 0){
-                (containerList.get(itemIndex)).setPrice(Integer.parseInt(result.get()));
-                System.out.println("Changed Price of " + (containerList.get(itemIndex)).getName() + " " + (containerList.get(itemIndex)).getPrice());
-                (containerList.get(itemIndex)).setCur_price(Integer.parseInt(result.get()));
-                System.out.println("Changed Current Price of " + (containerList.get(itemIndex)).getName() + " " + (containerList.get(itemIndex)).getCur_price());
-            }else{
-                (containerList.get(itemIndex)).setCur_price(Integer.parseInt(result.get()));
-                System.out.println("Changed Current Price of " + (containerList.get(itemIndex)).getName() + " " + (containerList.get(itemIndex)).getCur_price());
-            }
-            
+            // Set both price and cur_price.
+            (containerList.get(itemIndex)).setPrice(Integer.parseInt(pp.getText()));
+            System.out.println("Changed Price of " + (containerList.get(itemIndex)).getName() + " " + (containerList.get(itemIndex)).getPrice());
+            (containerList.get(itemIndex)).setCur_price(Integer.parseInt(cmv.getText()));
+            System.out.println("Changed Current Price of " + (containerList.get(itemIndex)).getName() + " " + (containerList.get(itemIndex)).getCur_price());            
         }
     }
 
@@ -1078,9 +1069,9 @@ public class HelloController implements Initializable{
         for(int i=0; i<containerList.size();i++){
             if(item.getValue() == ((ItemsClass) containerList.get(i)).getName()){
                 parentPPV = ((ItemsClass) containerList.get(i)).getPrice() + childPPV;
-                parentCMV = ((ItemsClass) containerList.get(i)).getCur_price() + childCMV;
+                //parentCMV = ((ItemsClass) containerList.get(i)).getCur_price() + childCMV;
                 purchasePriceValue.setText("$"+Integer.toString(parentPPV)+".00");
-                CurrentMarketValue.setText("$"+Integer.toString(parentCMV)+".00");
+                CurrentMarketValue.setText("$"+Integer.toString(childCMV)+".00");
             }
         }
 
