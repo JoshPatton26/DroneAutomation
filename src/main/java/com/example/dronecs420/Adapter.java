@@ -77,7 +77,7 @@ public class Adapter extends Adaptee{
 				adp.turnCCW(90);
 			}
 			
-			adp.gotoXY(-X, -Y, 100);
+			adp.gotoXY(-X, Y, 100);
 			adp.land();
 			adp.end();
     	}catch (Exception e) {
