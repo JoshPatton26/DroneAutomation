@@ -2,6 +2,7 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.TreeView?>
 <?import javafx.scene.image.Image?>
@@ -57,15 +58,11 @@
                         <Button layoutX="10.0" layoutY="169.0" mnemonicParsing="false" onAction="#itemContDeleteClick" prefHeight="26.0" prefWidth="256.0" text="Delete" />
                      </children>
                   </VBox>
-                  <VBox fx:id="droneBtns2" focusTraversable="true" layoutX="118.0" layoutY="570.0" prefHeight="27.0" prefWidth="71.0" spacing="5.0">
+                  <VBox fx:id="droneBtns" layoutX="27.0" layoutY="535.0" prefHeight="78.0" prefWidth="163.0" spacing="5.0">
                      <children>
-                        <Button fx:id="goHome" mnemonicParsing="false" onAction="#goHomeClick" prefHeight="26.0" prefWidth="77.0" text="Go Home" />
-                     </children>
-                  </VBox>
-                  <VBox fx:id="droneBtns" layoutX="40.0" layoutY="540.0" prefHeight="56.0" prefWidth="150.0" spacing="5.0">
-                     <children>
-                        <Button mnemonicParsing="false" onAction="#visitItemBtn" text="Visit Item/Item Container" />
-                        <Button mnemonicParsing="false" onAction="#scanFarmBtn" text="Scan Farm" />
+                        <RadioButton fx:id="visitBtn" mnemonicParsing="false" onAction="#visitItemBtn" prefHeight="18.0" prefWidth="160.0" text="Visit Item/Item Container" />
+                        <RadioButton fx:id="scanBtn" mnemonicParsing="false" onAction="#scanFarmBtn" text="Scan Farm" />
+                        <RadioButton fx:id="goHome" mnemonicParsing="false" onAction="#goHomeClick" text="Go Home" visible="false" />
                      </children>
                   </VBox>
                   <Label layoutX="80.0" layoutY="465.0" text="Purchase Price:">

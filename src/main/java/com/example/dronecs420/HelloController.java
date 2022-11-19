@@ -14,6 +14,7 @@ import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ButtonBar.ButtonData;
+import javafx.scene.control.RadioButton;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
@@ -44,6 +45,19 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.*;
 
+//import tellolib.command.TelloFlip;
+//import tellolib.communication.TelloConnection;
+//import tellolib.control.TelloControl;
+//import tellolib.drone.TelloDrone;
+//
+//import java.util.logging.Level;
+//import java.util.logging.Logger;
+
+//import tellolib.command.TelloFlip;
+//import tellolib.communication.TelloConnection;
+//import tellolib.control.TelloControl;
+//import tellolib.drone.TelloDrone;
+
 public class HelloController implements Initializable{
     @FXML
     private TreeView treeView;
@@ -67,10 +81,7 @@ public class HelloController implements Initializable{
     private VBox droneBtns;
 
     @FXML
-    private VBox droneBtns2;
-
-    @FXML
-    private Button goHome;
+    private RadioButton goHome;
 
     public String selectedItem = "";
 
@@ -82,6 +93,9 @@ public class HelloController implements Initializable{
 
     @FXML
     private Label CurrentMarketValue;
+    
+    @FXML
+    private RadioButton visitBtn;
 
     @FXML
     protected void onHelloButtonClick() {
@@ -103,10 +117,23 @@ public class HelloController implements Initializable{
     void launchSimBtn(ActionEvent event) {
 
     }
-
+    
+//    private final Logger logger = Logger.getGlobal();
+    
     @FXML
-    void LaunchDroneBtn(ActionEvent event) {
-
+    void LaunchDroneBtn(ActionEvent event) throws IOException, InterruptedException {
+    	
+    	Adapter adpt = new Adapter();
+    	
+    	try {
+    		adpt.launch();
+    		if(visitBtn.isPressed()){
+    			System.out.println("HERE");
+    			adpt.gotoXY(100, 100, 100);
+    		}
+    	}catch (Exception e) {
+	    	e.printStackTrace();
+	    }
     }
 
     private RotateTransition rotate = new RotateTransition();
@@ -1018,7 +1045,29 @@ public class HelloController implements Initializable{
 
         return match;
     }
+    
+    public ItemsClass getItem(String name) {
+    	String item = selectItem().getValue();
+    	
+    	for(int i=0; i<itemList.size();i++){
+            if(item.equals(((ItemsClass) itemList.get(i)).getName())){
+                return itemList.get(i);
+            }
+        }
+		return null;
+    }
 
+    public ItemContainer getItemContainer(String name) {
+    	String item = selectItem().getValue();
+    	
+    	for(int i=0; i<containerList.size();i++){
+            if(item.equals(((ItemContainer) containerList.get(i)).getName())){
+                return containerList.get(i);
+            }
+        }
+		return null;
+    }
+    
     //Printing out the Item Values when selecting each specific Item or Item Container
     public TreeItem<String> selectItem(){
         TreeItem<String> item = (TreeItem<String>) treeView.getSelectionModel().getSelectedItem();
