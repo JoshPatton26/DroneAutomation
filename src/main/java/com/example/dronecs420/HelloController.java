@@ -80,9 +80,6 @@ public class HelloController implements Initializable{
     @FXML
     private VBox droneBtns;
 
-    @FXML
-    private RadioButton goHome;
-
     public String selectedItem = "";
 
     public List<ItemsClass> itemList = new ArrayList<ItemsClass>();
@@ -96,7 +93,13 @@ public class HelloController implements Initializable{
     
     @FXML
     private RadioButton visitBtn;
+    
+    @FXML
+    private RadioButton scanBtn;
 
+    @FXML
+    private RadioButton goHome;
+    
     @FXML
     protected void onHelloButtonClick() {
         welcomeText.setText("sWelcome to JavaFX Application!");
@@ -122,18 +125,44 @@ public class HelloController implements Initializable{
     
     @FXML
     void LaunchDroneBtn(ActionEvent event) throws IOException, InterruptedException {
+    	int x = 0, y = 0;
     	
     	Adapter adpt = new Adapter();
     	
-    	try {
-    		adpt.launch();
-    		if(visitBtn.isPressed()){
-    			System.out.println("HERE");
-    			adpt.gotoXY(100, 100, 100);
-    		}
-    	}catch (Exception e) {
-	    	e.printStackTrace();
-	    }
+    	// Determine whether the selected item is an Item or ItemContainer and get the x & y values.
+    	if(selectItem().isLeaf()) {
+    		ItemsClass item = getItem(selectItem().getValue());
+    		x = (int)item.getLx();
+    		y = (int)item.getLy();
+    	}else if(!(selectItem().isLeaf()) && selectItem().getValue() != "Root") {
+    		ItemContainer itemCont = getItemContainer(selectItem().getValue());
+    		x = (int)itemCont.getLx();
+    		y = (int)itemCont.getLy();
+    	}else {
+    		System.out.println("SELECT A TREE ITEM!!");
+    	}
+    	
+    	// Used to zero out the drone to the center of the Farm AnchorPane.
+    	if(x > 227) {
+    		y = y * -1;
+    	}
+    	
+    	// Determine the radio button selected and call the proper drone functions.
+    	if(visitBtn.isSelected() == true) {
+    		try {
+        		adpt.gotoXY(x, y, 100);
+        	}catch (Exception e) {
+    	    	e.printStackTrace();
+    	    }
+    	}else if(scanBtn.isSelected() == true) {
+    		try {
+        		adpt.scanFarm();
+        	}catch (Exception e) {
+    	    	e.printStackTrace();
+    	    }
+    	}else {
+    		System.out.println("Select a radio button to perform a task.");
+    	}
     }
 
     private RotateTransition rotate = new RotateTransition();
