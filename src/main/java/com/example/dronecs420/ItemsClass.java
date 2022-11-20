@@ -24,18 +24,6 @@ public class ItemsClass implements Visitable {
             return true;
         return false;
     }
-//    @Override
-//    public <E> boolean equals(E element){
-//        if (this == element)
-//            return true;
-//        if (element == null)
-//            return false;
-//        ItemsClass other = (ItemsClass) element;
-//        if (((ItemsClass) element).name == other.name)
-//            return true;
-//        return false;
-//
-//    }
 
     public ItemsClass(String iparent, String iname, int iprice, double ix, double iy, int ilength, int iwidth, int iheight, int initial_price){
         this.parent = iparent;

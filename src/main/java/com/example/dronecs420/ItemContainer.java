@@ -28,17 +28,6 @@ public class ItemContainer extends ItemsClass implements Visitable {
             return true;
         return false;
     }
-//@Override
-//    public <E> boolean equals2(E element){
-//        if (this == element)
-//            return true;
-//        if (element == null)
-//            return false;
-//        ItemContainer other = (ItemContainer) element;
-//        if (((ItemContainer) element).name == other.name)
-//            return true;
-//        return false;
-//    }
 
     private final boolean container = true;
 

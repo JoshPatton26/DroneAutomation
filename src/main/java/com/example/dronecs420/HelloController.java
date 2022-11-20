@@ -3,14 +3,12 @@ package com.example.dronecs420;
 import javafx.animation.*;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-
 import java.io.*;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
-
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ButtonBar.ButtonData;
@@ -24,39 +22,7 @@ import javafx.scene.text.Text;
 import javafx.util.Duration;
 import javafx.animation.PathTransition;
 import javafx.animation.RotateTransition;
-import javafx.fxml.FXML;
-import javafx.scene.control.*;
-import java.net.URL;
-import java.net.URL;
-import java.util.Optional;
-import java.util.ResourceBundle;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
-import javafx.scene.control.ButtonBar.ButtonData;
-import javafx.scene.control.SpinnerValueFactory.IntegerSpinnerValueFactory;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
 import javafx.scene.shape.*;
-
-//import tellolib.command.TelloFlip;
-//import tellolib.communication.TelloConnection;
-//import tellolib.control.TelloControl;
-//import tellolib.drone.TelloDrone;
-//
-//import java.util.logging.Level;
-//import java.util.logging.Logger;
-
-//import tellolib.command.TelloFlip;
-//import tellolib.communication.TelloConnection;
-//import tellolib.control.TelloControl;
-//import tellolib.drone.TelloDrone;
 
 public class HelloController implements Initializable{
     @FXML
@@ -105,23 +71,101 @@ public class HelloController implements Initializable{
         welcomeText.setText("sWelcome to JavaFX Application!");
     }
 
-    @FXML
-    void goHomeClick(ActionEvent event) {
-        TranslateTransition translate = new TranslateTransition();
-        //TreeItem<Object> commandCenter = new TreeItem<Object>(new ItemContainer("Command Center", 0, 174, 32, 100, 76, 66));
-        translate.setNode(ImageView);
-        translate.setToX(174 - ImageView.getLayoutX());
-        translate.setToY(32 - ImageView.getLayoutY());
-        pathTransition.setDuration(Duration.seconds(15));
-        translate.play();
-    }
-
+    private RotateTransition rotate = new RotateTransition();
+    private PathTransition pathTransition = new PathTransition();
     @FXML
     void launchSimBtn(ActionEvent event) {
+    	if(visitBtn.isSelected() == true) {
+    		String[] info = getItemInfo();
+            int itemIndex = Integer.parseInt(info[0]);
+            String type = info[1];
+            TranslateTransition translate = new TranslateTransition();
+            translate.setNode(ImageView); //ImageView = Image of the drone
 
+            double x = -1;
+            double y = -1;
+
+            if(type == "item") {
+                x = (itemList.get(itemIndex)).getLx();
+                y = (itemList.get(itemIndex)).getLy();
+                translate.setToX(x - ImageView.getLayoutX());
+                translate.setToY(y - ImageView.getLayoutY());
+                translate.play();
+            }else if (type == "itemContainer") {
+                x = (containerList.get(itemIndex)).getLx();
+                y = (containerList.get(itemIndex)).getLy();
+                translate.setToX(x - ImageView.getLayoutX());
+                translate.setToY(y - ImageView.getLayoutY());
+                translate.play();
+            }
+
+            System.out.println("x: " + x + ", y: " + y);
+            
+    	}else if(scanBtn.isSelected() == true) {
+    		Path path = new Path();
+            rotate.setNode(ImageView);
+            rotate.setDuration(Duration.seconds(1));
+            path.getElements().add(new MoveTo(-100,50));
+            rotate.setByAngle(90);
+            path.getElements().add(new VLineTo(525));
+            path.getElements().add(new HLineTo(-75));
+            path.getElements().add(new VLineTo(50));
+            path.getElements().add(new HLineTo(-50));
+            path.getElements().add(new VLineTo(525));
+            path.getElements().add(new HLineTo(-25));
+            path.getElements().add(new VLineTo(50));
+            path.getElements().add(new HLineTo(0));
+            path.getElements().add(new VLineTo(525));
+            path.getElements().add(new HLineTo(25));
+            path.getElements().add(new VLineTo(50));
+            path.getElements().add(new HLineTo(50));
+            path.getElements().add(new VLineTo(525));
+            path.getElements().add(new HLineTo(75));
+            path.getElements().add(new VLineTo(50));
+            path.getElements().add(new HLineTo(100));
+            path.getElements().add(new VLineTo(525));
+            path.getElements().add(new HLineTo(125));
+            path.getElements().add(new VLineTo(50));
+            path.getElements().add(new HLineTo(150));
+            path.getElements().add(new VLineTo(525));
+            path.getElements().add(new HLineTo(175));
+            path.getElements().add(new VLineTo(50));
+            path.getElements().add(new HLineTo(200));
+            path.getElements().add(new VLineTo(525));
+            path.getElements().add(new HLineTo(225));
+            path.getElements().add(new VLineTo(50));
+            path.getElements().add(new ClosePath());
+            pathTransition.setNode(ImageView);
+            pathTransition.setDuration(Duration.seconds(15));
+            pathTransition.setPath(path);
+            pathTransition.play();
+            rotate.play();
+            
+    	}else if(goHome.isSelected() == true){
+    		TranslateTransition translate = new TranslateTransition();
+            //TreeItem<Object> commandCenter = new TreeItem<Object>(new ItemContainer("Command Center", 0, 174, 32, 100, 76, 66));
+            translate.setNode(ImageView);
+            translate.setToX(174 - ImageView.getLayoutX());
+            translate.setToY(32 - ImageView.getLayoutY());
+            pathTransition.setDuration(Duration.seconds(15));
+            translate.play();
+            
+    	}else {
+    		// Create ERROR dialog box.
+            Dialog<Double> errmsg = new Dialog<>();
+            errmsg.setTitle("ERROR");
+            errmsg.setHeaderText("Select a radio button to perform a task.");
+            errmsg.setResizable(true);
+
+            // Add button to close dialog box after user enters values.
+            ButtonType okButton = new ButtonType("Okay", ButtonData.OK_DONE);
+            errmsg.getDialogPane().getButtonTypes().add(okButton);
+
+            // Display the dialog box.
+            errmsg.showAndWait();
+    		System.out.println("Select a radio button to perform a task.");
+    	}
     }
-    
-//    private final Logger logger = Logger.getGlobal();
     
     @FXML
     void LaunchDroneBtn(ActionEvent event) throws IOException, InterruptedException {
@@ -130,16 +174,16 @@ public class HelloController implements Initializable{
     	Adapter adpt = new Adapter();
     	
     	// Determine whether the selected item is an Item or ItemContainer and get the x & y values.
-    	if(selectItem().isLeaf()) {
+    	if(selectItem() == null) {
+    		System.out.println("SELECT A TREE ITEM!!");
+    	}else if(selectItem().isLeaf()) {
     		ItemsClass item = getItem(selectItem().getValue());
     		x = (int)item.getLx();
     		y = (int)item.getLy();
-    	}else if(!(selectItem().isLeaf()) && selectItem().getValue() != "Root") {
+    	}else if(!(selectItem().isLeaf()) && selectItem().getValue() != "Root" && selectItem() != null) {
     		ItemContainer itemCont = getItemContainer(selectItem().getValue());
     		x = (int)itemCont.getLx();
     		y = (int)itemCont.getLy();
-    	}else {
-    		System.out.println("SELECT A TREE ITEM!!");
     	}
     	
     	// Used to zero out the drone to the center of the Farm AnchorPane.
@@ -161,52 +205,19 @@ public class HelloController implements Initializable{
     	    	e.printStackTrace();
     	    }
     	}else {
-    		System.out.println("Select a radio button to perform a task.");
-    	}
-    }
+    		// Create ERROR dialog box.
+            Dialog<Double> errmsg = new Dialog<>();
+            errmsg.setTitle("ERROR");
+            errmsg.setHeaderText("Select a radio button to perform a task.");
+            errmsg.setResizable(true);
 
-    private RotateTransition rotate = new RotateTransition();
-    private PathTransition pathTransition = new PathTransition();
-    @FXML
-    void scanFarmBtn(ActionEvent event) {
-        Path path = new Path();
-        rotate.setNode(ImageView);
-        rotate.setDuration(Duration.seconds(1));
-        path.getElements().add(new MoveTo(-100,50));
-        rotate.setByAngle(90);
-        path.getElements().add(new VLineTo(525));
-        path.getElements().add(new HLineTo(-75));
-        path.getElements().add(new VLineTo(50));
-        path.getElements().add(new HLineTo(-50));
-        path.getElements().add(new VLineTo(525));
-        path.getElements().add(new HLineTo(-25));
-        path.getElements().add(new VLineTo(50));
-        path.getElements().add(new HLineTo(0));
-        path.getElements().add(new VLineTo(525));
-        path.getElements().add(new HLineTo(25));
-        path.getElements().add(new VLineTo(50));
-        path.getElements().add(new HLineTo(50));
-        path.getElements().add(new VLineTo(525));
-        path.getElements().add(new HLineTo(75));
-        path.getElements().add(new VLineTo(50));
-        path.getElements().add(new HLineTo(100));
-        path.getElements().add(new VLineTo(525));
-        path.getElements().add(new HLineTo(125));
-        path.getElements().add(new VLineTo(50));
-        path.getElements().add(new HLineTo(150));
-        path.getElements().add(new VLineTo(525));
-        path.getElements().add(new HLineTo(175));
-        path.getElements().add(new VLineTo(50));
-        path.getElements().add(new HLineTo(200));
-        path.getElements().add(new VLineTo(525));
-        path.getElements().add(new HLineTo(225));
-        path.getElements().add(new VLineTo(50));
-        path.getElements().add(new ClosePath());
-        pathTransition.setNode(ImageView);
-        pathTransition.setDuration(Duration.seconds(15));
-        pathTransition.setPath(path);
-        pathTransition.play();
-        rotate.play();
+            // Add button to close dialog box after user enters values.
+            ButtonType okButton = new ButtonType("Okay", ButtonData.OK_DONE);
+            errmsg.getDialogPane().getButtonTypes().add(okButton);
+
+            // Display the dialog box.
+            errmsg.showAndWait();
+    	}
     }
 
     String[] getItemInfo() {
@@ -252,35 +263,6 @@ public class HelloController implements Initializable{
 
         return info;
     }
-
-    @FXML
-    void visitItemBtn(ActionEvent event) {
-        String[] info = getItemInfo();
-        int itemIndex = Integer.parseInt(info[0]);
-        String type = info[1];
-        TranslateTransition translate = new TranslateTransition();
-        translate.setNode(ImageView); //ImageView = Image of the drone
-
-        double x = -1;
-        double y = -1;
-
-        if(type == "item") {
-            x = (itemList.get(itemIndex)).getLx();
-            y = (itemList.get(itemIndex)).getLy();
-            translate.setToX(x - ImageView.getLayoutX());
-            translate.setToY(y - ImageView.getLayoutY());
-            translate.play();
-        }else if (type == "itemContainer") {
-            x = (containerList.get(itemIndex)).getLx();
-            y = (containerList.get(itemIndex)).getLy();
-            translate.setToX(x - ImageView.getLayoutX());
-            translate.setToY(y - ImageView.getLayoutY());
-            translate.play();
-        }
-
-        System.out.println("x: " + x + ", y: " + y);
-    }
-
 
     @FXML
     void itemChangeDClick(ActionEvent event) {
@@ -1105,7 +1087,13 @@ public class HelloController implements Initializable{
         ItemsVisitor visitor = new ItemsVisitor();
 
         // Check to see if the selected item is a branch or leaf and show the respective commands.
-        if(item.isLeaf()){
+        if (item == null) {
+        	try {
+        		System.out.println("SELECT A TREE ITEM!!");
+            } catch (NullPointerException e) {
+                System.out.println(e);
+            }
+        }else if(item.isLeaf()){
             this.itemCmds.setVisible(true);
             this.itemContCmds.setVisible(false);
 
@@ -1114,53 +1102,55 @@ public class HelloController implements Initializable{
             this.itemContCmds.setVisible(true);
         }
 
-         //If drone is selected, show the "go home" button.
-        System.out.println(item.getValue());
-        if(item.getValue().equals("Drone")){
-            goHome.setVisible(true);
-        }else{
-            goHome.setVisible(false);
-        }
+        if(item != null) {
+	         //If drone is selected, show the "go home" button.
+	        System.out.println(item.getValue());
+	        if(item.getValue().equals("Drone")){
+	            goHome.setVisible(true);
+	        }else{
+	            goHome.setVisible(false);
+	        }
 
-        // Testing purposes.
-        if(item != null){
+	        // Testing purposes.
             System.out.println(item.getValue());
             selectedItem = item.getValue();
-        }
 
-        /* 
-         * Loops through the itemList to find the matching item name and displays 
-         * the pruchase price and current market price of that item to dashboard
-         * 
-         * Also, checks to see if selected TreeItem is equal to any itemList's parent,
-         * if so get a sum of all that parents childrens price values.
-        */
-        for(int i=0; i<itemList.size();i++){
-            if(item.getValue().equals(((ItemsClass) itemList.get(i)).getName())){
-                purchasePriceValue.setText("$"+Integer.toString(((ItemsClass) itemList.get(i)).getPrice())+".00");
-                CurrentMarketValue.setText("$"+Integer.toString(((ItemsClass) itemList.get(i)).getCur_price())+".00");
-            }
-            if(item.getValue().equals(((ItemsClass) itemList.get(i)).getParent())){
-                childPPV += itemList.get(i).accept1(visitor);
-                childCMV += itemList.get(i).accept2(visitor);
-            }
+	        /* 
+	         * Loops through the itemList to find the matching item name and displays 
+	         * the purchase price and current market price of that item to dashboard
+	         * 
+	         * Also, checks to see if selected TreeItem is equal to any itemList's parent,
+	         * if so get a sum of all that parents children's price values.
+	        */
+	        for(int i=0; i<itemList.size();i++){
+	            if(item.getValue().equals(((ItemsClass) itemList.get(i)).getName())){
+	                purchasePriceValue.setText("$"+Integer.toString(((ItemsClass) itemList.get(i)).getPrice())+".00");
+	                CurrentMarketValue.setText("$"+Integer.toString(((ItemsClass) itemList.get(i)).getCur_price())+".00");
+	            }
+	            if(item.getValue().equals(((ItemsClass) itemList.get(i)).getParent())){
+	                childPPV += itemList.get(i).accept1(visitor);
+	                childCMV += itemList.get(i).accept2(visitor);
+	            }
+	        }
+	
+	        /* 
+	         * Loops through the containerList to find the matching item container name, then adds the sum of all children's prices to 
+	         * the purchase price and current market price and displays info on dashboard.
+	         * 
+	         * purchase price value = parent's price + all children's prices.
+	         * current market value = all children's cur_price's.
+	        */
+	        for(int i=0; i<containerList.size();i++){
+	            if(item.getValue() == ((ItemsClass) containerList.get(i)).getName()){
+	                parentPPV = containerList.get(i).accept1(visitor) + childPPV;
+	                purchasePriceValue.setText("$"+Integer.toString(parentPPV)+".00");
+	                CurrentMarketValue.setText("$"+Integer.toString(childCMV)+".00");
+	            }
+	        }
+	
+	        return item;
+        }else {
+        	return null;
         }
-
-        /* 
-         * Loops through the containerList to find the matching item container name, then adds the sum of all childrens prices to 
-         * the purchase price and current market price and displays info on dashboard.
-         * 
-         * purchase price value = parent's price + all children's prices.
-         * current market value = all children's cur_price's.
-        */
-        for(int i=0; i<containerList.size();i++){
-            if(item.getValue() == ((ItemsClass) containerList.get(i)).getName()){
-                parentPPV = containerList.get(i).accept1(visitor) + childPPV;
-                purchasePriceValue.setText("$"+Integer.toString(parentPPV)+".00");
-                CurrentMarketValue.setText("$"+Integer.toString(childCMV)+".00");
-            }
-        }
-
-        return item;
     }
 }
