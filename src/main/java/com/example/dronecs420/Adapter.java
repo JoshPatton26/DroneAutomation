@@ -39,6 +39,7 @@ public class Adapter extends Adaptee{
 			adp.takeoff();
 	    	adp.gotoXY(x, y, speed);
 	    	adp.turnCW(360);
+	    	adp.hoverInPlace(2);
 	    	adp.gotoXY(-x, -y, speed);
 	    	adp.land();
 	    	adp.end();
