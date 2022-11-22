@@ -1,5 +1,7 @@
 # Drone Automation (Drone Farming)
 
+Drone Automation (Drone Farming) Link to repository: https://github.com/JoshPatton26/DroneAutomation
+
 HOW TO RUN:
 
 To run this project you should have JavaFX set up with your IDE, as well as access to a DJI Tello Drone. 
