@@ -1,6 +1,7 @@
 # Drone Automation (Drone Farming)
 
-Drone Automation (Drone Farming) Link to repository: https://github.com/JoshPatton26/DroneAutomation
+Drone Automation (Drone Farming) Github & GitLab Link to repository: https://github.com/JoshPatton26/DroneAutomation & https://gitlab.com/jzubia25/DroneAutomation
+
 
 HOW TO RUN:
 
