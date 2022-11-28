@@ -5,6 +5,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import java.io.*;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -23,6 +25,7 @@ import javafx.util.Duration;
 import javafx.animation.PathTransition;
 import javafx.animation.RotateTransition;
 import javafx.scene.shape.*;
+
 
 public class HelloController implements Initializable{
     @FXML
@@ -262,6 +265,40 @@ public class HelloController implements Initializable{
         info[1] = type;
 
         return info;
+    }
+    
+    @FXML
+    void saveClick(ActionEvent event) {
+    	try {
+    		String storagePath = "src/main/resources/com/example/dronecs420/storage.txt";
+        	File oldFile = new File(storagePath);
+        	oldFile.delete();
+        	
+        	File newFile = new File(storagePath);
+        	
+    		FileWriter fw = new FileWriter(newFile, false);
+    		
+    		String tempStr = "";
+    		for(int i = 0; i<containerList.size(); i++) {
+    			ItemContainer container = containerList.get(i);
+    			tempStr = "itemContainer," + container.getParent() + "," + container.getName() + "," + String.valueOf(container.getPrice()) + "," + String.valueOf(container.getLx()) + "," + String.valueOf(container.getLy()) + "," +String.valueOf(container.getLength()) + "," + String.valueOf(container.getWidth()) + "," + String.valueOf(container.getHeight()) + ";";
+    			System.out.println(tempStr);
+    			fw.write(tempStr);
+    			fw.write(System.getProperty("line.separator"));
+    		}
+    		
+    		for(int i = 0; i<itemList.size(); i++) {
+    			ItemsClass item = itemList.get(i);
+    			tempStr = "item," + item.getParent() + "," + item.getName() + "," + String.valueOf(item.getPrice()) + "," + String.valueOf(item.getLx()) + "," + String.valueOf(item.getLy()) + "," +String.valueOf(item.getLength()) + "," + String.valueOf(item.getWidth()) + "," + String.valueOf(item.getHeight()) + "," + String.valueOf(item.getCur_price()) + ";";
+    			System.out.println(tempStr);
+    			fw.write(tempStr);
+    			fw.write(System.getProperty("line.separator"));
+    		}
+    		fw.close();
+    	} catch (IOException e) {
+    		e.printStackTrace();
+    	}
+    	
     }
 
     @FXML
