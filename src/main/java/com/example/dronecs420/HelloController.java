@@ -295,8 +295,33 @@ public class HelloController implements Initializable{
     			fw.write(System.getProperty("line.separator"));
     		}
     		fw.close();
+    		
+    		// Create Success dialog box.
+            Dialog<Double> errmsg = new Dialog<>();
+            errmsg.setTitle("Saved");
+            errmsg.setHeaderText("You have successfully saved.");
+            errmsg.setResizable(true);
+
+            // Add button to close dialog box
+            ButtonType okButton = new ButtonType("Okay", ButtonData.OK_DONE);
+            errmsg.getDialogPane().getButtonTypes().add(okButton);
+
+            // Display the dialog box.
+            errmsg.showAndWait();
     	} catch (IOException e) {
     		e.printStackTrace();
+    		// Create Success dialog box.
+            Dialog<Double> errmsg = new Dialog<>();
+            errmsg.setTitle("Save Unsuccessful");
+            errmsg.setHeaderText("Something went wrong :(");
+            errmsg.setResizable(true);
+
+            // Add button to close dialog box
+            ButtonType okButton = new ButtonType("Okay", ButtonData.OK_DONE);
+            errmsg.getDialogPane().getButtonTypes().add(okButton);
+
+            // Display the dialog box.
+            errmsg.showAndWait();
     	}
     	
     }
