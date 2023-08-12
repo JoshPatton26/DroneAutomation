@@ -74,7 +74,7 @@ The primary objective of the project was to create an application that could int
   <li> Eric Dollar </li>
 </ul><br>
 
-
+<h2></h2>
 <footer>
   <b>Note:</b> The content in this repository represents the collaborative project work completed during the <b>Software Development</b> course at UAB. The project aimed to integrate Java programming, JavaFX for the user interface, and the Tello SDK to achieve autonomous farm tasks using a Tello drone. The utilization of the Agile Scrum methodology enhanced teamwork, software development life cycle understanding, and practical application of OOP principles.
 </footer>
